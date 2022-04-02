@@ -15,7 +15,7 @@
 import LayoutVertical from '@core/layouts/layout-vertical/LayoutVertical.vue'
 import AppCustomizer from '@core/layouts/components/app-customizer/AppCustomizer.vue'
 import { $themeConfig } from '@themeConfig'
-import navMenuItems from '@/navigation/vertical'
+import navMenuItems from '@/navigation'
 
 export default {
   components: {
