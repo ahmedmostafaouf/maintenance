@@ -18,6 +18,7 @@ class UserSeeder extends Seeder
         User::create([
             'name'=>'Admin',
             'email' => 'admin@gmail.com',
+            'image' => '/assets/images/avatar.png',
             'password' => '123456',
 
         ]);

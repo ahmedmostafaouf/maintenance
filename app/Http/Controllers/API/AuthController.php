@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\API\UserResource;
 use App\Http\Traits\ResponseTrait;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -17,8 +18,7 @@ class AuthController extends Controller
         if (! $user || ! Hash::check($request->password, $user->password))
             return $this->validationError([ 'email' => [__('auth.failed')],]);
 
-        $user->accessToken = $user->createToken('token-name', ['server:update'])->plainTextToken;
-        return $this->returnData('data', $user, 'User Authenticated Successfully');
+        return $this->returnData('data', new UserResource($user), 'User Authenticated Successfully');
     }
 
     /**this method signs out users by removing tokens
