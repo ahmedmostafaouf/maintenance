@@ -101,12 +101,11 @@
 <script>
 import AppBreadcrumb from '@core/layouts/components/AppBreadcrumb.vue'
 import AppNavbarHorizontalLayout from '@core/layouts/components/app-navbar/AppNavbarHorizontalLayout.vue'
-import AppNavbarHorizontalLayoutBrand from '@core/layouts/components/app-navbar/AppNavbarHorizontalLayoutBrand.vue'
 import AppFooter from '@core/layouts/components/AppFooter.vue'
 import useAppConfig from '@core/app-config/useAppConfig'
 import { BNavbar } from 'bootstrap-vue'
 import { useScrollListener } from '@core/comp-functions/misc/event-listeners'
-import verticalNavMenuItems from '@/navigation/vertical'
+import verticalNavMenuItems from '@/navigation'
 
 import { onUnmounted } from '@vue/composition-api'
 
@@ -128,7 +127,6 @@ export default {
   components: {
     AppBreadcrumb,
     AppNavbarHorizontalLayout,
-    AppNavbarHorizontalLayoutBrand,
     AppFooter,
     HorizontalNavMenu,
 
