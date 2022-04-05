@@ -21,6 +21,7 @@ supervisord.pid
 .DS_Store
 /dist
 
+/public/js/app.js
 # local env files
 .env.local
 .env.*.local
