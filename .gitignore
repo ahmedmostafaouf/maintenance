@@ -48,4 +48,4 @@ yarn-error.log*
 
 # Docs
 /docs/.temp
-.env
+
