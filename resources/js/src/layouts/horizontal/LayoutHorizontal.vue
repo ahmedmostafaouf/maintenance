@@ -1,13 +1,13 @@
 <template>
-  <layout-horizontal>
+    <layout-horizontal>
 
-    <router-view />
+        <router-view />
 
-    <app-customizer
-      v-if="showCustomizer"
-      slot="customizer"
-    />
-  </layout-horizontal>
+        <app-customizer
+            v-if="showCustomizer"
+            slot="customizer"
+        />
+    </layout-horizontal>
 
 </template>
 
@@ -17,14 +17,14 @@ import AppCustomizer from '@core/layouts/components/app-customizer/AppCustomizer
 import { $themeConfig } from '@themeConfig'
 
 export default {
-  components: {
-    LayoutHorizontal,
-    AppCustomizer,
-  },
-  data() {
-    return {
-      showCustomizer: $themeConfig.layout.customizer,
-    }
-  },
+    components: {
+        LayoutHorizontal,
+        AppCustomizer,
+    },
+    data() {
+        return {
+            showCustomizer: $themeConfig.layout.customizer,
+        }
+    },
 }
 </script>
