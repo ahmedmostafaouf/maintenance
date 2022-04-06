@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Dashboard\BranchesResource;
+use App\Models\Branch;
 use Illuminate\Http\Request;
 
 class BrancheController extends Controller
@@ -12,9 +14,10 @@ class BrancheController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $branches = Branch::branchesData($request);
+        return BranchesResource::collection($branches);
     }
 
     /**

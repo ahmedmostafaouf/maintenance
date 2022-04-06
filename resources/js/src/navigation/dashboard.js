@@ -12,16 +12,29 @@ export default [
     icon: 'AlertCircleIcon',
     route: 'dashboard-roles',
   },
-  /* {
-    title: 'Dashboards',
-    icon: 'HomeIcon',
-    tag: '2',
-    tagVariant: 'light-warning',
-    children: [
-      {
-        title: 'Analytics',
-        route: 'dashboard-analytics',
-      },
-    ],
-  }, */
+  {
+    header: 'Departments',
+  },
+  {
+    title: 'Department',
+    icon: 'AlertCircleIcon',
+    route: 'departments',
+  },
+    {
+        header: 'Branches',
+    },
+    {
+        title: 'Branches',
+        icon: 'AlertCircleIcon',
+        children: [
+            {
+                title: 'Branch',
+                route: 'branches',
+            },
+            {
+                title: 'Add Branch',
+                route: '',
+            },
+        ],
+    },
 ]
