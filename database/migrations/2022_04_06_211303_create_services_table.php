@@ -22,7 +22,6 @@ return new class extends Migration
             $table->integer('range_time')->comment('5 min');
             $table->unsignedBigInteger('department_id');
             $table->foreign('department_id')->references('id')->on('departments');
-
             $table->timestamps();
             $table->softDeletes();
         });

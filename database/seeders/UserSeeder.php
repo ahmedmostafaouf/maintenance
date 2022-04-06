@@ -15,12 +15,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
+        User::updateOrCreate(['email' => 'admin@gmail.com'],[
             'name'=>'Admin',
             'email' => 'admin@gmail.com',
             'image' => '/assets/images/avatar.png',
-            'password' => '123456',
-
+            'password' => 123456,
+            'role' => 1,
         ]);
     }
 }
