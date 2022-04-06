@@ -12,6 +12,14 @@ export default [
     icon: 'AlertCircleIcon',
     route: 'dashboard-roles',
   },
+  {
+    header: 'Departments',
+  },
+  {
+    title: 'Department',
+    icon: 'AlertCircleIcon',
+    route: 'departments',
+  },
   /* {
     title: 'Dashboards',
     icon: 'HomeIcon',

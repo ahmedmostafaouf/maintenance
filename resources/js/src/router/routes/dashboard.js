@@ -9,4 +9,10 @@ export default [
     name: 'dashboard',
     component: () => import('@/views/dashboard/roles/Index.vue'),
   },
+  {
+    path: '/dashboard/departments',
+    name: 'departments',
+    component: () => import('@/views/dashboard/departments/index.vue'),
+  },
+
 ]
