@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Department;
@@ -21,5 +22,17 @@ class Branch extends Model
 
     public function departments(){
         return $this->hasMany(Department::class,'branch_id');
+    }
+
+    public function getCreatedAtAttribute($val){
+        return Carbon::parse($val)->format('Y-m-d');
+    }
+
+    public function scopeBranchesData($query,$req){
+        return $query->when((isset($req['searchTerm']) && $req['searchTerm'] != null),function($query) use ($req){
+            $query->where( 'name', 'LIKE', '%' . $req['searchTerm'] . '%' );
+        })
+            ->orderBy($req->field,$req->type)
+            ->paginate( $req->per_page );
     }
 }

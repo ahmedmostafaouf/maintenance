@@ -14,5 +14,9 @@ export default [
     name: 'departments',
     component: () => import('@/views/dashboard/departments/index.vue'),
   },
-
+    {
+        path: '/dashboard/branches',
+        name: 'branches',
+        component: () => import('@/views/dashboard/branches/index.vue'),
+    },
 ]

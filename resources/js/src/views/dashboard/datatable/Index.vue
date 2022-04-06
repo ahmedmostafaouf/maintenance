@@ -247,8 +247,9 @@
                          Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
                      }
                  }).then((response) => {
-                    this.rows = response.data.departments.data
-                     this.totalRecords = response.data.departments.total;
+                     console.log(response)
+                     this.rows = response.data.data
+                     this.totalRecords = response.data.meta.total;
                 })
 
             }

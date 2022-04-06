@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Dashboard\DepartmentsResource;
 use App\Models\Department;
 use Illuminate\Http\Request;
 
@@ -15,16 +16,17 @@ class DepartmentController extends Controller
      */
     public function index(Request $request)
     {
-        $search_query = $request->searchTerm;
-        $perPage      = $request->per_page;
-        $field=$request->field;
-        $type=$request->type;
-        $departments        = Department::where( 'name', 'LIKE', '%' . $search_query . '%' )
-            ->orderBy($field,$type)
-            ->paginate( $perPage )
-            ->toArray();
-//        dd($departments);
-        return response()->json(['status'=>true,'departments'=>$departments]);
+        $branches = Department::departmentData($request);
+        return DepartmentsResource::collection($branches);
+       // $search_query = $request->searchTerm;
+//        $perPage      = $request->per_page;
+//        $field=$request->field;
+//        $type=$request->type;
+//        $departments        = Department::where( 'name', 'LIKE', '%' . $search_query . '%' )
+//            ->orderBy($field,$type)
+//            ->paginate( $perPage )
+//            ->toArray();
+//        return response()->json(['status'=>true,'items'=>$departments]);
 
     }
 
