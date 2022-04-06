@@ -13,10 +13,10 @@ export default [
     route: 'dashboard-roles',
   },
   {
-    header: 'Departments',
+    header: 'Departments Section',
   },
   {
-    title: 'Department',
+    title: 'Departments',
     icon: 'AlertCircleIcon',
       children: [
           {
@@ -30,7 +30,7 @@ export default [
           ]
   },
     {
-        header: 'Branches',
+        header: 'Branches Section',
     },
     {
         title: 'Branches',
@@ -42,7 +42,7 @@ export default [
             },
             {
                 title: 'Add Branch',
-                route: '',
+                route: 'add-branch',
             },
         ],
     },

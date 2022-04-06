@@ -19,4 +19,9 @@ export default [
         name: 'branches',
         component: () => import('@/views/dashboard/branches/index.vue'),
     },
+    {
+        path: '/dashboard/branches/add-branch',
+        name: 'add-branch',
+        component: () => import('@/views/dashboard/branches/add-branch.vue'),
+    },
 ]
