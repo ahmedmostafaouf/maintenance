@@ -23,4 +23,12 @@ class Service extends Model
     public function members(){
         return $this->belongsToMany(Member::class, 'member_services');
     }
+
+    public function scopeGetData(){
+        return $query->when((isset($req['searchTerm']) && $req['searchTerm'] != null),function($query) use ($req){
+            $query->where( 'name', 'LIKE', '%' . $req['searchTerm'] . '%' );
+        })
+            ->orderBy($req->field,$req->type)
+            ->paginate( $req->per_page );
+    }
 }

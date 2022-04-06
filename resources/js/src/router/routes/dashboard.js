@@ -14,9 +14,17 @@ export default [
     name: 'departments',
     component: () => import('@/views/dashboard/departments/index.vue'),
   },
-    {
-        path: '/dashboard/branches',
-        name: 'branches',
-        component: () => import('@/views/dashboard/branches/index.vue'),
-    },
+  {
+    path: '/dashboard/branches',
+    name: 'branches',
+    component: () => import('@/views/dashboard/branches/index.vue'),
+  },
+  {
+    path: '/dashboard/services',
+    name: 'services',
+    component: () => import('@/views/dashboard/services/index.vue'),
+    meta:{
+        title:'services',
+    }
+  },
 ]
