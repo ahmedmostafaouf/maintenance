@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class MemberService extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'member_id','service_id','status','member_type','feedback','completed_feedback','current_members_service',
+    ];
 }
