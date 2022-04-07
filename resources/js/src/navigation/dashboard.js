@@ -13,14 +13,14 @@ export default [
     route: 'dashboard-roles',
   },
   {
-    header: 'Departments',
+    header: 'Controle Departments',
   },
   {
-    title: 'Department',
-    icon: 'AlertCircleIcon',
+    title: 'Departments',
+    icon: 'LayersIcon',
       children: [
           {
-              title: 'Department',
+              title: 'Departments',
               route: 'departments',
           },
           {
@@ -30,11 +30,11 @@ export default [
           ]
   },
   {
-    header: 'Branches',
+    header: 'Controle Branches',
   },
   {
     title: 'Branches',
-    icon: 'AlertCircleIcon',
+    icon: 'GitBranchIcon',
     children: [
         {
             title: 'Branch',
@@ -47,11 +47,11 @@ export default [
     ],
    },
    {
-    header: 'services',
+    header: 'Controle Services',
   },
   {
     title: 'Services',
-    icon: 'AlertCircleIcon',
+    icon: 'ServerIcon',
     children: [
         {
             title: 'Services',

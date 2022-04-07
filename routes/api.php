@@ -19,6 +19,7 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
     Route::post('/logout', 'AuthController@signout');
     Route::resource('departments', "Dashboard\DepartmentController");
     Route::resource('branches', "Dashboard\BrancheController");
+    Route::resource('services', "Dashboard\ServiceController");
 
     //Route::get('/user', 'UserController@getUser');
 });

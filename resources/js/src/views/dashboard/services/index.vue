@@ -1,22 +1,103 @@
 <template>
-    <div>
+    <table-data :titleProp="title" :searchTermProp="searchTerm" :columnsProp="columns" :url="url">
+        <template v-slot:searchDiv>
+            <div class="custom-search d-flex justify-content-end">
+                <b-form-group>
+                    <div class="d-flex align-items-center">
+                        <label class="mr-1">Search</label>
+                        <b-form-input
+                            v-model="searchTerm"
+                            placeholder="Search"
+                            type="text"
+                            class="d-inline-block"
+                        />
+                    </div>
+                </b-form-group>
+            </div>
+        </template>
 
-    </div>
+    </table-data>
 </template>
 
 <script>
 import { reactive, toRefs } from 'vue'
-
+import tableData from '../datatable/index'
+import {
+    BCard,BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdownItem, BDropdown,BRow, BCol
+} from 'bootstrap-vue'
 export default {
-    setup () {
-        const state = reactive({
-            count: 0,
-        })
-
+     components: {
+        tableData,
+        BCard,
+        BAvatar,
+        BBadge,
+        BPagination,
+        BFormGroup,
+        BFormInput,
+        BFormSelect,
+        // Prism,
+        BDropdownItem,
+        BDropdown,
+        BRow, BCol
+     },
+      data() {
         return {
-            ...toRefs(state),
+            url:'/services',
+            searchTerm:'',
+            title:'Services',
+            columns: [
+                {
+                    label: 'Name',
+                    field: 'name',
+                    filterable:true,
+                    sortable:true
+                },
+                {
+                    label: 'Department Name',
+                    field: 'department_name',
+                    filterable:true
+                },
+                {
+                    label: 'Status',
+                    field: 'status',
+                    filterable:true
+                },
+                 {
+                    label: 'Description',
+                    field: 'desc',
+                    filterable:true
+                },
+                {
+                    label: 'Created At',
+                    field: 'created_at',
+                    filterable:true
+                },
+                {
+                    label: 'Action',
+                    field: 'action',
+                    sortable:false
+                },
+            ],
         }
-    }
+    },
+    computed: {
+
+    },
+    methods: {
+
+    },
+     created() {
+
+    },
+    // setup () {
+    //     const state = reactive({
+    //         count: 0,
+    //     })
+
+    //     return {
+    //         ...toRefs(state),
+    //     }
+    // }
 }
 </script>
 
