@@ -5,6 +5,22 @@ export default [
     component: () => import('@/views/dashboard/homepage/Index.vue'),
   },
   {
+    path: '/dashboard/organizations',
+    name: 'organizations',
+    component: () => import('@/views/dashboard/organizations/Index.vue'),
+    meta: {
+      title: 'Organizations',
+    },
+  },
+  {
+    path: '/dashboard/organizations-add',
+    name: 'add-organization',
+    component: () => import('@/views/dashboard/organizations/Create.vue'),
+    meta: {
+      title: 'Add Organization',
+    },
+  },
+  {
     path: '/dashboard/roles',
     name: 'dashboard',
     component: () => import('@/views/dashboard/roles/Index.vue'),
@@ -23,8 +39,8 @@ export default [
     path: '/dashboard/services',
     name: 'services',
     component: () => import('@/views/dashboard/services/index.vue'),
-    meta:{
-        title:'services',
-    }
+    meta: {
+      title: 'services',
+    },
   },
 ]
