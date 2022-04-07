@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Service;
+use App\Http\Resources\Dashboard\ServicesResource;
 
 class ServiceController extends Controller
 {
@@ -12,9 +14,10 @@ class ServiceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $services = Service::getData($request);
+        return ServicessResource::collection($services);
     }
 
     /**

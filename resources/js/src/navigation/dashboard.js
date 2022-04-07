@@ -29,21 +29,38 @@ export default [
           },
           ]
   },
-    {
-        header: 'Branches',
-    },
-    {
-        title: 'Branches',
-        icon: 'AlertCircleIcon',
-        children: [
-            {
-                title: 'Branch',
-                route: 'branches',
-            },
-            {
-                title: 'Add Branch',
-                route: '',
-            },
-        ],
-    },
+  {
+    header: 'Branches',
+  },
+  {
+    title: 'Branches',
+    icon: 'AlertCircleIcon',
+    children: [
+        {
+            title: 'Branch',
+            route: 'branches',
+        },
+        {
+            title: 'Add Branch',
+            route: '',
+        },
+    ],
+   },
+   {
+    header: 'services',
+  },
+  {
+    title: 'Services',
+    icon: 'AlertCircleIcon',
+    children: [
+        {
+            title: 'Services',
+            route: 'services',
+        },
+        {
+            title: 'Add Services',
+            route: '',
+        },
+    ],
+   },
 ]
