@@ -13,24 +13,24 @@ export default [
     route: 'dashboard-roles',
   },
   {
-    header: 'Controle Departments',
+    header: 'Departments Section',
   },
   {
     title: 'Departments',
     icon: 'LayersIcon',
-      children: [
-          {
-              title: 'Departments',
-              route: 'departments',
-          },
-          {
-              title: 'Add Department',
-              route: '',
-          },
-          ]
+    children: [
+        {
+            title: 'Departments',
+            route: 'departments',
+        },
+        {
+          title: 'Add Department',
+          route: '',
+        },
+    ]
   },
   {
-    header: 'Controle Branches',
+    header: 'Branches Section',
   },
   {
     title: 'Branches',
@@ -42,12 +42,12 @@ export default [
         },
         {
             title: 'Add Branch',
-            route: '',
+            route: 'add-branch',
         },
     ],
    },
    {
-    header: 'Controle Services',
+    header: 'Services Section',
   },
   {
     title: 'Services',

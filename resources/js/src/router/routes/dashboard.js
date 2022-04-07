@@ -20,6 +20,11 @@ export default [
     component: () => import('@/views/dashboard/branches/index.vue'),
   },
   {
+    path: '/dashboard/branches/add-branch',
+    name: 'add-branch',
+    component: () => import('@/views/dashboard/branches/add-branch.vue'),
+  },
+  {
     path: '/dashboard/services',
     name: 'services',
     component: () => import('@/views/dashboard/services/index.vue'),
@@ -27,4 +32,5 @@ export default [
         title:'services',
     }
   },
+
 ]

@@ -3,12 +3,17 @@
 namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\BranchesRequest;
 use App\Http\Resources\Dashboard\BranchesResource;
+use App\Http\Traits\ResponseTrait;
 use App\Models\Branch;
+use App\Models\Organization;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class BrancheController extends Controller
 {
+    use ResponseTrait;
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +23,11 @@ class BrancheController extends Controller
     {
         $branches = Branch::branchesData($request);
         return BranchesResource::collection($branches);
+    }
+
+    public function getAllOrganizations(){
+        $organizations = Organization::all();
+        return response()->json(['status'=>true,'data'=>$organizations]);
     }
 
     /**
@@ -36,9 +46,22 @@ class BrancheController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BranchesRequest $request)
     {
-        //
+        try{
+          //  dd($request->all());
+            Branch::create([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'address' => $request->desc,
+                'organization_id' => $request->org,
+            ]);
+            return $this->returnSuccessMessage('Branch Stored Succeffully');
+
+         } catch (ValidationException $e) {
+            return $this->validationError($e,'validation err');
+
+        }
     }
 
     /**
