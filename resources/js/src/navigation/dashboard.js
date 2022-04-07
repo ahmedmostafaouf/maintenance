@@ -18,18 +18,32 @@ export default [
   {
     title: 'Department',
     icon: 'AlertCircleIcon',
-    route: 'departments',
+      children: [
+          {
+              title: 'Department',
+              route: 'departments',
+          },
+          {
+              title: 'Add Department',
+              route: '',
+          },
+          ]
   },
-  /* {
-    title: 'Dashboards',
-    icon: 'HomeIcon',
-    tag: '2',
-    tagVariant: 'light-warning',
-    children: [
-      {
-        title: 'Analytics',
-        route: 'dashboard-analytics',
-      },
-    ],
-  }, */
+    {
+        header: 'Branches',
+    },
+    {
+        title: 'Branches',
+        icon: 'AlertCircleIcon',
+        children: [
+            {
+                title: 'Branch',
+                route: 'branches',
+            },
+            {
+                title: 'Add Branch',
+                route: '',
+            },
+        ],
+    },
 ]

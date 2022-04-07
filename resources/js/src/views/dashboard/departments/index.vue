@@ -60,6 +60,24 @@
 
                     },
                     {
+                        label: 'Organization',
+                        field: 'organization_id',
+                        filterable:true
+
+                    },
+                    {
+                        label: 'Branch',
+                        field: 'branch_id',
+                        filterable:true
+
+                    },
+                    {
+                        label: 'Created At',
+                        field: 'created_at',
+                        filterable:true
+
+                    },
+                    {
                         label: 'Phone',
                         field: 'phone',
                         filterable:true

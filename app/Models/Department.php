@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\organization;
@@ -26,5 +27,16 @@ class Department extends Model
 
     public function services(){
         return $this->hasMany(Service::class,'department_id');
+    }
+    public function getCreatedAtAttribute($val){
+        return Carbon::parse($val)->format('Y-m-d');
+    }
+
+    public function scopeDepartmentData($query,$req){
+        return $query->when((isset($req['searchTerm']) && $req['searchTerm'] != null),function($query) use ($req){
+            $query->where( 'name', 'LIKE', '%' . $req['searchTerm'] . '%' );
+        })
+            ->orderBy($req->field,$req->type)
+            ->paginate( $req->per_page );
     }
 }
