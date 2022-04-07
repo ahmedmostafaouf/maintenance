@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\API\UserResource;
+use App\Http\Resources\Api\UserResource;
 use App\Http\Traits\ResponseTrait;
 use App\Models\User;
 use Illuminate\Http\Request;
