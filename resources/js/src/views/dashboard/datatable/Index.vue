@@ -53,20 +53,8 @@
                     class="text-body align-middle mr-25"
                 />
               </template>
-              <b-dropdown-item>
-                <feather-icon
-                    icon="Edit2Icon"
-                    class="mr-50"
-                />
-                <span>Edit</span>
-              </b-dropdown-item>
-              <b-dropdown-item>
-                <feather-icon
-                    icon="TrashIcon"
-                    class="mr-50"
-                />
-                <span>Delete</span>
-              </b-dropdown-item>
+              <slot name="actions" :row="props.row"/>
+
             </b-dropdown>
           </span>
         </span>

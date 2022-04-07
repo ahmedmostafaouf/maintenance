@@ -32,5 +32,10 @@ export default [
         title:'services',
     }
   },
+  {
+    path: '/dashboard/services/:id/edit',
+    name: 'edit-service',
+    component: () => import('@/views/dashboard/services/edit.vue'),
+  },
 
 ]
