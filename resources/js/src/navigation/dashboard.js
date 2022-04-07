@@ -44,6 +44,9 @@ export default [
     ],
   },
   {
+    header: 'Branches Section',
+  },
+  {
     title: 'Branches',
     icon: 'GitBranchIcon',
     children: [
@@ -57,9 +60,12 @@ export default [
       },
     ],
   },
+   {
+    header: 'Services Section',
+  },
   {
     title: 'Services',
-    icon: 'MonitorIcon',
+    icon: 'ServerIcon',
     children: [
       {
         title: 'Services',
@@ -71,4 +77,5 @@ export default [
       },
     ],
   },
+
 ]

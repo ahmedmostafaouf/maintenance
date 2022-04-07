@@ -17,9 +17,10 @@ Route::post('/login', 'AuthController@login');
 
 Route::group(['middleware'=>['auth:sanctum']],function () {
     Route::post('/logout', 'AuthController@signout');
-    Route::resource('departments', "DepartmentController");
-    Route::resource('branches', "BrancheController");
-    Route::get('/all-organizations', "BrancheController@getAllOrganizations");
+    Route::resource('departments', "Dashboard\DepartmentController");
+    Route::resource('branches', "Dashboard\BrancheController");
+    Route::get('/all-organizations', "Dashboard\BrancheController@getAllOrganizations");
+    Route::resource('services', "Dashboard\ServiceController");
 
     //Route::get('/user', 'UserController@getUser');
 });
