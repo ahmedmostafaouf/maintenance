@@ -49,7 +49,15 @@ class BrancheController extends Controller
     public function store(BranchesRequest $request)
     {
         try{
-//        $validated = $request->validated();
+          //  dd($request->all());
+            Branch::create([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'address' => $request->desc,
+                'organization_id' => $request->org,
+            ]);
+            return $this->returnSuccessMessage('Branch Stored Succeffully');
+
          } catch (ValidationException $e) {
             return $this->validationError($e,'validation err');
 

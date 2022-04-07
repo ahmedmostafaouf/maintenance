@@ -16,8 +16,11 @@
                             id="vi-name"
                             v-model="branch.name"
                             placeholder="Name"
-                        />
+                        /><br>
                     </b-input-group>
+                        <label class="text-danger" v-if="Object.keys(errors).length > 0 && errors.name !== undefined">
+                            Name is required
+                        </label>
                 </b-form-group>
             </b-col>
 
@@ -36,8 +39,11 @@
                             type="number"
                             v-model="branch.phone"
                             placeholder="Phone"
-                        />
+                        /><br>
                     </b-input-group>
+                        <label class="text-danger" v-if="Object.keys(errors).length > 0 && errors.phone !== undefined">
+                            Phone is required
+                        </label>
                 </b-form-group>
             </b-col>
 
@@ -55,6 +61,9 @@
                             :reduce="org => org.id" label="name"
                         ></v-select>
                     </b-input-group>
+                         <label class="text-danger" v-if="Object.keys(errors).length > 0 && errors.org !== undefined">
+                            Organization is required
+                        </label>
                 </b-form-group>
             </b-col>
 
@@ -67,8 +76,11 @@
                             placeholder="Description"
                             v-model="branch.desc"
                             rows="3"
-                        />
+                        /><br>
                 </b-input-group>
+                    <label class="text-danger" v-if="Object.keys(errors).length > 0 && errors.desc !== undefined">
+                        Description is required
+                    </label>
             </b-col>
 
             <!-- reset and submit -->
@@ -95,7 +107,8 @@
 
 <script>
 import {
-    BRow, BCol, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton, BInputGroup, BInputGroupPrepend,BFormTextarea
+    BRow, BCol, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton, BInputGroup, BInputGroupPrepend,BFormTextarea,BFormValidFeedback,
+    BFormInvalidFeedback
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
 import vSelect from 'vue-select'
@@ -106,6 +119,8 @@ export default {
         BRow,
         vSelect,
         BCol,
+        BFormValidFeedback,
+        BFormInvalidFeedback,
         BFormGroup,
         BFormInput,
         BFormTextarea,
@@ -121,7 +136,7 @@ export default {
     data(){
         return{
             organizations:[],
-            errors:[],
+            errors:{},
             branch:{
                 name:'',
                 phone:'',
@@ -131,18 +146,29 @@ export default {
         }
     },
     methods:{
+        makeToast(variant = null,body) {
+            this.$bvToast.toast(body, {
+                title: `Variant ${variant || 'default'}`,
+                variant,
+                solid: true,
+            })
+        },
         saveBranch(){
+            let instance = this
             axios.post('/branches',this.branch,{
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
                 }
             }).then(response => {
-                //console.log(1,response)
-                //this.errors = response
+                this.errors = {}
+                this.makeToast('success','Branch Stored Succeffully')
+                setTimeout(function(){
+                    instance.$router.push({name:'branches'})
+                },1000)
             })
                 .catch(error => {
-                    this.errors = error.response
-                    console.log(2,error.response)
+                    this.makeToast('warning',error.response.data.message)
+                    this.errors = error.response.data.errors
                 });
         },
         getAllOrganizations(){
