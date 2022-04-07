@@ -30,6 +30,16 @@ export default [
     name: 'departments',
     component: () => import('@/views/dashboard/departments/index.vue'),
   },
+    {
+    path: '/dashboard/edit-department',
+    name: 'edit-department',
+    component: () => import('@/views/dashboard/departments/index.vue'),
+  },
+    {
+        path: '/dashboard/add-department',
+        name: 'add-department',
+        component: () => import('@/views/dashboard/departments/add-department.vue'),
+    },
   {
     path: '/dashboard/branches',
     name: 'branches',

@@ -54,7 +54,6 @@
                 />
               </template>
               <slot name="actions" :row="props.row"/>
-
             </b-dropdown>
           </span>
         </span>

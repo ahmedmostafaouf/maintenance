@@ -39,7 +39,7 @@ export default [
       },
       {
         title: 'Add Department',
-        route: '',
+        route: 'add-department',
       },
     ],
   },
