@@ -56,7 +56,7 @@ export default [
       },
       {
         title: 'Add Branch',
-        route: '',
+        route: 'add-branch',
       },
     ],
   },
