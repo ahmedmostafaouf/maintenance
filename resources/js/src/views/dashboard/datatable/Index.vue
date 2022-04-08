@@ -10,13 +10,21 @@
           :total-rows="totalRecords"
           :is-loading="isLoading"
           :pagination-options="{
-            enabled: true,
-          }"
-          :sort-options="{
-            enabled: true,
-          }"
           :rows="rows"
           :columns="columns"
+          :rtl="direction"
+          :is-loading.sync="isLoading"
+          :pagination-options="{enabled: true}"
+          :sort-options="{enabled: true}"
+          :select-options="{
+            enabled: true,
+            selectOnCheckboxOnly: true,
+            selectionInfoClass: 'custom-class',
+            selectionText: 'rows selected',
+            clearSelectionText: 'clear',
+            disableSelectInfo: true,
+            selectAllByGroup: true,
+          }"
           @on-sort-change="onSortChange"
         >
 
@@ -38,7 +46,17 @@
                 {{ (props.row.status=='0')?'In Active':"Active" }}
               </b-badge>
             </span>
-
+             <!-- Column: Status -->
+            <span v-else-if="props.column.field === 'website_url'">
+               <a target="_blank" class="btn btn-primary website" :href="props.row.website_url"   >
+                  <feather-icon icon="Link2Icon" class="mr-50"/>
+                  <span class="align-middle">website</span>
+                </a>
+            </span>
+            <!-- Column: Image -->
+            <span v-else-if="props.column.field === 'logo'">
+              <b-avatar :src="props.row.logo" class="mx-1"/>
+            </span>
             <!-- Column: Action -->
             <span v-else-if="props.column.field === 'action'">
               <span>
@@ -153,8 +171,8 @@ export default {
       isLoading: false,
       searchTerm: '',
       dir: false,
-      pageLength: 3,
-      pages: ['3', '5', '10'],
+      pageLength: 10,
+      pages: ['10', '20', '50', '100', '1000'],
       columns: [
       ],
       rows: [],
@@ -163,11 +181,11 @@ export default {
         columnFilters: {},
         sort:
             {
-                field: 'name',
-                type: 'desc',
+              field: 'name',
+              type: 'desc',
             },
         page: 1,
-        perPage: 3,
+        perPage: 10,
       },
     }
   },
@@ -254,4 +272,7 @@ export default {
 </script>
 <style lang="scss" >
 @import '~@core/scss/vue/libs/vue-good-table.scss';
+.website{
+    display: flex!important;
+}
 </style>

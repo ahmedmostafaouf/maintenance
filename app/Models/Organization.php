@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Branch;
@@ -16,6 +18,18 @@ class Organization extends Model
         'phone','logo','qr_code','website_url'
     ];
 
+    /**
+     * Get the user's first name.
+     *
+     * @return Attribute
+     */
+    protected function createdAt(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => Carbon::parse($value)->format('Y-m-d'),
+        );
+    }
+
     public function branches(){
         return $this->hasMany(Branch::class,'organization_id');
     }
@@ -24,4 +38,9 @@ class Organization extends Model
         return $this->hasMany(Department::class,'organization_id');
     }
 
+    public function scopeFilter($query, $request){
+        return $query->when((isset($request['searchTerm']) && $request['searchTerm'] != null),function($query) use ($request){
+            $query->where( 'name', 'LIKE', '%' . $request['searchTerm'] . '%' );
+        });
+    }
 }
