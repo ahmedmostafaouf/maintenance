@@ -13,37 +13,69 @@ export default [
     route: 'dashboard-roles',
   },
   {
-    header: 'Departments',
+    header: 'System Setup',
+  },
+  {
+    title: 'Organization',
+    icon: 'CopyIcon',
+    children: [
+      {
+        title: 'Organization',
+        route: 'organizations',
+      },
+      {
+        title: 'Add organization',
+        route: 'add-organization',
+      },
+    ],
   },
   {
     title: 'Department',
-    icon: 'AlertCircleIcon',
-      children: [
-          {
-              title: 'Department',
-              route: 'departments',
-          },
-          {
-              title: 'Add Department',
-              route: '',
-          },
-          ]
+    icon: 'PackageIcon',
+    children: [
+      {
+        title: 'Department',
+        route: 'departments',
+      },
+      {
+        title: 'Add Department',
+        route: 'add-department',
+      },
+    ],
   },
-    {
-        header: 'Branches',
-    },
-    {
-        title: 'Branches',
-        icon: 'AlertCircleIcon',
-        children: [
-            {
-                title: 'Branch',
-                route: 'branches',
-            },
-            {
-                title: 'Add Branch',
-                route: '',
-            },
-        ],
-    },
+  {
+    header: 'Branches Section',
+  },
+  {
+    title: 'Branches',
+    icon: 'GitBranchIcon',
+    children: [
+      {
+        title: 'Branch',
+        route: 'branches',
+      },
+      {
+        title: 'Add Branch',
+        route: 'add-branch',
+      },
+    ],
+  },
+   {
+    header: 'Services Section',
+  },
+  {
+    title: 'Services',
+    icon: 'ServerIcon',
+    children: [
+      {
+        title: 'Services',
+        route: 'services',
+      },
+      {
+        title: 'Add Services',
+        route: '',
+      },
+    ],
+  },
+
 ]
