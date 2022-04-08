@@ -53,7 +53,6 @@ class BrancheController extends Controller
     public function store(BranchesRequest $request)
     {
         try{
-          //  dd($request->all());
             Branch::create([
                 'name' => $request->name,
                 'phone' => $request->phone,
@@ -64,7 +63,6 @@ class BrancheController extends Controller
 
          } catch (ValidationException $e) {
             return $this->validationError($e,'validation err');
-
         }
     }
 
@@ -87,7 +85,14 @@ class BrancheController extends Controller
      */
     public function edit($id)
     {
-        //
+        try{
+            $branche = Branch::find($id);
+            if($branche){
+                return $this->returnData('branch',$branche);
+            }
+        } catch (\Exception $e) {
+            return $this->validationError($e,'err');
+        }
     }
 
     /**
@@ -97,9 +102,20 @@ class BrancheController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BranchesRequest $request,$id)
     {
-        //
+        $branche = Branch::find($id);
+        try{
+            $branche->update([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'address' => $request->desc,
+                'organization_id' => $request->org,
+            ]);
+            return $this->returnSuccessMessage('Branch Updated Succeffully');
+        } catch (ValidationException $e) {
+            return $this->validationError($e,'validation err');
+        }
     }
 
     /**

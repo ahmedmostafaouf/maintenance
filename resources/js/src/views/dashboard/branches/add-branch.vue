@@ -1,7 +1,7 @@
 <template>
   <b-form @submit.prevent="saveBranch">
     <b-row>
-
+        <h2>Add Branch</h2>
       <!-- first name -->
       <b-col cols="12">
         <b-form-group
@@ -181,7 +181,7 @@ export default {
         },
       }).then(response => {
         this.errors = {}
-        this.makeToast('success', 'Branch Stored Succeffully')
+        this.makeToast('success', 'Branch Stored Successfully')
         setTimeout(() => {
           instance.$router.push({ name: 'branches' })
         }, 1000)

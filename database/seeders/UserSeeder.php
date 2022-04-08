@@ -20,7 +20,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'image' => '/assets/images/avatar.png',
             'password' => 123456,
-            'role' => 1,
+//            'role' => 1,
         ]);
     }
 }

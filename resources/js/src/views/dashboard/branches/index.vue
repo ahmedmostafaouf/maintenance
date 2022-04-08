@@ -20,7 +20,24 @@
         </b-form-group>
       </div>
     </template>
+      <template v-slot:actions='{row}'>
+          <b-dropdown-item :to="{name:'edit-branch',params:{'id':row.id}}">
+              <feather-icon
+                  icon="Edit2Icon"
+                  class="mr-50"
+              />
+              <span>Edit</span>
+          </b-dropdown-item>
 
+          <b-dropdown-item @click.prevent="confirmText(row.id)">
+              <feather-icon
+                  icon="TrashIcon"
+                  class="mr-50"
+              />
+              <span>Delete</span>
+          </b-dropdown-item>
+
+      </template>
   </table-data>
 </template>
 
@@ -30,6 +47,7 @@ import {
   BCard, BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdownItem, BDropdown, BRow, BCol,
 } from 'bootstrap-vue'
 import tableData from '../datatable/Index'
+import Ripple from 'vue-ripple-directive'
 
 export default {
   components: {
@@ -47,6 +65,9 @@ export default {
     BRow,
     BCol,
   },
+    directives: {
+        Ripple,
+    },
   data() {
     return {
       url: '/branches',
@@ -100,7 +121,44 @@ export default {
 
   },
   methods: {
-
-  },
+      dropRow(id) {
+          alert(id)
+      },
+      // confirm texrt
+      confirmText() {
+          this.$swal({
+              title: 'Are you sure?',
+              text: "You won't be able to revert this!",
+              icon: 'warning',
+              showCancelButton: true,
+              confirmButtonText: 'Yes, delete it!',
+              customClass: {
+                  confirmButton: 'btn btn-primary',
+                  cancelButton: 'btn btn-outline-danger ml-1',
+              },
+              buttonsStyling: false,
+          }).then(result => {
+              if (result.value) {
+                  this.$swal({
+                      icon: 'success',
+                      title: 'Deleted!',
+                      text: 'Your file has been deleted.',
+                      customClass: {
+                          confirmButton: 'btn btn-success',
+                      },
+                  })
+              } else if (result.dismiss === 'cancel') {
+                  this.$swal({
+                      title: 'Cancelled',
+                      text: 'Your imaginary file is safe :)',
+                      icon: 'error',
+                      customClass: {
+                          confirmButton: 'btn btn-success',
+                      },
+                  })
+              }
+          })
+      },
+  }
 }
 </script>

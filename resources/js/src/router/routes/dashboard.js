@@ -63,5 +63,10 @@ export default [
     name: 'edit-service',
     component: () => import('@/views/dashboard/services/edit.vue'),
   },
+    {
+        path: '/dashboard/branch/:id/edit',
+        name: 'edit-branch',
+        component: () => import('@/views/dashboard/branches/edit.vue'),
+    },
 
 ]

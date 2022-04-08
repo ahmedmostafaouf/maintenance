@@ -4,6 +4,7 @@ export default [
     route: 'apps-email',
     icon: 'HomeIcon',
   },
+
   {
     header: 'Roles & Permissions',
   },
