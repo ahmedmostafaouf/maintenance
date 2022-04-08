@@ -29,7 +29,7 @@
               <span>Edit</span>
           </b-dropdown-item>
 
-          <b-dropdown-item @click.prevent="confirmText(row.id)">
+          <b-dropdown-item @click="confirmText(row.id)">
               <feather-icon
                   icon="TrashIcon"
                   class="mr-50"
@@ -121,11 +121,7 @@ export default {
 
   },
   methods: {
-      dropRow(id) {
-          alert(id)
-      },
-      // confirm texrt
-      confirmText() {
+      confirmText(id) {
           this.$swal({
               title: 'Are you sure?',
               text: "You won't be able to revert this!",
@@ -139,14 +135,29 @@ export default {
               buttonsStyling: false,
           }).then(result => {
               if (result.value) {
-                  this.$swal({
-                      icon: 'success',
-                      title: 'Deleted!',
-                      text: 'Your file has been deleted.',
-                      customClass: {
-                          confirmButton: 'btn btn-success',
-                      },
-                  })
+                    axios.delete(`/branches/${id}`, {
+                            headers: {
+                                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                        },
+                    }).then(response => {
+                        this.$swal({
+                            icon: 'success',
+                            title: 'Deleted!',
+                            text: 'Your branch has been deleted.',
+                            customClass: {
+                                confirmButton: 'btn btn-success',
+                            },
+                        })
+                    }).catch(error => {
+                        this.$swal({
+                            icon: 'error',
+                            title: 'Error!',
+                            text: error.response.data.message,
+                            customClass: {
+                                confirmButton: 'btn btn-danger',
+                            },
+                        })
+                    })
               } else if (result.dismiss === 'cancel') {
                   this.$swal({
                       title: 'Cancelled',

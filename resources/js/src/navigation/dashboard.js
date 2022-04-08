@@ -57,10 +57,8 @@ export default [
         route: 'add-branch',
       },
     ],
+
    },
-   {
-    header: 'Services Section',
-  },
   {
     title: 'Services',
     icon: 'ServerIcon',

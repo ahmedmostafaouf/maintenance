@@ -2,10 +2,14 @@
   <b-row>
     <b-col cols="12">
       <b-card :title="titleProp">
+
         <slot name="searchDiv" />
         <!-- table -->
         <vue-good-table
           mode="remote"
+          :total-rows="totalRecords"
+          :is-loading="isLoading"
+          :pagination-options="{
           :rows="rows"
           :columns="columns"
           :rtl="direction"
@@ -141,6 +145,7 @@ import {
 } from 'bootstrap-vue'
 import { VueGoodTable } from 'vue-good-table'
 import 'prismjs/themes/prism-tomorrow.css'
+
 import axios from 'axios'
 import store from '@/store/index'
 
@@ -244,14 +249,17 @@ export default {
       this.loadItems()
     },
     loadItems() {
+        this.isLoading=true
       axios.get(`${this.url}?searchTerm=${this.searchTerm}&page=${this.serverParams.page}&per_page=${this.serverParams.perPage}&field=${this.serverParams.sort.field}&type=${this.serverParams.sort.type}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
         },
       }).then(response => {
-          console.log(response.data)
+        this.isLoading=false
         this.rows = response.data.data
         this.totalRecords = response.data.meta.total
+      }).catch((err)=>{
+          this.isLoading=false
       })
     },
   },

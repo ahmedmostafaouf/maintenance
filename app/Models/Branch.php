@@ -7,10 +7,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Department;
 use App\Models\Organization;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class Branch extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $fillable = [
         'name','phone','address','organization_id'
@@ -26,6 +29,13 @@ class Branch extends Model
 
     public function getCreatedAtAttribute($val){
         return Carbon::parse($val)->format('Y-m-d');
+    }
+
+    public static function boot() {
+        parent::boot();
+        static::deleting(function($branch) {
+             $branch->departments()->delete();
+        });
     }
 
     public function scopeBranchesData($query,$req){
