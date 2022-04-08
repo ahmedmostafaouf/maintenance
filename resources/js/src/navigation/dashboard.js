@@ -57,7 +57,8 @@ export default [
         route: 'add-branch',
       },
     ],
-  },
+
+   },
   {
     title: 'Services',
     icon: 'ServerIcon',
