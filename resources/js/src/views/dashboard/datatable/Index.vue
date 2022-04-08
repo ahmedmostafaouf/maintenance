@@ -9,12 +9,10 @@
           mode="remote"
           :total-rows="totalRecords"
           :is-loading="isLoading"
-          :pagination-options="{
+          :pagination-options="{enabled: true}"
           :rows="rows"
           :columns="columns"
           :rtl="direction"
-          :is-loading.sync="isLoading"
-          :pagination-options="{enabled: true}"
           :sort-options="{enabled: true}"
           :select-options="{
             enabled: true,
@@ -270,4 +268,10 @@ export default {
 .website{
     display: flex!important;
 }
+/*span{
+    -webkit-hyphens: none;
+    -moz-hyphens:    none;
+    -ms-hyphens:     none;
+    hyphens:         none;
+}*/
 </style>
