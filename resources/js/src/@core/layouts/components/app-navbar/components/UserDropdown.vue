@@ -28,7 +28,7 @@
     </template>
 
     <b-dropdown-item
-      :to="{ name: 'pages-profile'}"
+      :to="{ name: 'edit-profile'}"
       link-class="d-flex align-items-center"
     >
       <feather-icon
@@ -36,7 +36,7 @@
         icon="UserIcon"
         class="mr-50"
       />
-      <span>Profile</span>
+      <span>Edit Profile</span>
     </b-dropdown-item>
     <b-dropdown-divider />
     <b-dropdown-item
@@ -91,5 +91,9 @@ export default {
       this.$router.push({ name: 'auth-login' })
     },
   },
+  created(){
+      console.log(this.$ability)
+      console.log(initialAbility)
+  }
 }
 </script>

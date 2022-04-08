@@ -162,10 +162,10 @@ export default {
       serverParams: {
         columnFilters: {},
         sort:
-                    {
-                      field: 'name',
-                      type: 'desc',
-                    },
+            {
+                field: 'name',
+                type: 'desc',
+            },
         page: 1,
         perPage: 3,
       },
@@ -195,6 +195,11 @@ export default {
     },
   },
   mounted() {
+    if(this.$route.name == 'roles'){
+        this.serverParams.sort.field = 'roleName'
+    }else{
+        this.serverParams.sort.field = 'name'
+    }
     this.columns = this.columnsProp
     this.loadItems()
   },

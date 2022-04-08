@@ -23,4 +23,5 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
     Route::get('/all-organizations', "BrancheController@getAllOrganizations");
     Route::get('/all-branches', "BrancheController@getAllBranches");
     Route::resource('services', "ServiceController");
+    Route::resource('roles', "RoleController");
 });

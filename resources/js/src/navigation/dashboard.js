@@ -11,7 +11,7 @@ export default [
   {
     title: 'Roles',
     icon: 'AlertCircleIcon',
-    route: 'dashboard-roles',
+    route: 'roles',
   },
   {
     header: 'System Setup',
