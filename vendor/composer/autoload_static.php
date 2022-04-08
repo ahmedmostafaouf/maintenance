@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitf793574d65ac0a1b4dbd4a69b8f2cf9d
+class ComposerStaticInit162c9efa4ce6d123f6dfcd5c31868811
 {
     public static $files = array (
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
@@ -523,7 +523,12 @@ class ComposerStaticInitf793574d65ac0a1b4dbd4a69b8f2cf9d
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
-        'App\\Http\\Controllers\\API\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/API/AuthController.php',
+        'App\\Http\\Controllers\\Api\\Dashboard\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Dashboard/AuthController.php',
+        'App\\Http\\Controllers\\Api\\Dashboard\\BrancheController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Dashboard/BrancheController.php',
+        'App\\Http\\Controllers\\Api\\Dashboard\\DepartmentController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Dashboard/DepartmentController.php',
+        'App\\Http\\Controllers\\Api\\Dashboard\\MemberController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Dashboard/MemberController.php',
+        'App\\Http\\Controllers\\Api\\Dashboard\\OrganizationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Dashboard/OrganizationController.php',
+        'App\\Http\\Controllers\\Api\\Dashboard\\ServiceController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Dashboard/ServiceController.php',
         'App\\Http\\Controllers\\ApplicationController' => __DIR__ . '/../..' . '/app/Http/Controllers/ApplicationController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
@@ -535,8 +540,18 @@ class ComposerStaticInitf793574d65ac0a1b4dbd4a69b8f2cf9d
         'App\\Http\\Middleware\\TrustHosts' => __DIR__ . '/../..' . '/app/Http/Middleware/TrustHosts.php',
         'App\\Http\\Middleware\\VerifyCsrfToken' => __DIR__ . '/../..' . '/app/Http/Middleware/VerifyCsrfToken.php',
         'App\\Http\\Requests\\API\\LoginRequest' => __DIR__ . '/../..' . '/app/Http/Requests/API/LoginRequest.php',
+        'App\\Http\\Requests\\Dashboard\\BranchesRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Dashboard/BranchesRequest.php',
+        'App\\Http\\Requests\\Dashboard\\DepartmentRequest' => __DIR__ . '/../..' . '/app/Http/Requests/Dashboard/DepartmentRequest.php',
         'App\\Http\\Resources\\API\\UserResource' => __DIR__ . '/../..' . '/app/Http/Resources/API/UserResource.php',
+        'App\\Http\\Resources\\Dashboard\\BranchesResource' => __DIR__ . '/../..' . '/app/Http/Resources/Dashboard/BranchesResource.php',
+        'App\\Http\\Resources\\Dashboard\\DepartmentsResource' => __DIR__ . '/../..' . '/app/Http/Resources/Dashboard/DepartmentsResource.php',
+        'App\\Http\\Resources\\Dashboard\\ServicesResource' => __DIR__ . '/../..' . '/app/Http/Resources/Dashboard/ServicesResource.php',
         'App\\Http\\Traits\\ResponseTrait' => __DIR__ . '/../..' . '/app/Http/Traits/ResponseTrait.php',
+        'App\\Models\\Branch' => __DIR__ . '/../..' . '/app/Models/Branch.php',
+        'App\\Models\\Department' => __DIR__ . '/../..' . '/app/Models/Department.php',
+        'App\\Models\\Member' => __DIR__ . '/../..' . '/app/Models/Member.php',
+        'App\\Models\\MemberService' => __DIR__ . '/../..' . '/app/Models/MemberService.php',
+        'App\\Models\\Organization' => __DIR__ . '/../..' . '/app/Models/Organization.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\AuthServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AuthServiceProvider.php',
@@ -650,6 +665,12 @@ class ComposerStaticInitf793574d65ac0a1b4dbd4a69b8f2cf9d
         'Cron\\HoursField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/HoursField.php',
         'Cron\\MinutesField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MinutesField.php',
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
+        'Database\\Factories\\BranchFactory' => __DIR__ . '/../..' . '/database/factories/BranchFactory.php',
+        'Database\\Factories\\DepartmentFactory' => __DIR__ . '/../..' . '/database/factories/DepartmentFactory.php',
+        'Database\\Factories\\MemberFactory' => __DIR__ . '/../..' . '/database/factories/MemberFactory.php',
+        'Database\\Factories\\MemberServiceFactory' => __DIR__ . '/../..' . '/database/factories/MemberServiceFactory.php',
+        'Database\\Factories\\OrganizationFactory' => __DIR__ . '/../..' . '/database/factories/OrganizationFactory.php',
+        'Database\\Factories\\ServiceFactory' => __DIR__ . '/../..' . '/database/factories/ServiceFactory.php',
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
         'Database\\Seeders\\UserSeeder' => __DIR__ . '/../..' . '/database/seeders/UserSeeder.php',
@@ -5645,10 +5666,10 @@ class ComposerStaticInitf793574d65ac0a1b4dbd4a69b8f2cf9d
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitf793574d65ac0a1b4dbd4a69b8f2cf9d::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitf793574d65ac0a1b4dbd4a69b8f2cf9d::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInitf793574d65ac0a1b4dbd4a69b8f2cf9d::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInitf793574d65ac0a1b4dbd4a69b8f2cf9d::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit162c9efa4ce6d123f6dfcd5c31868811::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit162c9efa4ce6d123f6dfcd5c31868811::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit162c9efa4ce6d123f6dfcd5c31868811::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit162c9efa4ce6d123f6dfcd5c31868811::$classMap;
 
         }, null, ClassLoader::class);
     }
