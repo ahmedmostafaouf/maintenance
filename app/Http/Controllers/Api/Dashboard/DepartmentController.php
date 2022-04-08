@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Api\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Dashboard\DepartmentsResource;
+use App\Http\Traits\ResponseTrait;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class DepartmentController extends Controller
 {
+    use ResponseTrait;
     /**
      * Display a listing of the resource.
      *
@@ -18,16 +21,6 @@ class DepartmentController extends Controller
     {
         $branches = Department::departmentData($request);
         return DepartmentsResource::collection($branches);
-       // $search_query = $request->searchTerm;
-//        $perPage      = $request->per_page;
-//        $field=$request->field;
-//        $type=$request->type;
-//        $departments        = Department::where( 'name', 'LIKE', '%' . $search_query . '%' )
-//            ->orderBy($field,$type)
-//            ->paginate( $perPage )
-//            ->toArray();
-//        return response()->json(['status'=>true,'items'=>$departments]);
-
     }
 
     /**
@@ -48,7 +41,15 @@ class DepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+              dd($request->all());
+            Department::create($request->all());
+            return $this->returnSuccessMessage('Branch Stored Succeffully');
+
+        } catch (ValidationException $e) {
+            return $this->validationError($e,'validation err');
+
+        }
     }
 
     /**

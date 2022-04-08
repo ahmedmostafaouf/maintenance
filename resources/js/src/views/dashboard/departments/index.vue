@@ -20,6 +20,24 @@
         </b-form-group>
       </div>
     </template>
+    <template v-slot:actions='{row}'>
+            <b-dropdown-item :to="{name:'edit-department',params:{'id':row.id}}">
+                <feather-icon
+                    icon="Edit2Icon"
+                    class="mr-50"
+                />
+                <span>Edit</span>
+              </b-dropdown-item>
+
+              <b-dropdown-item @click.prevent="dropRow(row.id)">
+                <feather-icon
+                    icon="TrashIcon"
+                    class="mr-50"
+                />
+                <span>Delete</span>
+              </b-dropdown-item>
+
+        </template>
 
   </table-data>
 </template>
@@ -106,7 +124,9 @@ export default {
 
   },
   methods: {
-
+  dropRow(id){
+            alert(id)
+        }
   },
 }
 </script>

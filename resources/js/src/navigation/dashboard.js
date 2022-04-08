@@ -39,7 +39,7 @@ export default [
       },
       {
         title: 'Add Department',
-        route: '',
+        route: 'add-department',
       },
     ],
   },
@@ -56,6 +56,9 @@ export default [
         route: 'add-branch',
       },
     ],
+   },
+   {
+    header: 'Services Section',
   },
   {
     title: 'Services',
