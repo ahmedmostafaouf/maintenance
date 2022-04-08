@@ -8,7 +8,7 @@
         <vue-good-table
             mode="remote"
             :totalRows="totalRecords"
-            :isLoading.sync="isLoading"
+            :isLoading="isLoading"
             @on-sort-change="onSortChange"
             :pagination-options="{
                 enabled: true,
@@ -54,7 +54,6 @@
                 />
               </template>
               <slot name="actions" :row="props.row"/>
-
             </b-dropdown>
           </span>
         </span>
@@ -200,8 +199,8 @@
             getdata(){
                 alert(1)
             },
-             updateParams(newProps) {
-            this.serverParams = Object.assign({}, this.serverParams, newProps);
+            updateParams(newProps) {
+                this.serverParams = Object.assign({}, this.serverParams, newProps);
           },
             onPageChange(val) {
                 this.serverParams.page=val
@@ -230,14 +229,17 @@
 
             },
             loadItems() {
+                this.isLoading = true
                  axios.get(`${this.url}?searchTerm=${this.searchTerm}&page=${this.serverParams.page}&per_page=${this.serverParams.perPage}&field=${this.serverParams.sort.field}&type=${this.serverParams.sort.type}`,{
                      headers: {
                          Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
                      }
                  }).then((response) => {
-                     console.log(response)
+                     this.isLoading=false
                      this.rows = response.data.data
                      this.totalRecords = response.data.meta.total;
+                }).catch((err)=>{
+                    this.isLoading=false
                 })
 
             }

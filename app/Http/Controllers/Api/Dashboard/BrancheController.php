@@ -29,6 +29,10 @@ class BrancheController extends Controller
         $organizations = Organization::all();
         return response()->json(['status'=>true,'data'=>$organizations]);
     }
+    public function getAllBranches(){
+        $branches= Branch::all();
+        return response()->json(['status'=>true,'data'=>$branches]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -120,8 +124,16 @@ class BrancheController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Branch $branch)
     {
-        //
+
+        try{
+            if($branch){
+                $branch->delete();
+            }
+            return $this->returnSuccessMessage('Branch Deleted Succeffully');
+         } catch (\Exception $e) {
+            return $this->returnError(500,'err');
+        }
     }
 }
