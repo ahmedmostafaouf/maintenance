@@ -9,22 +9,20 @@
           mode="remote"
           :total-rows="totalRecords"
           :is-loading="isLoading"
-          :pagination-options="{
-          :rows="rows"
-          :columns="columns"
-          :rtl="direction"
-          :is-loading.sync="isLoading"
-          :pagination-options="{enabled: true}"
-          :sort-options="{enabled: true}"
-          :select-options="{
-            enabled: true,
-            selectOnCheckboxOnly: true,
-            selectionInfoClass: 'custom-class',
-            selectionText: 'rows selected',
-            clearSelectionText: 'clear',
-            disableSelectInfo: true,
-            selectAllByGroup: true,
-          }"
+            :rows="rows"
+            :columns="columns"
+            :rtl="direction"
+            :pagination-options="{enabled: true}"
+            :sort-options="{enabled: true}"
+            :select-options="{
+                enabled: true,
+                selectOnCheckboxOnly: true,
+                selectionInfoClass: 'custom-class',
+                selectionText: 'rows selected',
+                clearSelectionText: 'clear',
+                disableSelectInfo: true,
+                selectAllByGroup: true,
+            }"
           @on-sort-change="onSortChange"
 
         >
