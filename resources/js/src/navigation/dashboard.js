@@ -53,13 +53,13 @@ export default [
       },
       {
         title: 'Add Branch',
-        route: '',
+        route: 'add-branch',
       },
     ],
   },
   {
     title: 'Services',
-    icon: 'MonitorIcon',
+    icon: 'ServerIcon',
     children: [
       {
         title: 'Services',
@@ -71,4 +71,5 @@ export default [
       },
     ],
   },
+
 ]

@@ -17,7 +17,7 @@ class ServiceController extends Controller
     public function index(Request $request)
     {
         $services = Service::getData($request);
-        return ServicessResource::collection($services);
+        return ServicesResource::collection($services);
     }
 
     /**
