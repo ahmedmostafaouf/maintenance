@@ -154,7 +154,11 @@ import Ripple from 'vue-ripple-directive'
                 })
             },
             submit(){
-                Fire.$emit('submit-service',this.form)
+                if(this.$route.params.id){
+                    Fire.$emit('edit-service',this.form)
+                }else{
+                    Fire.$emit('add-service',this.form)
+                }
             },
             getService(){
                 axios.get(`/services/${this.$route.params.id}/edit`)

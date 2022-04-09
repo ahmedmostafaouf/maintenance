@@ -24,6 +24,6 @@ class ServicesResource extends JsonResource
             'department_id'=> (int)$this->department_id,
             'department_name'=> (string)@$this->department->name,
             'created_at'=> (string)$this->created_at,
-        ];;
+        ];
     }
 }

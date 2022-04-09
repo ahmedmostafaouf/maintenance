@@ -24,12 +24,9 @@ import formData from './form.vue';
             editService(form){
                 axios.patch(`/services/${this.$route.params.id}`,form)
                 .then((data)=>{
-                    console.log(data);
                      this.errors = {}
                     this.makeToast('success', data.data.message)
-                    setTimeout(() => {
-                        this.$router.push({ name: 'services' })
-                    }, 1000)
+                    this.$router.push({ name: 'services' })
                 })
                  .catch(error => {
                      if(error.response){
@@ -40,7 +37,7 @@ import formData from './form.vue';
             }
         },
         mounted(){
-             Fire.$on('submit-service',this.editService)
+             Fire.$on('edit-service',this.editService)
         }
     }
 </script>

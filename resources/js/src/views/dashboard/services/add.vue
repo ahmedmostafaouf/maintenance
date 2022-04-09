@@ -27,9 +27,7 @@ import formData from './form.vue';
                     console.log(data);
                      this.errors = {}
                     this.makeToast('success', data.data.message)
-                    setTimeout(() => {
-                        this.$router.push({ name: 'services' })
-                    }, 1000)
+                    this.$router.push({ name: 'services' })
                 })
                  .catch(error => {
                      if(error.response){
@@ -40,7 +38,7 @@ import formData from './form.vue';
             }
         },
         mounted(){
-            Fire.$on('submit-service',this.addService)
+            Fire.$on('add-service',this.addService)
         }
     }
 </script>
