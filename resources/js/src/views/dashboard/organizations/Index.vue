@@ -130,6 +130,8 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+.vgt-left-align span{
+    white-space: nowrap!important;
+}
 </style>
