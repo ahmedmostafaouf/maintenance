@@ -9,20 +9,20 @@
           mode="remote"
           :total-rows="totalRecords"
           :is-loading="isLoading"
-          :pagination-options="{enabled: true}"
-          :rows="rows"
-          :columns="columns"
-          :rtl="direction"
-          :sort-options="{enabled: true}"
-          :select-options="{
-            enabled: true,
-            selectOnCheckboxOnly: true,
-            selectionInfoClass: 'custom-class',
-            selectionText: 'rows selected',
-            clearSelectionText: 'clear',
-            disableSelectInfo: true,
-            selectAllByGroup: true,
-          }"
+            :rows="rows"
+            :columns="columns"
+            :rtl="direction"
+            :pagination-options="{enabled: true}"
+            :sort-options="{enabled: true}"
+            :select-options="{
+                enabled: true,
+                selectOnCheckboxOnly: true,
+                selectionInfoClass: 'custom-class',
+                selectionText: 'rows selected',
+                clearSelectionText: 'clear',
+                disableSelectInfo: true,
+                selectAllByGroup: true,
+            }"
           @on-sort-change="onSortChange"
 
         >
@@ -212,6 +212,11 @@ export default {
     },
   },
   mounted() {
+    if(this.$route.name == 'roles'){
+        this.serverParams.sort.field = 'roleName'
+    }else{
+        this.serverParams.sort.field = 'name'
+    }
     this.columns = this.columnsProp
     this.loadItems()
   },
@@ -269,10 +274,4 @@ export default {
 .website{
     display: flex!important;
 }
-/*span{
-    -webkit-hyphens: none;
-    -moz-hyphens:    none;
-    -ms-hyphens:     none;
-    hyphens:         none;
-}*/
 </style>

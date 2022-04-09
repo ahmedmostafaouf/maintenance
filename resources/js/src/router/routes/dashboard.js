@@ -22,8 +22,13 @@ export default [
   },
   {
     path: '/dashboard/roles',
-    name: 'dashboard',
+    name: 'roles',
     component: () => import('@/views/dashboard/roles/Index.vue'),
+  },
+  {
+    path: '/dashboard/assign-role',
+    name: 'assign-role',
+    component: () => import('@/views/dashboard/roles/assignRole.vue'),
   },
   {
     path: '/dashboard/departments',
@@ -73,4 +78,10 @@ export default [
     name: 'add-service',
     component: () => import('@/views/dashboard/services/add.vue'),
   },
+  {
+    path: '/dashboard/profile/edit',
+    name: 'edit-profile',
+    component: () => import('@/views/dashboard/profile/index.vue'),
+  },
+
 ]

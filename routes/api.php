@@ -27,4 +27,6 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
     Route::group(['prefix'=>'spinner'],function(){
         Route::get('departments', "SpinnersControler@departments");
     });
+    Route::resource('roles', "RoleController");
+    Route::get('/all-roles', "RoleController@allRoles");
 });
