@@ -78,7 +78,7 @@ export default [
       },
       {
         title: 'Add Services',
-        route: '',
+        route: 'add-service',
       },
     ],
   },

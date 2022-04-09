@@ -74,6 +74,11 @@ export default [
     component: () => import('@/views/dashboard/branches/edit.vue'),
   },
   {
+    path: '/dashboard/services/create',
+    name: 'add-service',
+    component: () => import('@/views/dashboard/services/add.vue'),
+  },
+  {
     path: '/dashboard/profile/edit',
     name: 'edit-profile',
     component: () => import('@/views/dashboard/profile/index.vue'),

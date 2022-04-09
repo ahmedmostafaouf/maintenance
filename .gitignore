@@ -1,13 +1,12 @@
 /node_modules
 /public/hot
 /public/storage
-/public/js
+/public/js/app.js
 /public/css
 /public/fonts
 /public/images
 /storage/*.key
 /vendor
-/.env
 .env
 .env.backup
 .phpunit.result.cache
@@ -22,7 +21,6 @@ supervisord.pid
 .DS_Store
 /dist
 
-/public/js/app.js
 # local env files
 .env.local
 .env.*.local
