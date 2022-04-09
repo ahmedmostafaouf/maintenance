@@ -23,6 +23,7 @@
             </b-form-group>
         </b-col>
         <b-col cols="12">
+            <button class="btn btn-success mt-2 mb-2" :loading="is_sending" :disabled="is_sending" @click="assignRole">Assign</button>
             <table class="table table-responsive table-striped">
                 <thead>
                     <tr>
@@ -71,10 +72,27 @@ export default {
   },
     data(){
         return{
+            is_sending:false,
             roles:[],
             errors:{},
             role_id:'',
-            all_routes:[]
+            all_routes:[],
+            default_all_routes:[]
+        }
+    },
+    watch:{
+        'role_id'(val){
+            this.roles.map((item) => {
+                if(item.id == val){
+                    if(item.permissions){
+                        if(typeof JSON.parse(item.permissions) == 'object'){
+                            this.all_routes = JSON.parse(item.permissions)
+                        }else{
+                            this.all_routes = JSON.parse(JSON.parse(item.permissions))
+                        }
+                    }
+                }
+            })
         }
     },
     methods:{
@@ -85,6 +103,30 @@ export default {
                 },
             }).then(response => {
                 this.roles = response.data.data
+                if(response.data.data.length > 0){
+                    this.role_id = response.data.data[0].id
+                    if(response.data.data[0].permissions)
+                        this.all_routes = JSON.parse(response.data.data[0].permissions)
+                }
+            })
+        },
+        async assignRole(){
+            let data = JSON.stringify(this.all_routes)
+            const res = await axios.post('assign-role',{'role':this.role_id,'permissions' : data}, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                },
+            });
+            if(res.status === 200){
+                this.makeToast('success', 'Permissions updated successfully');
+            }
+
+        },
+        makeToast(variant = null, body) {
+            this.$bvToast.toast(body, {
+                title: `Variant ${variant || 'default'}`,
+                variant,
+                solid: true,
             })
         },
     },
@@ -94,6 +136,9 @@ export default {
         this.$router.options.routes.forEach(route => {
             if(route.name){
                 this.all_routes.push({
+                    name: route.name , read: false,write: false,delete: false,update: false
+                })
+                this.default_all_routes.push({
                     name: route.name , read: false,write: false,delete: false,update: false
                 })
             }
