@@ -15,6 +15,53 @@
         icon="feather icon-file-text"
       >
         <b-row>
+          <!-- Logo -->
+          <b-col
+            v-if="filePreview"
+            md="6"
+          >
+            <b-form-group
+              label="Logo"
+              label-for="vi-previewBlock"
+            >
+              <a
+                download="organization_Logo"
+                :href="filePreview"
+                title="ImageName"
+              >
+                <div
+                  id="vi-previewBlock"
+                  class="previewBlock"
+                  :style="{ 'background-image': `url(${filePreview})` }"
+                />
+              </a>
+            </b-form-group>
+          </b-col>
+          <!-- QR code -->
+          <b-col
+            v-if="qr_code"
+            md="6"
+          >
+            <b-form-group
+              label="QR code"
+              label-for="vi-qrcode"
+            >
+              <a
+                download="organization_Qrcode"
+                :href="qr_code"
+                title="ImageName"
+              >
+                <div
+                  id="vi-qrcode"
+                  class="previewBlock"
+                  :style="{ 'background-image': `url(${qr_code})` }"
+                />
+              </a>
+
+            </b-form-group>
+          </b-col>
+        </b-row>
+        <b-row>
           <b-col
             cols="12"
             class="mb-2"
@@ -25,17 +72,6 @@
             <small class="text-muted">
               Enter Your Organization Details.
             </small>
-          </b-col>
-          <!-- Logo -->
-          <b-col
-            v-if="filePreview"
-            md="12"
-          >
-            <div
-              class="previewBlock"
-              :style="{ 'background-image': `url(${filePreview})` }"
-              @click="chooseFile"
-            />
           </b-col>
           <!-- Logo -->
           <b-col md="6">
@@ -434,6 +470,12 @@ export default {
         qr_code: '',
       },
       filePreview: null,
+      qr_code: '',
+    }
+  },
+  mounted() {
+    if (this.$route.params.id) {
+      this.getOrganization()
     }
   },
   methods: {
@@ -475,7 +517,7 @@ export default {
       }
       const formData = new FormData()
       for (const key in this.organization) {
-          formData.append(key, this.organization[key])
+        formData.append(key, this.organization[key])
       }
 
       axios.post(url, formData, config)
@@ -488,6 +530,18 @@ export default {
           if (error.response) {
             this.makeToast('danger', error.response.data.message)
             this.errors = error.response.data.errors
+          }
+        })
+    },
+    getOrganization() {
+      axios.get(`/organizations/${this.$route.params.id}/edit`)
+        .then(({ data }) => {
+          if (data.status) {
+            Object.keys(this.organization).forEach(key => {
+              if (key == 'logo') this.filePreview = data.organization[key]
+              else this.organization[key] = data.organization[key]
+            })
+            this.qr_code = data.organization.qr_code
           }
         })
     },

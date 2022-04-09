@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
         ]);
-        Organization::factory(100)->create();
+        Organization::factory(10)->create();
         Branch::factory(10)->create();
         Department::factory(10)->create();
         Service::factory(10)->create();

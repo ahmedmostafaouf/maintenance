@@ -21,7 +21,7 @@
       </div>
     </template>
     <template v-slot:actions="{row}">
-      <b-dropdown-item :to="{name:'edit-service',params:{'id':row.id}}">
+      <b-dropdown-item :to="{name:'edit-organization',params:{'id':row.id}}">
         <feather-icon
           icon="Edit2Icon"
           class="mr-50"

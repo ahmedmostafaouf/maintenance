@@ -18,7 +18,8 @@ class OrganizationResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'logo' =>@$this->logo?? '..',
+            'logo' =>'/images/organization/logo/'.$this->logo?? '..',
+            'qr_code' =>'/images/organization/qrcode/'.$this->qr_code?? '..',
             'email' =>$this->email,
             'phone' =>$this->phone,
             'website_url' =>$this->website_url,

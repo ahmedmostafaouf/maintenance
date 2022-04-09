@@ -8,6 +8,7 @@ use App\Http\Resources\Dashboard\OrganizationResource;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Organization;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class OrganizationController extends Controller
 {
@@ -27,7 +28,7 @@ class OrganizationController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created organization in storage.
      *
      * @param  OrganizationRequest  $request
      * @return Response
@@ -44,25 +45,14 @@ class OrganizationController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Show the form for editing the specified organization.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Organization $organization
+     * @return Response
      */
-    public function show($id)
+    public function edit(Organization $organization)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return $this->returnData( 'organization', new OrganizationResource($organization), 'Organization Data Returned Successfully' );
     }
 
     /**
