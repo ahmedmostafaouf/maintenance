@@ -101,6 +101,11 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
-        //
+        try{
+            $service->delete();
+            return $this->returnSuccessMessage('Service Deleted Succeffully');
+         } catch (\Exception $e) {
+            return $this->returnError(500,'err');
+        }
     }
 }
