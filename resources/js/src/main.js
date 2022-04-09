@@ -19,6 +19,10 @@ import '@/libs/toastification'
 import '@/libs/sweet-alerts'
 import '@/libs/vue-select'
 import '@/libs/tour'
+import VueSweetalert2 from 'vue-sweetalert2';
+
+// If you don't need the styles, do not connect
+import 'sweetalert2/dist/sweetalert2.min.css';
 
 // Axios Mock Adapter
 import '@/@fake-db/db'
@@ -26,6 +30,7 @@ import '@/@fake-db/db'
 // BSV Plugin Registration
 Vue.use(ToastPlugin)
 Vue.use(ModalPlugin)
+Vue.use(VueSweetalert2)
 
 // Composition API
 Vue.use(VueCompositionAPI)

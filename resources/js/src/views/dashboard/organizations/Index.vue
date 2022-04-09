@@ -28,13 +28,13 @@
         />
         <span>Edit</span>
       </b-dropdown-item>
-      <b-dropdown-item @click="delete(row.id)">
-        <feather-icon
-          icon="TrashIcon"
-          class="mr-50"
-        />
-        <span>Delete</span>
-      </b-dropdown-item>
+        <b-dropdown-item @click.prevent="dropRow(row.id)">
+            <feather-icon
+                icon="TrashIcon"
+                class="mr-50"
+            />
+            <span>Delete</span>
+        </b-dropdown-item>
     </template>
   </table-data>
 </template>
@@ -118,7 +118,7 @@ export default {
     }
   },
   methods: {
-    delete(id) {
+      dropRow(id) {
       this.$swal({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
