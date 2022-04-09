@@ -4,6 +4,7 @@ export default [
     route: 'apps-email',
     icon: 'HomeIcon',
   },
+
   {
     header: 'Roles & Permissions',
   },
@@ -44,9 +45,6 @@ export default [
     ],
   },
   {
-    header: 'Branches Section',
-  },
-  {
     title: 'Branches',
     icon: 'GitBranchIcon',
     children: [
@@ -59,10 +57,8 @@ export default [
         route: 'add-branch',
       },
     ],
-  },
-   {
-    header: 'Services Section',
-  },
+
+   },
   {
     title: 'Services',
     icon: 'ServerIcon',

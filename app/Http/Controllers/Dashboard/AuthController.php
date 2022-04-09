@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Api\Dashboard;
+namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Api\UserResource;
+use App\Http\Requests\Dashboard\LoginRequest;
+use App\Http\Resources\Dashboard\UserResource;
 use App\Http\Traits\ResponseTrait;
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\API\LoginRequest;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller

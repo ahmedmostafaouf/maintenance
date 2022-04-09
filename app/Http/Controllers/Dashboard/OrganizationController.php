@@ -1,19 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Api\Dashboard;
+namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Dashboard\BranchesRequest;
-use App\Http\Resources\Dashboard\BranchesResource;
+use App\Http\Resources\Dashboard\OrganizationResource;
 use App\Http\Traits\ResponseTrait;
-use App\Models\Branch;
 use App\Models\Organization;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
-class BrancheController extends Controller
+class OrganizationController extends Controller
 {
-    use ResponseTrait;
+    use  ResponseTrait;
     /**
      * Display a listing of the resource.
      *
@@ -21,17 +18,11 @@ class BrancheController extends Controller
      */
     public function index(Request $request)
     {
-        $branches = Branch::branchesData($request);
-        return BranchesResource::collection($branches);
-    }
-
-    public function getAllOrganizations(){
-        $organizations = Organization::all();
-        return response()->json(['status'=>true,'data'=>$organizations]);
-    }
-    public function getAllBranches(){
-        $branches= Branch::all();
-        return response()->json(['status'=>true,'data'=>$branches]);
+         $organizations = Organization::filter($request)
+                                     ->orderBy($request->field,$request->type)
+                                     ->paginate( $request->per_page );
+         return OrganizationResource::collection($organizations);
+/*         $this->returnData( 'data', OrganizationResource::collection($organizations), 'Organization Data Returned Successfully' );*/
     }
 
     /**
@@ -50,22 +41,9 @@ class BrancheController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(BranchesRequest $request)
+    public function store(Request $request)
     {
-        try{
-          //  dd($request->all());
-            Branch::create([
-                'name' => $request->name,
-                'phone' => $request->phone,
-                'address' => $request->desc,
-                'organization_id' => $request->org,
-            ]);
-            return $this->returnSuccessMessage('Branch Stored Succeffully');
-
-         } catch (ValidationException $e) {
-            return $this->validationError($e,'validation err');
-
-        }
+        //
     }
 
     /**

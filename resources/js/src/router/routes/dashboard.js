@@ -30,16 +30,16 @@ export default [
     name: 'departments',
     component: () => import('@/views/dashboard/departments/index.vue'),
   },
-    {
-    path: '/dashboard/edit-department',
+  {
+    path: '/dashboard/department/:id/edit',
     name: 'edit-department',
-    component: () => import('@/views/dashboard/departments/index.vue'),
+    component: () => import('@/views/dashboard/departments/edit-department.vue'),
   },
-    {
-        path: '/dashboard/add-department',
-        name: 'add-department',
-        component: () => import('@/views/dashboard/departments/add-department.vue'),
-    },
+  {
+    path: '/dashboard/add-department',
+    name: 'add-department',
+    component: () => import('@/views/dashboard/departments/add-department.vue'),
+  },
   {
     path: '/dashboard/branches',
     name: 'branches',
@@ -62,6 +62,11 @@ export default [
     path: '/dashboard/services/:id/edit',
     name: 'edit-service',
     component: () => import('@/views/dashboard/services/edit.vue'),
+  },
+  {
+    path: '/dashboard/branch/:id/edit',
+    name: 'edit-branch',
+    component: () => import('@/views/dashboard/branches/edit.vue'),
   },
 
 ]

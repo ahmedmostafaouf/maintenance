@@ -4,9 +4,14 @@
 
       <!-- Brand logo-->
       <b-link class="brand-logo">
-        <vuexy-logo />
+        <!-- <vuexy-logo /> -->
+
+        <b-img
+        :src="logoAppImg"
+        style="width:30px;height:30px;"
+        />
         <h2 class="brand-text text-primary ml-1">
-          Ifmiq
+          Bot
         </h2>
       </b-link>
       <!-- /Brand logo-->
@@ -41,7 +46,7 @@
             class="mb-1 font-weight-bold"
             title-tag="h2"
           >
-            Welcome to Ifmiq! 👋
+            Welcome to Bot! 👋
           </b-card-title>
           <b-card-text class="mb-2">
             Please sign-in to your account and start the adventure
@@ -209,6 +214,7 @@ export default {
       // validation rules
       required,
       email,
+      logoAppImg:require('@/assets/images/logo/bot.png')
     }
   },
   computed: {
@@ -217,7 +223,6 @@ export default {
     },
     imgUrl() {
       if (store.state.appConfig.layout.skin === 'dark') {
-        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
         this.sideImg = require('@/assets/images/pages/login-v2-dark.svg')
         return this.sideImg
       }

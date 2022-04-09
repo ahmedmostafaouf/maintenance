@@ -38,7 +38,7 @@
 
 <script>
 import { reactive, toRefs } from 'vue'
-import tableData from '../datatable/index'
+import tableData from '../datatable/Index'
 import {
     BCard,BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdownItem, BDropdown,BRow, BCol
 } from 'bootstrap-vue'

@@ -25,7 +25,7 @@ class DepartmentRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'phone' => 'required',
+            'phone' => 'required|min:3',
             'status' => 'required',
             'branch_id' => 'required',
             'organization_id' => 'required',

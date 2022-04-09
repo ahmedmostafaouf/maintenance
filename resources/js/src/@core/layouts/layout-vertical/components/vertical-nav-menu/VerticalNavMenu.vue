@@ -31,7 +31,8 @@
                 />
               </span>
               <h2 class="brand-text">
-                {{ appName }}
+                <!-- {{ appName }} -->
+                Bot
               </h2>
             </b-link>
           </li>

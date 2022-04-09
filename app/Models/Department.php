@@ -5,7 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\organization;
+use App\Models\Organization;
 use App\Models\Branch;
 use App\Models\Service;
 
@@ -36,7 +36,7 @@ class Department extends Model
         return $query->when((isset($req['searchTerm']) && $req['searchTerm'] != null),function($query) use ($req){
             $query->where( 'name', 'LIKE', '%' . $req['searchTerm'] . '%' );
         })
-            ->orderBy($req->field,$req->type)
-            ->paginate( $req->per_page );
+        ->orderBy($req->field,$req->type)
+        ->paginate( $req->per_page );
     }
 }
