@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Dashboard;
+namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -20,6 +20,12 @@ class RoleController extends Controller
     {
         $roles = Role::RolesData($request);
         return RolesResource::collection($roles);
+    }
+
+
+    public function allRoles(){
+        $roles = Role::all();
+        return response()->json(['status'=>true,'data'=>$roles]);
     }
 
     /**
