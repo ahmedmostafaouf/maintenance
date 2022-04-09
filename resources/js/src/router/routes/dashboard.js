@@ -22,8 +22,13 @@ export default [
   },
   {
     path: '/dashboard/roles',
-    name: 'dashboard',
+    name: 'roles',
     component: () => import('@/views/dashboard/roles/Index.vue'),
+  },
+  {
+    path: '/dashboard/assign-role',
+    name: 'assign-role',
+    component: () => import('@/views/dashboard/roles/assignRole.vue'),
   },
   {
     path: '/dashboard/departments',
@@ -67,6 +72,11 @@ export default [
     path: '/dashboard/branch/:id/edit',
     name: 'edit-branch',
     component: () => import('@/views/dashboard/branches/edit.vue'),
+  },
+  {
+    path: '/dashboard/profile/edit',
+    name: 'edit-profile',
+    component: () => import('@/views/dashboard/profile/index.vue'),
   },
 
 ]

@@ -9,9 +9,18 @@ export default [
     header: 'Roles & Permissions',
   },
   {
-    title: 'Roles',
+    title: 'Roles Section',
     icon: 'AlertCircleIcon',
-    route: 'dashboard-roles',
+    children: [
+        {
+          title: 'Roles',
+          route: 'roles',
+        },
+        {
+          title: 'Assign Roles',
+          route: 'assign-role',
+        },
+      ],
   },
   {
     header: 'System Setup',
