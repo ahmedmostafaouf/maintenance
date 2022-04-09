@@ -25,6 +25,11 @@ class OrganizationResource extends JsonResource
             'website_url' =>$this->website_url,
             'lat' =>$this->lat,
             'long' =>$this->long,
+            'desc' =>$this->desc,
+            'address' =>$this->address,
+            'temp_msg' =>$this->temp_msg,
+            'token' =>$this->token,
+            'instance_id' =>$this->instance_id,
             'created_at' =>$this->created_at,
         ];
     }

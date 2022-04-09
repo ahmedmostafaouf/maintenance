@@ -481,13 +481,10 @@ export default {
   methods: {
     formSubmitted() {
       if (this.$route.params.id) {
-        alert('Edit')
+        this.create('organizations')
       } else {
         this.create('organizations')
       }
-    },
-    chooseFile() {
-      this.$refs.fileInput.click()
     },
     selectImgFile() {
       const { fileInput } = this.$refs
@@ -519,7 +516,6 @@ export default {
       for (const key in this.organization) {
         formData.append(key, this.organization[key])
       }
-
       axios.post(url, formData, config)
         .then(data => {
           this.errors = {}
@@ -542,6 +538,30 @@ export default {
               else this.organization[key] = data.organization[key]
             })
             this.qr_code = data.organization.qr_code
+            this.organization.id = data.organization.id
+          }
+        })
+    },
+    update() {
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      }
+      const formData = new FormData()
+      for (const key in this.organization) {
+        formData.append(key, this.organization[key])
+      }
+      axios.patch(`/organizations/${this.$route.params.id}`, formData, config)
+        .then(data => {
+          this.errors = {}
+          this.makeToast('success', data.data.message)
+          this.$router.push({ name: 'services' })
+        })
+        .catch(error => {
+          if (error.response) {
+            this.makeToast('warning', error.response.data.message)
+            this.errors = error.response.data.errors
           }
         })
     },

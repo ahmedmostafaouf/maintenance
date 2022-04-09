@@ -58,13 +58,13 @@ class OrganizationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  OrganizationRequest  $request
+     * @param  Organization $organization
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(OrganizationRequest $request, Organization $organization)
     {
-        //
+        dd($organization);
     }
 
     /**
