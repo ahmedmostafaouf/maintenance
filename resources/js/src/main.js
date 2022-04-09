@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { ToastPlugin, ModalPlugin } from 'bootstrap-vue'
+import { ToastPlugin, ModalPlugin, BvComponent } from 'bootstrap-vue'
 import VueCompositionAPI from '@vue/composition-api'
 
 import i18n from '@/libs/i18n'
@@ -11,7 +11,7 @@ import App from './App.vue'
 import './global-components'
 
 // 3rd party plugins
-import '@axios'
+import axios from '@axios'
 import '@/libs/acl'
 import '@/libs/portal-vue'
 import '@/libs/clipboard'
@@ -42,9 +42,19 @@ require('@/assets/scss/style.scss')
 
 Vue.config.productionTip = false
 
+window.axios = axios;
+
+window.Fire = new Vue();
+
 new Vue({
   router,
   store,
   i18n,
+  mounted(){
+      let token;
+      if( token = localStorage.getItem('accessToken')){
+        axios.defaults.headers.common['Authorization'] = token;
+      }
+  },
   render: h => h(App),
 }).$mount('#app')
