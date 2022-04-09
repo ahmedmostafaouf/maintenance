@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\OrganizationRequest;
 use App\Http\Resources\Dashboard\OrganizationResource;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Organization;
@@ -26,24 +27,20 @@ class OrganizationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  OrganizationRequest  $request
+     * @return Response
      */
-    public function store(Request $request)
+    public function store(OrganizationRequest $request)
     {
-        //
+        $data = $request->except('logo');
+        if( gettype($request->logo) == 'object' && $request->logo->isValid())
+            $data['logo'] = imageUpload($request->logo, 'images/organization/logo');
+
+        $data['qr_code'] = generateQrcode($request->name);
+        Organization::create($data);
+        $this->returnSuccessMessage('Organization Created Successfully');
     }
 
     /**

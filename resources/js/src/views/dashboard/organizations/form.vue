@@ -27,6 +27,17 @@
             </small>
           </b-col>
           <!-- Logo -->
+          <b-col
+            v-if="filePreview"
+            md="12"
+          >
+            <div
+              class="previewBlock"
+              :style="{ 'background-image': `url(${filePreview})` }"
+              @click="chooseFile"
+            />
+          </b-col>
+          <!-- Logo -->
           <b-col md="6">
             <b-form-group
               label="Logo"
@@ -35,16 +46,18 @@
               <b-input-group class="input-group-merge">
                 <b-form-file
                   id="vi-logo"
+                  ref="fileInput"
                   v-model="organization.logo"
                   accept="image/*"
                   placeholder="Logo"
+                  @input="selectImgFile"
                 />
               </b-input-group>
               <label
                 v-if="Object.keys(errors).length > 0 && errors.logo !== undefined"
                 class="text-danger"
               >
-                Logo is required
+                {errors.logo[0]}}
               </label>
             </b-form-group>
           </b-col>
@@ -68,7 +81,7 @@
                 v-if="Object.keys(errors).length > 0 && errors.name !== undefined"
                 class="text-danger"
               >
-                Name is required
+                {{ errors.name[0] }}
               </label>
             </b-form-group>
           </b-col>
@@ -93,7 +106,7 @@
                 v-if="Object.keys(errors).length > 0 && errors.phone !== undefined"
                 class="text-danger"
               >
-                Phone is required
+                {{ errors.phone[0] }}
               </label>
             </b-form-group>
           </b-col>
@@ -118,7 +131,7 @@
                 v-if="Object.keys(errors).length > 0 && errors.email !== undefined"
                 class="text-danger"
               >
-                Email is required
+                {{ errors.email[0] }}
               </label>
             </b-form-group>
           </b-col>
@@ -135,7 +148,7 @@
                 <b-form-input
                   id="vi-website_url"
                   v-model="organization.website_url"
-                  type="website_url"
+                  type="url"
                   placeholder="Website Url"
                 />
               </b-input-group>
@@ -143,7 +156,7 @@
                 v-if="Object.keys(errors).length > 0 && errors.website_url !== undefined"
                 class="text-danger"
               >
-                Website Url is required
+                {{ errors.website_url[0] }}
               </label>
             </b-form-group>
           </b-col>
@@ -162,7 +175,7 @@
               v-if="Object.keys(errors).length > 0 && errors.desc !== undefined"
               class="text-danger"
             >
-              Description is required
+              {{ errors.desc[0] }}
             </label>
           </b-col>
         </b-row>
@@ -198,7 +211,7 @@
                 <b-form-input
                   id="vi-address"
                   v-model="organization.address"
-                  type="address"
+                  type="text"
                   placeholder="Address"
                 />
               </b-input-group>
@@ -206,7 +219,7 @@
                 v-if="Object.keys(errors).length > 0 && errors.address !== undefined"
                 class="text-danger"
               >
-                Address is required
+                {{ errors.address[0] }}
               </label>
             </b-form-group>
           </b-col>
@@ -231,7 +244,7 @@
                 v-if="Object.keys(errors).length > 0 && errors.lat !== undefined"
                 class="text-danger"
               >
-                Latitude is required
+                {{ errors.lat[0] }}
               </label>
             </b-form-group>
           </b-col>
@@ -256,7 +269,7 @@
                 v-if="Object.keys(errors).length > 0 && errors.long !== undefined"
                 class="text-danger"
               >
-                Longitude is required
+                {{ errors.long[0] }}
               </label>
             </b-form-group>
           </b-col>
@@ -301,7 +314,7 @@
                 v-if="Object.keys(errors).length > 0 && errors.token !== undefined"
                 class="text-danger"
               >
-                Token is required
+                {{ errors.token[0] }}
               </label>
             </b-form-group>
           </b-col>
@@ -326,7 +339,7 @@
                 v-if="Object.keys(errors).length > 0 && errors.instance_id !== undefined"
                 class="text-danger"
               >
-                Instance Id is required
+                {{ errors.instance_id[0] }}
               </label>
             </b-form-group>
           </b-col>
@@ -352,7 +365,7 @@
                 v-if="Object.keys(errors).length > 0 && errors.temp_msg !== undefined"
                 class="text-danger"
               >
-                Temp Message is required
+                {{ errors.temp_msg[0] }}
               </label>
             </b-form-group>
           </b-col>
@@ -371,6 +384,8 @@ import {
 } from 'bootstrap-vue'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
+import Ripple from 'vue-ripple-directive'
+import axios from 'axios'
 
 export default {
   components: {
@@ -387,7 +402,6 @@ export default {
     BInputGroupPrepend,
     BForm,
     BButton,
-    FormData,
     FormWizard,
     TabContent,
     BRow,
@@ -397,6 +411,9 @@ export default {
     vSelect,
     BFormFile,
     ToastificationContent,
+  },
+  directives: {
+    Ripple,
   },
   data() {
     return {
@@ -413,45 +430,78 @@ export default {
         token: '',
         instance_id: '',
         temp_msg: '',
-        logo: '',
+        logo: null,
         qr_code: '',
       },
-      selectedContry: 'select_value',
-      selectedLanguage: 'nothing_selected',
-      // codeIconInfo,
-      countryName: [
-        { value: 'select_value', text: 'Select Value' },
-        { value: 'Russia', text: 'Russia' },
-        { value: 'Canada', text: 'Canada' },
-        { value: 'China', text: 'China' },
-        { value: 'United States', text: 'United States' },
-        { value: 'Brazil', text: 'Brazil' },
-        { value: 'Australia', text: 'Australia' },
-        { value: 'India', text: 'India' },
-      ],
-      languageName: [
-        { value: 'nothing_selected', text: 'Nothing Selected' },
-        { value: 'English', text: 'English' },
-        { value: 'Chinese', text: 'Mandarin Chinese' },
-        { value: 'Hindi', text: 'Hindi' },
-        { value: 'Spanish', text: 'Spanish' },
-        { value: 'Arabic', text: 'Arabic' },
-        { value: 'Malay', text: 'Malay' },
-        { value: 'Russian', text: 'Russian' },
-      ],
+      filePreview: null,
     }
   },
   methods: {
     formSubmitted() {
-      this.$toast({
-        component: ToastificationContent,
-        props: {
-          title: 'Form Submitted',
-          icon: 'EditIcon',
-          variant: 'success',
-        },
+      if (this.$route.params.id) {
+        alert('Edit')
+      } else {
+        this.create('organizations')
+      }
+    },
+    chooseFile() {
+      this.$refs.fileInput.click()
+    },
+    selectImgFile() {
+      const { fileInput } = this.$refs
+      const imgFile = fileInput.files
+      if (imgFile && imgFile[0]) {
+        const reader = new FileReader()
+        reader.onload = e => {
+          this.filePreview = e.target.result
+          this.organization.logo = imgFile[0]
+        }
+        reader.readAsDataURL(imgFile[0])
+        this.$emit('fileInput', imgFile[0])
+      }
+    },
+    makeToast(variant = null, body) {
+      this.$bvToast.toast(body, {
+        title: `Variant ${variant || 'default'}`,
+        variant,
+        solid: true,
       })
+    },
+    create(url) {
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      }
+      const formData = new FormData()
+      for (const key in this.organization) {
+          formData.append(key, this.organization[key])
+      }
+
+      axios.post(url, formData, config)
+        .then(data => {
+          this.errors = {}
+          this.makeToast('success', data.data.message)
+          this.$router.push({ name: 'organizations' })
+        })
+        .catch(error => {
+          if (error.response) {
+            this.makeToast('danger', error.response.data.message)
+            this.errors = error.response.data.errors
+          }
+        })
     },
   },
 }
 </script>
+<style scoped>
+.previewBlock {
+    display: block;
+    cursor: pointer;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background-position: center center;
+    background-size: cover;
+}
+</style>

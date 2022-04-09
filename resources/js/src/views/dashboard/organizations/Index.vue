@@ -49,6 +49,7 @@ import {
 import tableData from '../datatable/Index'
 
 export default {
+  name: 'Organization',
   components: {
     tableData,
     BCard,
