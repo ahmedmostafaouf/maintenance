@@ -28,15 +28,13 @@
         />
         <span>Edit</span>
       </b-dropdown-item>
-
-      <b-dropdown-item @click.prevent="delete(row.id)">
+      <b-dropdown-item @click="delete(row.id)">
         <feather-icon
           icon="TrashIcon"
           class="mr-50"
         />
         <span>Delete</span>
       </b-dropdown-item>
-
     </template>
   </table-data>
 </template>
