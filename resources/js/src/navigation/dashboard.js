@@ -12,25 +12,25 @@ export default [
     title: 'Roles Section',
     icon: 'AlertCircleIcon',
     children: [
-        {
-          title: 'Roles',
-          route: 'roles',
-        },
-        {
-          title: 'Assign Roles',
-          route: 'assign-role',
-        },
-      ],
+      {
+        title: 'Roles',
+        route: 'roles',
+      },
+      {
+        title: 'Assign Roles',
+        route: 'assign-role',
+      },
+    ],
   },
   {
     header: 'System Setup',
   },
   {
-    title: 'Organization',
+    title: 'Organizations',
     icon: 'CopyIcon',
     children: [
       {
-        title: 'Organization',
+        title: 'Organizations',
         route: 'organizations',
       },
       {
@@ -67,7 +67,7 @@ export default [
       },
     ],
 
-   },
+  },
   {
     title: 'Services',
     icon: 'ServerIcon',

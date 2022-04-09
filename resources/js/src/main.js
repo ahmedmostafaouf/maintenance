@@ -50,11 +50,5 @@ new Vue({
   router,
   store,
   i18n,
-  mounted(){
-      let token;
-      if( token = localStorage.getItem('accessToken')){
-        axios.defaults.headers.common['Authorization'] = token;
-      }
-  },
   render: h => h(App),
 }).$mount('#app')

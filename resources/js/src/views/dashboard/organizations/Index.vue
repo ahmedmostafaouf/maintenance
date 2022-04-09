@@ -21,7 +21,7 @@
       </div>
     </template>
     <template v-slot:actions="{row}">
-      <b-dropdown-item :to="{name:'edit-service',params:{'id':row.id}}">
+      <b-dropdown-item :to="{name:'edit-organization',params:{'id':row.id}}">
         <feather-icon
           icon="Edit2Icon"
           class="mr-50"
@@ -29,7 +29,7 @@
         <span>Edit</span>
       </b-dropdown-item>
 
-      <b-dropdown-item @click.prevent="dropRow(row.id)">
+      <b-dropdown-item @click.prevent="delete(row.id)">
         <feather-icon
           icon="TrashIcon"
           class="mr-50"
@@ -46,9 +46,11 @@ import { reactive, toRefs } from 'vue'
 import {
   BCard, BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdownItem, BDropdown, BRow, BCol,
 } from 'bootstrap-vue'
+import axios from 'axios'
 import tableData from '../datatable/Index'
 
 export default {
+  name: 'Organization',
   components: {
     tableData,
     BCard,
@@ -117,14 +119,51 @@ export default {
       ],
     }
   },
-  computed: {
-
-  },
-  created() {
-
-  },
   methods: {
-    dropRow() {
+    delete(id) {
+      this.$swal({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        customClass: {
+          confirmButton: 'btn btn-primary',
+          cancelButton: 'btn btn-outline-danger ml-1',
+        },
+        buttonsStyling: false,
+      }).then(result => {
+        if (result.value) {
+          axios.delete(`/organizations/${id}`).then(response => {
+            this.$swal({
+              icon: 'success',
+              title: 'Deleted!',
+              text: 'Your branch has been deleted.',
+              customClass: {
+                confirmButton: 'btn btn-success',
+              },
+            })
+          }).catch(error => {
+            this.$swal({
+              icon: 'error',
+              title: 'Error!',
+              text: error.response.data.message,
+              customClass: {
+                confirmButton: 'btn btn-danger',
+              },
+            })
+          })
+        } else if (result.dismiss === 'cancel') {
+          this.$swal({
+            title: 'Cancelled',
+            text: 'Your imaginary file is safe :)',
+            icon: 'error',
+            customClass: {
+              confirmButton: 'btn btn-success',
+            },
+          })
+        }
+      })
     },
   },
 }

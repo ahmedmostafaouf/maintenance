@@ -17,7 +17,7 @@ class ServicesResource extends JsonResource
         return [
             'id' => (int)$this->id,
             'name'=> (string)$this->name,
-            'status'=> (boolean)$this->status,
+            'status'=> (string)$this->status,
             'desc'=> (string)$this->desc,
             'range_time'=> (string)$this->range_time,
             'queue_number'=> (int)$this->queue_number,
