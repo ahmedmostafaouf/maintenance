@@ -83,7 +83,6 @@ export default [
     name: 'edit-service',
     component: () => import('@/views/dashboard/services/edit.vue'),
   },
-
   {
     path: '/dashboard/profile/edit',
     name: 'edit-profile',
