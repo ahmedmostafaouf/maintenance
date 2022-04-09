@@ -1,166 +1,16 @@
 <template>
   <b-form @submit.prevent="saveDepartment">
     <b-row>
-      <!-- Org name -->
-      <b-col cols="12">
-        <b-form-group
-          label="Name"
-          label-for="vi-name"
-        >
-          <b-input-group class="input-group-merge">
-            <b-input-group-prepend is-text>
-              <feather-icon icon="UserIcon" />
-            </b-input-group-prepend>
-            <b-form-input
-              id="vi-name"
-              v-model="organization.name"
-              placeholder="Name"
-            /><br>
-          </b-input-group>
-          <label
-            v-if="Object.keys(errors).length > 0 && errors.name !== undefined"
-            class="text-danger"
-          >
-            Name is required
-          </label>
-        </b-form-group>
-      </b-col>
-
-      <!-- phone -->
-      <b-col cols="12">
-        <b-form-group
-          label="Phone"
-          label-for="vi-phone"
-        >
-          <b-input-group class="input-group-merge">
-            <b-input-group-prepend is-text>
-              <feather-icon icon="SmartphoneIcon" />
-            </b-input-group-prepend>
-            <b-form-input
-              id="vi-phone"
-              v-model="organization.phone"
-              type="number"
-              placeholder="Phone"
-            /><br>
-          </b-input-group>
-          <label
-            v-if="Object.keys(errors).length > 0 && errors.phone !== undefined"
-            class="text-danger"
-          >
-            Phone is required
-          </label>
-        </b-form-group>
-      </b-col>
-
-      <!-- orgnization -->
-      <b-col cols="12">
-        <b-form-group
-          label="Organization"
-          label-for="vi-organization"
-        >
-          <b-input-group class="input-group-merge">
-            <v-select
-              v-model="organization.organization"
-              placeholder="Organization..."
-              :options="organizations"
-              :reduce="org => org.id"
-              label="name"
-            />
-          </b-input-group>
-          <label
-            v-if="Object.keys(errors).length > 0 && errors.org !== undefined"
-            class="text-danger"
-          >
-            Organization is required
-          </label>
-        </b-form-group>
-      </b-col>
-      <!-- Branch -->
-      <b-col cols="12">
-        <b-form-group
-          label="Branches"
-          label-for="vi-branch"
-        >
-          <b-input-group class="input-group-merge">
-            <v-select
-              v-model="organization.branch"
-              placeholder="Branches..."
-              :options="branches"
-              :reduce="branch => branch.id"
-              label="name"
-            />
-          </b-input-group>
-          <label
-            v-if="Object.keys(errors).length > 0 && errors.branch !== undefined"
-            class="text-danger"
-          >
-            Branches is required
-          </label>
-        </b-form-group>
-      </b-col>
-      <!-- status -->
-      <b-col cols="12">
-        <b-form-group
-          label="Status"
-          label-for="vi-status"
-        >
-          <b-input-group class="input-group-merge">
-            <v-select
-              v-model="organization.status"
-              placeholder="Status..."
-              :options="status"
-              :reduce="sta => sta.value"
-              label="name"
-            />
-          </b-input-group>
-          <label
-            v-if="Object.keys(errors).length > 0 && errors.branch !== undefined"
-            class="text-danger"
-          >
-            Status is required
-          </label>
-        </b-form-group>
-      </b-col>
-
-      <!-- description -->
-      <b-col cols="12">
-        <label for="textarea-default">Description</label>
-        <b-input-group class="input-group-merge">
-          <b-form-textarea
-            id="textarea-default"
-            v-model="organization.desc"
-            placeholder="Description"
-            rows="3"
-          /><br>
-        </b-input-group>
-        <label
-          v-if="Object.keys(errors).length > 0 && errors.desc !== undefined"
-          class="text-danger"
-        >
-          Description is required
-        </label>
-      </b-col>
-
       <!-- reset and submit -->
       <b-col
         cols="12"
         class="mt-2"
       >
-        <b-button
-          v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-          type="add"
-          variant="primary"
-          class="mr-1"
-        >
-          Submit
-        </b-button>
-        <b-button
-          v-ripple.400="'rgba(186, 191, 199, 0.15)'"
-          type="reset"
-          variant="outline-secondary"
-        >
-          Reset
-        </b-button>
+        <b-row>
+          <b-col cols="12">
+            <FormData />
+          </b-col>
+        </b-row>
       </b-col>
     </b-row>
   </b-form>
@@ -171,9 +21,9 @@ import {
   BRow, BCol, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton, BInputGroup, BInputGroupPrepend, BFormTextarea, BFormValidFeedback,
   BFormInvalidFeedback,
 } from 'bootstrap-vue'
-import Ripple from 'vue-ripple-directive'
 import vSelect from 'vue-select'
 import axios from 'axios'
+import FormData from './form'
 
 export default {
   name: 'AddBranch',
@@ -191,30 +41,7 @@ export default {
     BInputGroupPrepend,
     BForm,
     BButton,
-  },
-  directives: {
-    Ripple,
-  },
-  data() {
-    return {
-      branches: [],
-      organizations: [],
-      errors: {},
-      organization: {
-        name: '',
-        phone: '',
-        email: '',
-        address: '',
-        desc: '',
-        branch_id: '',
-        organization_id: '',
-        status: '',
-      },
-    }
-  },
-  created() {
-    this.getAllOrganizations()
-    this.getBranches()
+    FormData,
   },
   methods: {
     saveDepartment() {
@@ -235,30 +62,13 @@ export default {
           this.errors = error.response.data.errors
         })
     },
-    getBranches() {
-      axios.get('all-branches', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      }).then(response => {
-        this.branches = response.data.data
-      })
-    },
-    getAllOrganizations() {
-      axios.get('all-organizations', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      }).then(response => {
-        this.organizations = response.data.data
-      })
-    },
   },
 }
 </script>
 
 <style lang="scss" >
 @import 'https://unpkg.com/vue-select@3.0.0/dist/vue-select.css';
+@import '~@core/scss/vue/libs/vue-wizard.scss';
 .v-select{
     width: 100% !important;
 }
