@@ -228,6 +228,9 @@ export default {
     }
     this.columns = this.columnsProp
     this.loadItems()
+   Fire.$on('deleted',()=>{
+          this.loadItems();
+      })
   },
   methods: {
     getdata() {

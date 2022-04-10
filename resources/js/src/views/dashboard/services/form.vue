@@ -164,7 +164,7 @@ import Ripple from 'vue-ripple-directive'
                 axios.get(`/services/${this.$route.params.id}/edit`)
                 .then(({data})=>{
                     if(data.status){
-                        Object.keys(this.form).forEach((key)=>this.form[key]= data.service[key])
+                        Object.keys(this.form).forEach((key)=>this.form[key]= (key!='status')?data.service[key]:Boolean(data.service[key]))
                     }
                 })
             }
