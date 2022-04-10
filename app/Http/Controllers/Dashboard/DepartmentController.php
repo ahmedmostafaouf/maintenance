@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\DepartmentRequest;
 use App\Http\Resources\Dashboard\DepartmentsResource;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Department;
@@ -39,16 +40,13 @@ class DepartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DepartmentRequest $request)
     {
         try{
-              dd($request->all());
             Department::create($request->all());
-            return $this->returnSuccessMessage('Branch Stored Succeffully');
-
+            return $this->returnSuccessMessage('Department Stored Succeffully');
         } catch (ValidationException $e) {
             return $this->validationError($e,'validation err');
-
         }
     }
 
@@ -71,7 +69,14 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        //
+        try{
+            $departments=Department::findOrFail($id);
+            if($departments){
+                return $this->returnData('departments',$departments);
+            }
+        } catch (\Exception $e) {
+            return $this->validationError($e,'err');
+        }
     }
 
     /**
@@ -81,9 +86,16 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Department $department,DepartmentRequest $request)
     {
-        //
+        try{
+            if($department){
+               $department->update($request->all());
+            }
+        } catch (\Exception $e) {
+            return $this->validationError($e,'err');
+        }
+
     }
 
     /**
@@ -92,8 +104,15 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Department $department)
     {
-        //
+        try{
+            if($department){
+                $department->delete();
+            }
+            return $this->returnSuccessMessage('department Deleted Succeffully');
+        } catch (\Exception $e) {
+            return $this->returnError(500,'err');
+        }
     }
 }

@@ -22,7 +22,7 @@
                         v-if="Object.keys(errors).length > 0 && errors.name !== undefined"
                         class="text-danger"
                     >
-                        Name is required
+                        {{this.errors.name[0]}}
                     </label>
                 </b-form-group>
             </b-col>
@@ -48,7 +48,7 @@
                         v-if="Object.keys(errors).length > 0 && errors.phone !== undefined"
                         class="text-danger"
                     >
-                        Phone is required
+                        {{this.errors.phone[0]}}
                     </label>
                 </b-form-group>
             </b-col>
@@ -61,7 +61,7 @@
                 >
                     <b-input-group class="input-group-merge">
                         <v-select
-                            v-model="department.organization"
+                            v-model="department.organization_id"
                             placeholder="Organization..."
                             :options="organizations"
                             :reduce="org => org.id"
@@ -69,10 +69,10 @@
                         />
                     </b-input-group>
                     <label
-                        v-if="Object.keys(errors).length > 0 && errors.org !== undefined"
+                        v-if="Object.keys(errors).length > 0 && errors.organization_id !== undefined"
                         class="text-danger"
                     >
-                        Organization is required
+                        {{this.errors.organization_id[0]}}
                     </label>
                 </b-form-group>
             </b-col>
@@ -84,7 +84,7 @@
                 >
                     <b-input-group class="input-group-merge">
                         <v-select
-                            v-model="department.branch"
+                            v-model="department.branch_id"
                             placeholder="Branches..."
                             :options="branches"
                             :reduce="branch => branch.id"
@@ -92,10 +92,10 @@
                         />
                     </b-input-group>
                     <label
-                        v-if="Object.keys(errors).length > 0 && errors.branch !== undefined"
+                        v-if="Object.keys(errors).length > 0 && errors.branch_id !== undefined"
                         class="text-danger"
                     >
-                        Branches is required
+                        {{this.errors.branch_id[0]}}
                     </label>
                 </b-form-group>
             </b-col>
@@ -115,10 +115,10 @@
                         />
                     </b-input-group>
                     <label
-                        v-if="Object.keys(errors).length > 0 && errors.branch !== undefined"
+                        v-if="Object.keys(errors).length > 0 && errors.status !== undefined"
                         class="text-danger"
                     >
-                        Status is required
+                        {{this.errors.status[0]}}
                     </label>
                 </b-form-group>
             </b-col>
@@ -138,7 +138,8 @@
                     v-if="Object.keys(errors).length > 0 && errors.desc !== undefined"
                     class="text-danger"
                 >
-                    Description is required
+                    {{this.errors.desc[0]}}
+
                 </label>
             </b-col>
 
@@ -177,7 +178,7 @@ import vSelect from 'vue-select'
 import axios from 'axios'
 
 export default {
-    name: 'AddBranch',
+    name: 'AddDepartment',
     components: {
         BRow,
         vSelect,
@@ -220,15 +221,22 @@ export default {
        this.getBranches();
     },
     methods:{
+        makeToast(variant = null, body) {
+            this.$bvToast.toast(body, {
+                title: `Variant ${variant || 'default'}`,
+                variant,
+                solid: true,
+            })
+        },
         saveDepartment(){
             const instance = this
-            axios.post('/departments', this.branch, {
+            axios.post('/departments', this.department, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },
             }).then(response => {
                 this.errors = {}
-                this.makeToast('success', 'Branch Stored Succeffully')
+                this.makeToast('success', 'Department Stored Succeffully')
                 setTimeout(() => {
                     instance.$router.push({ name: 'departments' })
                 }, 1000)
