@@ -36,7 +36,7 @@ class OrganizationController extends Controller
     public function store(OrganizationRequest $request)
     {
         $data = $request->except('logo');
-        if( gettype($request->logo) == 'object' && $request->logo->isValid())
+        if( isset($request->logo) && $request->logo->isValid())
             $data['logo'] = imageUpload($request->logo, 'images/organization/logo');
 
         $data['qr_code'] = generateQrcode($request->name);
@@ -65,7 +65,7 @@ class OrganizationController extends Controller
     public function update(OrganizationRequest $request, Organization $organization)
     {
         $data = $request->except('logo');
-        if( gettype($request->logo) == 'object' && $request->logo->isValid())
+        if(isset($request->logo) && $request->logo->isValid())
             $data['logo'] = imageUpload($request->logo, 'images/organization/logo');
 
         $organization->update($data);
@@ -80,7 +80,7 @@ class OrganizationController extends Controller
      */
     public function destroy(Organization $organization)
     {
-        $this->returnSuccessMessage('Organization Deleted Successfully');
-
+        $organization->delete();
+        return $this->returnSuccessMessage('Organization Deleted Successfully');
     }
 }

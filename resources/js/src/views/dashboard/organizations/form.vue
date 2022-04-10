@@ -93,7 +93,7 @@
                 v-if="Object.keys(errors).length > 0 && errors.logo !== undefined"
                 class="text-danger"
               >
-                {errors.logo[0]}}
+                {{ errors.logo[0] }}
               </label>
             </b-form-group>
           </b-col>
@@ -171,6 +171,30 @@
               </label>
             </b-form-group>
           </b-col>
+          <!-- status -->
+          <b-col cols="6">
+            <b-form-group
+              label="Status"
+              label-for="vi-status"
+            >
+              <b-input-group class="input-group-merge">
+                <v-select
+                  v-model="organization.status"
+                  placeholder="Status..."
+                  :options="status"
+                  :reduce="sta => sta.value"
+                  label="name"
+                />
+              </b-input-group>
+              <label
+                v-if="Object.keys(errors).length > 0 && errors.status !== undefined"
+                class="text-danger"
+              >
+                {{ errors.status[0] }}
+              </label>
+            </b-form-group>
+          </b-col>
+
           <!-- website_url -->
           <b-col cols="6">
             <b-form-group
@@ -413,15 +437,15 @@
 
 <script>
 import { FormWizard, TabContent } from 'vue-form-wizard'
-import vSelect from 'vue-select'
 import {
   BRow, BCol, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton, BInputGroup, BInputGroupPrepend, BFormTextarea, BFormValidFeedback,
   BFormInvalidFeedback, BFormFile,
 } from 'bootstrap-vue'
 import ToastificationContent from '@core/components/toastification/ToastificationContent.vue'
 import 'vue-form-wizard/dist/vue-form-wizard.min.css'
-import Ripple from 'vue-ripple-directive'
 import axios from 'axios'
+import Ripple from 'vue-ripple-directive'
+import vSelect from 'vue-select'
 
 export default {
   components: {
@@ -468,9 +492,15 @@ export default {
         temp_msg: '',
         logo: null,
         qr_code: '',
+        status: '',
+
       },
       filePreview: null,
       qr_code: '',
+        status:[
+            {name:'Active',value:1},
+            {name:'In Active',value:0},
+        ],
     }
   },
   mounted() {
@@ -480,10 +510,26 @@ export default {
   },
   methods: {
     formSubmitted() {
+      const config = {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      }
+      const formData = new FormData()
+      for (const key in this.organization) {
+        if (this.organization[key]) {
+          formData.append(key, this.organization[key])
+        }
+      }
+      formData.append('_method', 'PATCH')
       if (this.$route.params.id) {
-        this.updateOrganization()
+        axios.post(`organizations/${this.$route.params.id}`, formData, config)
+          .then(data => this.formSuccess(data))
+          .catch(error => this.formCatchError(error))
       } else {
-        this.create('organizations')
+        axios.post('organizations', formData, config)
+          .then(data => this.formSuccess(data))
+          .catch(error => this.formCatchError(error))
       }
     },
     selectImgFile() {
@@ -499,35 +545,23 @@ export default {
         this.$emit('fileInput', imgFile[0])
       }
     },
+    formSuccess(data) {
+      this.errors = {}
+      this.makeToast('success', data.data.message)
+      this.$router.push({ name: 'organizations' })
+    },
+    formCatchError(error) {
+      if (error.response) {
+        this.makeToast('danger', error.response.data.message)
+        this.errors = error.response.data.errors
+      }
+    },
     makeToast(variant = null, body) {
       this.$bvToast.toast(body, {
         title: `Variant ${variant || 'default'}`,
         variant,
         solid: true,
       })
-    },
-    create(url) {
-      const config = {
-        headers: {
-          'content-type': 'multipart/form-data',
-        },
-      }
-      const formData = new FormData()
-      for (const key in this.organization) {
-        formData.append(key, this.organization[key])
-      }
-      axios.post(url, formData, config)
-        .then(data => {
-          this.errors = {}
-          this.makeToast('success', data.data.message)
-          this.$router.push({ name: 'organizations' })
-        })
-        .catch(error => {
-          if (error.response) {
-            this.makeToast('danger', error.response.data.message)
-            this.errors = error.response.data.errors
-          }
-        })
     },
     getOrganization() {
       axios.get(`/organizations/${this.$route.params.id}/edit`)
@@ -539,29 +573,6 @@ export default {
             })
             this.qr_code = data.organization.qr_code
             this.organization.id = data.organization.id
-          }
-        })
-    },
-    updateOrganization() {
-      const config = {
-        headers: {
-          'content-type': 'multipart/form-data',
-        },
-      }
-      const formData = new FormData()
-      for (const key in this.organization){
-          formData.append(key, this.organization[key])
-      }
-      axios.put(`/organizations/${this.$route.params.id}`, formData, config)
-        .then(data => {
-          this.errors = {}
-          this.makeToast('success', data.data.message)
-          this.$router.push({ name: 'services' })
-        })
-        .catch(error => {
-          if (error.response) {
-            this.makeToast('warning', error.response.data.message)
-            this.errors = error.response.data.errors
           }
         })
     },
@@ -577,5 +588,11 @@ export default {
     margin: 0 auto 20px;
     background-position: center center;
     background-size: cover;
+}
+</style>
+<style lang="scss" >
+@import 'https://unpkg.com/vue-select@3.0.0/dist/vue-select.css';
+.v-select{
+    width: 100% !important;
 }
 </style>

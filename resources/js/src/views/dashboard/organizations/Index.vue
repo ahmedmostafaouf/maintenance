@@ -80,6 +80,12 @@ export default {
           filterable: true,
           sortable: true,
         },
+          {
+              label: 'Status',
+              field: 'status',
+              filterable: true,
+
+          },
         {
           label: 'Email',
           field: 'email',
@@ -136,11 +142,12 @@ export default {
             this.$swal({
               icon: 'success',
               title: 'Deleted!',
-              text: 'Your branch has been deleted.',
+              text: response.data.message,
               customClass: {
                 confirmButton: 'btn btn-success',
               },
             })
+              Fire.$emit('deleted');
           }).catch(error => {
             this.$swal({
               icon: 'error',
