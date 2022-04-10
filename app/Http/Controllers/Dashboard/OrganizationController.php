@@ -56,7 +56,7 @@ class OrganizationController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified organization in storage.
      *
      * @param  OrganizationRequest  $request
      * @param  Organization $organization
@@ -64,17 +64,23 @@ class OrganizationController extends Controller
      */
     public function update(OrganizationRequest $request, Organization $organization)
     {
-        dd($organization);
+        $data = $request->except('logo');
+        if( gettype($request->logo) == 'object' && $request->logo->isValid())
+            $data['logo'] = imageUpload($request->logo, 'images/organization/logo');
+
+        $organization->update($data);
+        $this->returnSuccessMessage('Organization Updated Successfully');
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified organization from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Organization $organization
+     * @return Response
      */
-    public function destroy($id)
+    public function destroy(Organization $organization)
     {
-        //
+        $this->returnSuccessMessage('Organization Deleted Successfully');
+
     }
 }

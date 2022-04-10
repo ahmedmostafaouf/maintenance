@@ -481,7 +481,7 @@ export default {
   methods: {
     formSubmitted() {
       if (this.$route.params.id) {
-        this.create('organizations')
+        this.updateOrganization()
       } else {
         this.create('organizations')
       }
@@ -542,17 +542,17 @@ export default {
           }
         })
     },
-    update() {
+    updateOrganization() {
       const config = {
         headers: {
           'content-type': 'multipart/form-data',
         },
       }
       const formData = new FormData()
-      for (const key in this.organization) {
-        formData.append(key, this.organization[key])
+      for (const key in this.organization){
+          formData.append(key, this.organization[key])
       }
-      axios.patch(`/organizations/${this.$route.params.id}`, formData, config)
+      axios.put(`/organizations/${this.$route.params.id}`, formData, config)
         .then(data => {
           this.errors = {}
           this.makeToast('success', data.data.message)
