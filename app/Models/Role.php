@@ -11,9 +11,6 @@ class Role extends Model
     protected $fillable = ['roleName','permissions','created_at','updated_at'];
 
 
-
-
-
     public function scopeRolesData($query,$req){
         return $query->when((isset($req['searchTerm']) && $req['searchTerm'] != null),function($query) use ($req){
             $query->where( 'roleName', 'LIKE', '%' . $req['searchTerm'] . '%' );

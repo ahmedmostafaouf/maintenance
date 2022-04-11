@@ -20,6 +20,7 @@ class DepartmentsResource extends JsonResource
             'phone'=>$this->phone,
             'status'=>$this->status,
             'created_at'=>$this->created_at,
+            'services_count'=>@$this->services->count(),
             'organization_id'=>@$this->organization->name ?? '..',
             'branch_id'=>@$this->branch->name ?? '..',
         ];

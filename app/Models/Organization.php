@@ -8,14 +8,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Branch;
 use App\Models\Department;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Organization extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name','desc','lat','long','email','address','token','instance_id','temp_msg',
-        'phone','logo','qr_code','website_url'
+        'phone','logo','qr_code','website_url','status'
     ];
 
     /**
