@@ -96,6 +96,12 @@ export default {
 
         },
         {
+          label: 'Services Count',
+          field: this.fieldFn,
+          html:true
+        }
+        ,
+        {
           label: 'Created At',
           field: 'created_at',
           filterable: true,
@@ -124,6 +130,9 @@ export default {
 
   },
   methods: {
+      fieldFn(rowObj) {
+        return rowObj.services_count + `<i data-feather='server'></i>`;
+    },
       dropRow(id) {
           this.$swal({
               title: 'Are you sure?',

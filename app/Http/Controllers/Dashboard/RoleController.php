@@ -28,6 +28,27 @@ class RoleController extends Controller
         return response()->json(['status'=>true,'data'=>$roles]);
     }
 
+    public function assignRole(Request $request){
+        $this->validate($request,[
+            'role'=> 'required',
+            'permissions'=> 'required'
+        ]);
+
+        $role = $request->role;
+        $permissions = $request->permissions;
+
+        $roleData = Role::find($role);
+        if($roleData){
+            $roleData->update([
+                'permissions'=> $permissions
+            ]);
+        }
+
+        return response()->json(['status'=>true,'msg'=>'Permissions updated successfully']);
+    }
+
+
+
     /**
      * Show the form for creating a new resource.
      *
