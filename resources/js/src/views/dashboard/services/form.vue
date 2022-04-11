@@ -155,9 +155,9 @@ import Ripple from 'vue-ripple-directive'
             },
             submit(){
                 if(this.$route.params.id){
-                    Fire.$emit('edit-service',this.form)
+                    this.$emit('editService',this.form)
                 }else{
-                    Fire.$emit('add-service',this.form)
+                    this.$emit('addService',this.form)
                 }
             },
             getService(){

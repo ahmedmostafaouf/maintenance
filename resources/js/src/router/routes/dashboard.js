@@ -41,9 +41,9 @@ export default [
     component: () => import('@/views/dashboard/departments/index.vue'),
   },
   {
-    path: '/dashboard/edit-department',
+    path: '/dashboard/department/:id/edit',
     name: 'edit-department',
-    component: () => import('@/views/dashboard/departments/index.vue'),
+    component: () => import('@/views/dashboard/departments/edit-department.vue'),
   },
   {
     path: '/dashboard/add-department',

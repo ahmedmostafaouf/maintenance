@@ -79,6 +79,16 @@ export default {
                     field: 'status',
                     filterable:true
                 },
+                {
+                    label: 'Window Number',
+                    field: 'queue_number',
+                    filterable:true
+                },
+                {
+                    label: 'range time',
+                    field: 'range_time',
+                    filterable:true
+                },
                  {
                     label: 'Description',
                     field: 'desc',

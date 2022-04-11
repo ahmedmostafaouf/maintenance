@@ -29,6 +29,7 @@ class OrganizationRequest extends FormRequest
             'email' => 'required|email|unique:organizations,email,'.(integer)$this->id,
             'address' => 'required|string|min:20|max:255',
             'website_url' => 'required|url',
+            'status'=> 'required|numeric|in:0,1',
             'lat' => 'required|between:-90,90',
             'long' => 'required|between:-180,180',
             'desc' => 'required|string|min:20|max:255',

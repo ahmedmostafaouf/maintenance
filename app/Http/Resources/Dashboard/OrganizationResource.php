@@ -30,6 +30,7 @@ class OrganizationResource extends JsonResource
             'temp_msg' =>$this->temp_msg,
             'token' =>$this->token,
             'instance_id' =>$this->instance_id,
+            'status'=>$this->status,
             'created_at' =>$this->created_at,
         ];
     }
