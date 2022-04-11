@@ -98,7 +98,6 @@ export default {
         {
           label: 'Services Count',
           field: this.fieldFn,
-          filterable: true,
           html:true
         }
         ,
