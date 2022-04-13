@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Role;
 use App\Http\Resources\Dashboard\RolesResource;
-
-
+use App\Http\Traits\ResponseTrait;
 
 class RoleController extends Controller
 {
+    use ResponseTrait;
     /**
      * Display a listing of the resource.
      *
@@ -21,33 +21,6 @@ class RoleController extends Controller
         $roles = Role::RolesData($request);
         return RolesResource::collection($roles);
     }
-
-
-    public function allRoles(){
-        $roles = Role::all();
-        return response()->json(['status'=>true,'data'=>$roles]);
-    }
-
-    public function assignRole(Request $request){
-        $this->validate($request,[
-            'role'=> 'required',
-            'permissions'=> 'required'
-        ]);
-
-        $role = $request->role;
-        $permissions = $request->permissions;
-
-        $roleData = Role::find($role);
-        if($roleData){
-            $roleData->update([
-                'permissions'=> $permissions
-            ]);
-        }
-
-        return response()->json(['status'=>true,'msg'=>'Permissions updated successfully']);
-    }
-
-
 
     /**
      * Show the form for creating a new resource.
@@ -67,7 +40,14 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'role'=> 'required|string',
+            'permissions'=> 'required'
+        ]);
+        $inputs['roleName'] = $request['role'];
+        $inputs['permissions'] = $request['permissions'];
+        Role::updateOrCreate(['roleName'=>$inputs['roleName']],$inputs);
+        return $this->returnSuccessMessage(__('role added successfully'));
     }
 
     /**
@@ -84,34 +64,46 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Role $role
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Role $role)
     {
-        //
+        return $this->returnData('role',new RolesResource($role));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Role $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        //
+        $this->validate($request,[
+            'role'=> 'required|string',
+            'permissions'=> 'required'
+        ]);
+        $inputs['roleName'] = $request['role'];
+        $inputs['permissions'] = $request['permissions'];
+        $role->update($inputs);
+        return $this->returnSuccessMessage(__('role updated successfully'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Role $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        //
+        try{
+            $role->delete();
+            return $this->returnSuccessMessage('Service Deleted Succeffully');
+         } catch (\Exception $e) {
+            return $this->returnError(500,'err');
+        }
     }
 }

@@ -17,7 +17,7 @@
             </b-form-group>
         </b-col>
         <b-col cols="12">
-            <button class="btn btn-success mt-2 mb-2" :loading="is_sending" :disabled="is_sending" @click="assignRole">Assign</button>
+            <button class="btn btn-success mt-2 mb-2" :loading="is_sending" :disabled="is_sending" @click="edit">Update</button>
             <table class="table table-responsive table-striped">
                 <thead>
                     <tr>
@@ -37,76 +37,71 @@
         </b-col>
      </b-row>
 </template>
+
 <script>
 import {
   BRow, BCol, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton, BInputGroup, BInputGroupPrepend, BFormTextarea, BFormValidFeedback,
   BFormInvalidFeedback,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
-export default {
-    components: {
-        BRow,
-        BCol,
-        BFormValidFeedback,
-        BFormInvalidFeedback,
-        BFormGroup,
-        BFormInput,
-        BFormTextarea,
-        BFormCheckbox,
-        BInputGroup,
-        BInputGroupPrepend,
-        BForm,
-        BButton,
-    },
-  directives: {
-    Ripple,
-  },
-    data(){
-        return{
-            is_sending:false,
-            errors:{},
-            role:'',
-            all_permissions:[],
-        }
-    },
-    methods:{
-        assignRole(){
-            let data = JSON.stringify(this.all_permissions)
-            axios.post('roles',{'role':this.role,'permissions' : data})
-            .then((res)=>{
-                if(res.status === 200){
-                    this.makeToast('success', res.data.message);
-                }
-            })
-
+    export default {
+         components: {
+            BRow,
+            BCol,
+            BFormValidFeedback,
+            BFormInvalidFeedback,
+            BFormGroup,
+            BFormInput,
+            BFormTextarea,
+            BFormCheckbox,
+            BInputGroup,
+            BInputGroupPrepend,
+            BForm,
+            BButton,
         },
-        makeToast(variant = null, body) {
-            this.$bvToast.toast(body, {
-                title: `Variant ${variant || 'default'}`,
-                variant,
-                solid: true,
-            })
+        directives: {
+            Ripple,
         },
-        permissions(){
-            axios.get('/spinner/permissions')
-            .then(({data})=>{
-                data.permissions.forEach(permission=>{
-                    this.all_permissions.push({
-                        name: permission , read: false,write: false,delete: false,update: false
-                    })
+        data(){
+            return{
+                is_sending:false,
+                errors:{},
+                role:'',
+                all_permissions:[],
+            }
+        },
+        methods:{
+            getRole(){
+                axios.get(`/roles/${this.$route.params.id}/edit`)
+                .then(({data})=>{
+                    this.all_permissions = data.role.permissions;
+                    this.role = data.role.name;
                 })
-            })
+            },
+            edit(){
+                let data = JSON.stringify(this.all_permissions)
+                axios.patch(`/roles/${this.$route.params.id}`,{'role':this.role,'permissions' : data})
+                .then(({data})=>{
+                    if(data.status){
+                        this.makeToast('success', data.message);
+                    }
+                })
+            },
+            makeToast(variant = null, body) {
+                this.$bvToast.toast(body, {
+                    title: `Variant ${variant || 'default'}`,
+                    variant,
+                    solid: true,
+                })
+            },
+        },
+        mounted(){
+            this.getRole();
         }
-    },
-    created(){
-        this.permissions();
-    }
 
-}
+    }
 </script>
-<style lang="scss" >
-@import 'https://unpkg.com/vue-select@3.0.0/dist/vue-select.css';
-.v-select{
-    width: 100% !important;
-}
+
+<style scoped>
+
 </style>

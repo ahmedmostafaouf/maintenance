@@ -1,5 +1,5 @@
 <template>
-<form-data title="Add Service" :errors="errors"/>
+<form-data title="Add Service" :errors="errors" @addService="addService"/>
 </template>
 
 <script>
@@ -27,7 +27,9 @@ import formData from './form.vue';
                     console.log(data);
                      this.errors = {}
                     this.makeToast('success', data.data.message)
-                    this.$router.push({ name: 'services' })
+                   setTimeout(() => {
+                        this.$router.push({ name: 'services' })
+                    },1000)
                 })
                  .catch(error => {
                      if(error.response){
@@ -38,7 +40,6 @@ import formData from './form.vue';
             }
         },
         mounted(){
-            Fire.$on('add-service',this.addService)
         }
     }
 </script>

@@ -36,6 +36,11 @@ export default [
     component: () => import('@/views/dashboard/roles/assignRole.vue'),
   },
   {
+    path: '/dashboard/roles/:id/edit',
+    name: 'edit-role',
+    component: () => import('@/views/dashboard/roles/edit.vue'),
+  },
+  {
     path: '/dashboard/departments',
     name: 'departments',
     component: () => import('@/views/dashboard/departments/index.vue'),
