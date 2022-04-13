@@ -37,6 +37,10 @@ export default [
         title: 'Add_organization',
         route: 'add-organization',
       },
+      {
+        title: 'Show_organization',
+        route: 'show-organization',
+      },
     ],
   },
     {
