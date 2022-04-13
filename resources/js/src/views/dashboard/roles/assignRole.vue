@@ -6,13 +6,7 @@
             label-for="vi-roles"
             >
             <b-input-group class="input-group-merge">
-                <v-select
-                v-model="role_id"
-                placeholder="Roles..."
-                :options="roles"
-                :reduce="rol => rol.id"
-                label="roleName"
-                />
+                 <b-form-input id="vi-name" v-model="role" placeholder="Name" />
             </b-input-group>
             <label
                 v-if="Object.keys(errors).length > 0 && errors.rol !== undefined"
@@ -31,7 +25,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="r in all_routes" :key="r.name">
+                    <tr v-for="r in all_permissions" :key="r.name">
                         <td>{{r.name}}</td>
                         <td>read <input type="checkbox" v-model="r.read" /></td>
                         <td>write <input type="checkbox" v-model="r.write" /></td>
@@ -49,12 +43,9 @@ import {
   BFormInvalidFeedback,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
-import vSelect from 'vue-select'
-import axios from 'axios'
 export default {
     components: {
         BRow,
-        vSelect,
         BCol,
         BFormValidFeedback,
         BFormInvalidFeedback,
@@ -73,53 +64,20 @@ export default {
     data(){
         return{
             is_sending:false,
-            roles:[],
             errors:{},
-            role_id:'',
-            all_routes:[],
-            default_all_routes:[]
-        }
-    },
-    watch:{
-        'role_id'(val){
-            this.roles.map((item) => {
-                if(item.id == val){
-                    if(item.permissions){
-                        if(typeof JSON.parse(item.permissions) == 'object'){
-                            this.all_routes = JSON.parse(item.permissions)
-                        }else{
-                            this.all_routes = JSON.parse(JSON.parse(item.permissions))
-                        }
-                    }
-                }
-            })
+            role:'',
+            all_permissions:[],
         }
     },
     methods:{
-        getAllRoles() {
-            axios.get('all-roles', {
-                headers: {
-                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                },
-            }).then(response => {
-                this.roles = response.data.data
-                if(response.data.data.length > 0){
-                    this.role_id = response.data.data[0].id
-                    if(response.data.data[0].permissions)
-                        this.all_routes = JSON.parse(response.data.data[0].permissions)
+        assignRole(){
+            let data = JSON.stringify(this.all_permissions)
+            axios.post('roles',{'role':this.role,'permissions' : data})
+            .then((res)=>{
+                if(res.status === 200){
+                    this.makeToast('success', res.data.message);
                 }
             })
-        },
-        async assignRole(){
-            let data = JSON.stringify(this.all_routes)
-            const res = await axios.post('assign-role',{'role':this.role_id,'permissions' : data}, {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                },
-            });
-            if(res.status === 200){
-                this.makeToast('success', 'Permissions updated successfully');
-            }
 
         },
         makeToast(variant = null, body) {
@@ -129,21 +87,19 @@ export default {
                 solid: true,
             })
         },
+        permissions(){
+            axios.get('/spinner/permissions')
+            .then(({data})=>{
+                data.permissions.forEach(permission=>{
+                    this.all_permissions.push({
+                        name: permission , read: false,write: false,delete: false,update: false
+                    })
+                })
+            })
+        }
     },
     created(){
-        this.getAllRoles()
-
-        this.$router.options.routes.forEach(route => {
-            if(route.name){
-                this.all_routes.push({
-                    name: route.name , read: false,write: false,delete: false,update: false
-                })
-                this.default_all_routes.push({
-                    name: route.name , read: false,write: false,delete: false,update: false
-                })
-            }
-        })
-
+        this.permissions();
     }
 
 }

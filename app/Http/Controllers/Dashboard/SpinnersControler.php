@@ -16,4 +16,8 @@ class SpinnersControler extends Controller
         $departments = Department::select('id','name')->where('status',1)->get();
         return $this->returnData('departments',$departments);
     }
+
+    public function permissions(){
+        return $this->returnData('permissions',permissions());
+    }
 }

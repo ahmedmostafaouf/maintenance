@@ -17,7 +17,6 @@ if(!function_exists('generateQrcode')){
 
         return $qrcode;
     }
-
 }
 
 
@@ -30,5 +29,11 @@ if(!function_exists('imageUpload')){
         $image->move(public_path($path), $imageName);
         return $imageName;
     }
+}
 
+if(!function_exists('permissions')){
+    function permissions(){
+       $permissions = ['branches','departments','members','organizations','roles','services','users'];
+        return $permissions;
+    }
 }
