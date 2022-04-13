@@ -8,6 +8,7 @@ use App\Http\Resources\Dashboard\DepartmentsResource;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 
 class DepartmentController extends Controller
@@ -70,7 +71,12 @@ class DepartmentController extends Controller
     public function edit($id)
     {
         try{
-            $departments=Department::findOrFail($id);
+
+
+            $departments=Department::findOrFail($id)->tosql();
+
+             
+
             if($departments){
                 return $this->returnData('departments',$departments);
             }
