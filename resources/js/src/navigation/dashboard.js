@@ -6,10 +6,10 @@ export default [
   },
 
   {
-    header: 'Roles & Permissions',
+    header: 'Roles_Permissions',
   },
   {
-    title: 'Roles Section',
+    title: 'Roles_Section',
     icon: 'AlertCircleIcon',
     children: [
       {
@@ -17,13 +17,13 @@ export default [
         route: 'roles',
       },
       {
-        title: 'Assign Roles',
+        title: 'Assign_Roles',
         route: 'assign-role',
       },
     ],
   },
   {
-    header: 'System Setup',
+    header: 'System_Setup',
   },
   {
     title: 'Organizations',
@@ -34,11 +34,26 @@ export default [
         route: 'organizations',
       },
       {
-        title: 'Add organization',
+        title: 'Add_organization',
         route: 'add-organization',
       },
     ],
   },
+    {
+        title: 'Branches',
+        icon: 'GitBranchIcon',
+        children: [
+            {
+                title: 'Branch',
+                route: 'branches',
+            },
+            {
+                title: 'Add_Branch',
+                route: 'add-branch',
+            },
+        ],
+
+    },
   {
     title: 'Department',
     icon: 'PackageIcon',
@@ -48,25 +63,10 @@ export default [
         route: 'departments',
       },
       {
-        title: 'Add Department',
+        title: 'Add_Department',
         route: 'add-department',
       },
     ],
-  },
-  {
-    title: 'Branches',
-    icon: 'GitBranchIcon',
-    children: [
-      {
-        title: 'Branch',
-        route: 'branches',
-      },
-      {
-        title: 'Add Branch',
-        route: 'add-branch',
-      },
-    ],
-
   },
   {
     title: 'Services',
@@ -77,7 +77,7 @@ export default [
         route: 'services',
       },
       {
-        title: 'Add Services',
+        title: 'Add_Services',
         route: 'add-service',
       },
     ],

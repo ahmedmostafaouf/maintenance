@@ -81,7 +81,6 @@
         >
           <v-select
             v-model="routerTransition"
-            :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
             :clearable="false"
             label="title"
             :options="routerTransitionOptions"
