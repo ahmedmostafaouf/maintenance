@@ -65,7 +65,7 @@
               :placeholder="$i18n.t('branches.org')"
               :options="organizations"
               :reduce="org => org.id"
-              :dir="$store.state.appConfig.isRTL ? 'rtl' : 'ltr'"
+              :dir="arabic ? 'rtl' : 'ltr'"
               label="name"
             />
           </b-input-group>
@@ -130,6 +130,7 @@ import {
 import Ripple from 'vue-ripple-directive'
 import vSelect from 'vue-select'
 import axios from 'axios'
+import {mapGetters} from "vuex";
 
 export default {
   name: 'AddBranch',
@@ -154,6 +155,7 @@ export default {
   data() {
     return {
       organizations: [],
+        arabic:false,
       errors: {},
       branch: {
         name: '',
@@ -163,9 +165,20 @@ export default {
       },
     }
   },
+    computed:{
+      ...mapGetters({
+          "isArabic" : 'appConfig/get_iSrtl'
+      })
+    },
   created() {
     this.getAllOrganizations()
+      this.arabic = this.isArabic
   },
+    watch:{
+      'isArabic'(val){
+          this.arabic = val
+      }
+    },
   methods: {
     makeToast(variant = null, body) {
       this.$bvToast.toast(body, {

@@ -21,7 +21,11 @@ export default {
       },
     },
   },
-  getters: {},
+  getters: {
+      get_iSrtl(state){
+          return state.layout.isRTL
+      }
+  },
   mutations: {
     TOGGLE_RTL(state,locale) {
 
