@@ -20,10 +20,11 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'email' => $this->email,
             'image' => $this->image,
-            'role' => 'admin',
+            'status' => $this->status,
+            'role' => $this->role,
             'ability' => [["action"=> "manage", "subject"=> "all"]],
-            'roles' => @$this->roles->roleName,
-            'permissions' => @$this->roles->permissions,
+            'group' => @$this->group->roleName,
+            'permissions' => json_decode($this->group->permissions),
         ];
         return [
             'accessToken' => $this->createToken('token-name', ['server:update'])->plainTextToken,

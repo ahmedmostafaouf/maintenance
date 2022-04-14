@@ -1,6 +1,7 @@
 <template>
   <li
-    v-if="canViewVerticalNavMenuLink(item)"
+    v-if="item.allows"
+    v-show="canViewVerticalNavMenuLink(item)"
     class="nav-item"
     :class="{
       'active': isActive,

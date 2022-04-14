@@ -1,3 +1,8 @@
+// auth user
+let user = localStorage.getItem('userData');
+// gate
+import Gate from '../Gate';
+let gate = new Gate(JSON.parse(user));
 export default [
   {
     title: 'Dashboards',
@@ -11,14 +16,17 @@ export default [
   {
     title: 'Roles_Section',
     icon: 'AlertCircleIcon',
+    allows: (gate.hasPermission('read roles') || gate.hasPermission('write roles')),
     children: [
       {
         title: 'Roles',
         route: 'roles',
+        allows:gate.hasPermission('read roles'),
       },
       {
         title: 'Assign_Roles',
         route: 'assign-role',
+        allows:gate.hasPermission('write roles'),
       },
     ],
   },
@@ -28,61 +36,74 @@ export default [
   {
     title: 'Organizations',
     icon: 'CopyIcon',
+    allows: (gate.hasPermission('read organizations') || gate.hasPermission('write organizations')),
     children: [
-      {
-        title: 'Organizations',
-        route: 'organizations',
-      },
-      {
-        title: 'Add_organization',
-        route: 'add-organization',
-      },
-      {
-        title: 'Show_organization',
-        route: 'show-organization',
-      },
+        {
+            title: 'Organizations',
+            route: 'organizations',
+            allows:gate.hasPermission('read organizations')
+        },
+        {
+            title: 'Add_organization',
+            route: 'add-organization',
+            allows:gate.hasPermission('write organizations')
+        },
+        {
+            title: 'Show_organization',
+            route: 'show-organization',
+            allows:gate.hasPermission('read organizations')
+        },
     ],
   },
     {
         title: 'Branches',
         icon: 'GitBranchIcon',
+        allows: (gate.hasPermission('read branches') || gate.hasPermission('write branches')),
         children: [
             {
                 title: 'Branch',
                 route: 'branches',
+                allows:gate.hasPermission('read branches'),
             },
             {
                 title: 'Add_Branch',
                 route: 'add-branch',
+                allows:gate.hasPermission('write branches'),
             },
         ],
 
     },
-  {
-    title: 'Department',
-    icon: 'PackageIcon',
-    children: [
-      {
+    {
         title: 'Department',
-        route: 'departments',
-      },
-      {
-        title: 'Add_Department',
-        route: 'add-department',
-      },
-    ],
-  },
+        icon: 'PackageIcon',
+        allows: (gate.hasPermission('read departments') || gate.hasPermission('write departments')),
+        children: [
+          {
+            title: 'Department',
+            route: 'departments',
+            allows: gate.hasPermission('read departments')
+          },
+          {
+            title: 'Add_Department',
+            route: 'add-department',
+            allows: gate.hasPermission('write departments')
+          },
+        ],
+    },
   {
     title: 'Services',
     icon: 'ServerIcon',
+    allows: (gate.hasPermission('read services') || gate.hasPermission('write services')),
     children: [
       {
         title: 'Services',
         route: 'services',
+        allows:gate.hasPermission('read services')
       },
       {
         title: 'Add_Services',
         route: 'add-service',
+        allows:gate.hasPermission('write services')
       },
     ],
   },
