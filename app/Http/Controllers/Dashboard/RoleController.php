@@ -93,6 +93,7 @@ class RoleController extends Controller
         if (auth('sanctum')->user()->cannot('admin', 'update roles')) {
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
+        dd(json_decode($request['permissions']));
         $this->validate($request,[
             'role'=> 'required|string',
             'permissions'=> 'required'
