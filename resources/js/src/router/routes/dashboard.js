@@ -21,7 +21,7 @@ export default [
     },
   },
   {
-    path: '/dashboard/show-organization',
+    path: '/dashboard/show-organization/:id',
     name: 'show-organization',
     component: () => import('@/views/dashboard/organizations/show.vue'),
     meta: {
