@@ -22,14 +22,15 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
 
         $this->call([
+            RoleSeeder::class,
             UserSeeder::class,
         ]);
-        Organization::factory(10)->create();
-        Branch::factory(10)->create();
-        Department::factory(10)->create();
-        Service::factory(10)->create();
-        Member::factory(10)->create();
-        MemberService::factory(10)->create();
+//        Organization::factory(10)->create();
+//        Branch::factory(10)->create();
+//        Department::factory(10)->create();
+//        Service::factory(10)->create();
+//        Member::factory(10)->create();
+//        MemberService::factory(10)->create();
 
     }
 }
