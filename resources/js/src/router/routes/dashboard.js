@@ -10,6 +10,14 @@ export default [
     component: () => import('@/views/dashboard/organizations/Index.vue'),
     meta: {
       title: 'Organizations',
+        pageTitle: 'Organizations',
+
+        breadcrumb: [
+        {
+          text: 'Organizations',
+          active: true,
+        },
+      ],
     },
   },
   {
@@ -18,21 +26,61 @@ export default [
     component: () => import('@/views/dashboard/organizations/Create.vue'),
     meta: {
       title: 'Add Organization',
-    },
-  },
-  {
-    path: '/dashboard/show-organization/:id',
-    name: 'show-organization',
-    component: () => import('@/views/dashboard/organizations/show.vue'),
-    meta: {
-      title: 'Show Organization',
+        pageTitle: 'Add Organization',
+
+        breadcrumb: [
+        {
+          text: 'Organizations',
+          to: '/dashboard/organizations',
+        },
+        {
+          text: 'Add Organization',
+          active: true,
+        },
+      ],
     },
   },
   {
     path: '/dashboard/organizations/:id/edit',
     name: 'edit-organization',
     component: () => import('@/views/dashboard/organizations/Edit.vue'),
+      meta: {
+          title: 'Edit Organization',
+          pageTitle: 'Edit Organization',
+
+          breadcrumb: [
+              {
+                  text: 'Organizations',
+                  to: '/dashboard/organizations',
+              },
+              {
+                  text: 'Edit Organization',
+                  active: true,
+              },
+          ],
+      },
   },
+    {
+        path: '/dashboard/show-organization/:id',
+        name: 'show-organization',
+        component: () => import('@/views/dashboard/organizations/show.vue'),
+        meta: {
+            title: 'Show Organization',
+            pageTitle: 'Show Organization',
+
+            breadcrumb: [
+                {
+                    text: 'Organizations',
+                    to: '/dashboard/organizations',
+                },
+                {
+                    text: 'Show Organization',
+                    active: true,
+                },
+            ],
+        },
+
+    },
   {
     path: '/dashboard/roles',
     name: 'roles',

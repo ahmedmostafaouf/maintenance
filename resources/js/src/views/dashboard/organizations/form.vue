@@ -521,9 +521,9 @@ export default {
           formData.append(key, this.organization[key])
         }
       }
-      formData.append('_method', 'PATCH')
       if (this.$route.params.id) {
-        axios.post(`organizations/${this.$route.params.id}`, formData, config)
+          formData.append('_method', 'PATCH')
+          axios.post(`organizations/${this.$route.params.id}`, formData, config)
           .then(data => this.formSuccess(data))
           .catch(error => this.formCatchError(error))
       } else {
