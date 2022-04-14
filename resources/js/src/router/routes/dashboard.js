@@ -13,7 +13,7 @@ export default [
     },
   },
   {
-    path: '/dashboard/organizations-add',
+    path: '/dashboard/add-organization',
     name: 'add-organization',
     component: () => import('@/views/dashboard/organizations/Create.vue'),
     meta: {
@@ -21,9 +21,19 @@ export default [
     },
   },
   {
+    path: '/dashboard/organizations/:id/edit',
+    name: 'edit-organization',
+    component: () => import('@/views/dashboard/organizations/Edit.vue'),
+  },
+  {
     path: '/dashboard/roles',
-    name: 'dashboard',
+    name: 'roles',
     component: () => import('@/views/dashboard/roles/Index.vue'),
+  },
+  {
+    path: '/dashboard/assign-role',
+    name: 'assign-role',
+    component: () => import('@/views/dashboard/roles/assignRole.vue'),
   },
   {
     path: '/dashboard/departments',
@@ -51,6 +61,11 @@ export default [
     component: () => import('@/views/dashboard/branches/add-branch.vue'),
   },
   {
+    path: '/dashboard/branch/:id/edit',
+    name: 'edit-branch',
+    component: () => import('@/views/dashboard/branches/edit.vue'),
+  },
+  {
     path: '/dashboard/services',
     name: 'services',
     component: () => import('@/views/dashboard/services/index.vue'),
@@ -59,14 +74,19 @@ export default [
     },
   },
   {
+    path: '/dashboard/services/create',
+    name: 'add-service',
+    component: () => import('@/views/dashboard/services/add.vue'),
+  },
+  {
     path: '/dashboard/services/:id/edit',
     name: 'edit-service',
     component: () => import('@/views/dashboard/services/edit.vue'),
   },
   {
-    path: '/dashboard/branch/:id/edit',
-    name: 'edit-branch',
-    component: () => import('@/views/dashboard/branches/edit.vue'),
+    path: '/dashboard/profile/edit',
+    name: 'edit-profile',
+    component: () => import('@/views/dashboard/profile/index.vue'),
   },
 
 ]

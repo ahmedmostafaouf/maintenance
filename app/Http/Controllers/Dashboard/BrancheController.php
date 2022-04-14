@@ -133,7 +133,7 @@ class BrancheController extends Controller
             }
             return $this->returnSuccessMessage('Branch Deleted Succeffully');
          } catch (\Exception $e) {
-            return $this->returnError(500,'err');
+            return $this->returnError(500,'Can not delete because have departments and services');
         }
     }
 }

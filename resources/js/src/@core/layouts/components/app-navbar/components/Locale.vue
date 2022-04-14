@@ -45,6 +45,19 @@ export default {
       return this.locales.find(l => l.locale === this.$i18n.locale)
     },
   },
+  created(){
+    //   console.log(this.currentLocale)
+  },
+  watch:{
+      currentLocale: function (val) {
+          if (val.locale == 'ar') {
+              this.$store.commit('appConfig/TOGGLE_RTL', true)
+          } else {
+              this.$store.commit('appConfig/TOGGLE_RTL', false)
+          }
+
+      }
+  },
   setup() {
     /* eslint-disable global-require */
     const locales = [
@@ -59,6 +72,7 @@ export default {
         name: 'Arabic',
       },
     ]
+
     /* eslint-disable global-require */
 
     return {

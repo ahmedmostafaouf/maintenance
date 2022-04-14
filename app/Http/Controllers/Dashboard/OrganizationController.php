@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Dashboard\OrganizationRequest;
 use App\Http\Resources\Dashboard\OrganizationResource;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Organization;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class OrganizationController extends Controller
 {
@@ -26,68 +28,59 @@ class OrganizationController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly created organization in storage.
      *
-     * @return \Illuminate\Http\Response
+     * @param  OrganizationRequest  $request
+     * @return Response
      */
-    public function create()
+    public function store(OrganizationRequest $request)
     {
-        //
+        $data = $request->except('logo');
+        if( isset($request->logo) && $request->logo->isValid())
+            $data['logo'] = imageUpload($request->logo, 'images/organization/logo');
+
+        $data['qr_code'] = generateQrcode($request->name);
+        Organization::create($data);
+        $this->returnSuccessMessage('Organization Created Successfully');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Show the form for editing the specified organization.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  Organization $organization
+     * @return Response
      */
-    public function store(Request $request)
+    public function edit(Organization $organization)
     {
-        //
+        return $this->returnData( 'organization', new OrganizationResource($organization), 'Organization Data Returned Successfully' );
     }
 
     /**
-     * Display the specified resource.
+     * Update the specified organization in storage.
      *
-     * @param  int  $id
+     * @param  OrganizationRequest  $request
+     * @param  Organization $organization
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function update(OrganizationRequest $request, Organization $organization)
     {
-        //
+        $data = $request->except('logo');
+        if(isset($request->logo) && $request->logo->isValid())
+            $data['logo'] = imageUpload($request->logo, 'images/organization/logo');
+
+        $organization->update($data);
+        $this->returnSuccessMessage('Organization Updated Successfully');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Remove the specified organization from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param  Organization $organization
+     * @return Response
      */
-    public function edit($id)
+    public function destroy(Organization $organization)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $organization->delete();
+        return $this->returnSuccessMessage('Organization Deleted Successfully');
     }
 }

@@ -9,10 +9,10 @@
           mode="remote"
           :total-rows="totalRecords"
           :is-loading="isLoading"
-          :pagination-options="{enabled: true}"
           :rows="rows"
           :columns="columns"
           :rtl="direction"
+          :pagination-options="{enabled: true}"
           :sort-options="{enabled: true}"
           :select-options="{
             enabled: true,
@@ -24,7 +24,6 @@
             selectAllByGroup: true,
           }"
           @on-sort-change="onSortChange"
-
         >
 
           <template
@@ -45,16 +44,26 @@
                 {{ (props.row.status=='0')?'In Active':"Active" }}
               </b-badge>
             </span>
-             <!-- Column: Status -->
+            <!-- Column: Status -->
             <span v-else-if="props.column.field === 'website_url'">
-               <a target="_blank" class="btn btn-primary website" :href="props.row.website_url"   >
-                  <feather-icon icon="Link2Icon" class="mr-50"/>
-                  <span class="align-middle">website</span>
-                </a>
+              <a
+                target="_blank"
+                class="btn btn-primary website"
+                :href="props.row.website_url"
+              >
+                <feather-icon
+                  icon="Link2Icon"
+                  class="mr-50"
+                />
+                <span class="align-middle">website</span>
+              </a>
             </span>
             <!-- Column: Image -->
             <span v-else-if="props.column.field === 'logo'">
-              <b-avatar :src="props.row.logo" class="mx-1"/>
+              <b-avatar
+                :src="props.row.logo"
+                class="mx-1"
+              />
             </span>
             <!-- Column: Action -->
             <span v-else-if="props.column.field === 'action'">
@@ -212,8 +221,16 @@ export default {
     },
   },
   mounted() {
+    if (this.$route.name == 'roles') {
+      this.serverParams.sort.field = 'roleName'
+    } else {
+      this.serverParams.sort.field = 'name'
+    }
     this.columns = this.columnsProp
     this.loadItems()
+   Fire.$on('deleted',()=>{
+          this.loadItems();
+      })
   },
   methods: {
     getdata() {
@@ -248,17 +265,13 @@ export default {
       this.loadItems()
     },
     loadItems() {
-        this.isLoading=true
-      axios.get(`${this.url}?searchTerm=${this.searchTerm}&page=${this.serverParams.page}&per_page=${this.serverParams.perPage}&field=${this.serverParams.sort.field}&type=${this.serverParams.sort.type}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-        },
-      }).then(response => {
-        this.isLoading=false
+      this.isLoading = true
+      axios.get(`${this.url}?searchTerm=${this.searchTerm}&page=${this.serverParams.page}&per_page=${this.serverParams.perPage}&field=${this.serverParams.sort.field}&type=${this.serverParams.sort.type}`).then(response => {
+        this.isLoading = false
         this.rows = response.data.data
         this.totalRecords = response.data.meta.total
-      }).catch((err)=>{
-          this.isLoading=false
+      }).catch(err => {
+        this.isLoading = false
       })
     },
   },
@@ -269,10 +282,4 @@ export default {
 .website{
     display: flex!important;
 }
-/*span{
-    -webkit-hyphens: none;
-    -moz-hyphens:    none;
-    -ms-hyphens:     none;
-    hyphens:         none;
-}*/
 </style>

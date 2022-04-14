@@ -1,11 +1,11 @@
 <template>
   <b-form @submit.prevent="saveBranch">
     <b-row>
-        <h2>Add Branch</h2>
+        <h2>{{$i18n.t('branches.add_branch')}}</h2>
       <!-- first name -->
       <b-col cols="12">
         <b-form-group
-          label="Name"
+          :label="$i18n.t('branches.name')"
           label-for="vi-name"
         >
           <b-input-group class="input-group-merge">
@@ -15,14 +15,14 @@
             <b-form-input
               id="vi-name"
               v-model="branch.name"
-              placeholder="Name"
+              :placeholder="$i18n.t('branches.name')"
             /><br>
           </b-input-group>
           <label
             v-if="Object.keys(errors).length > 0 && errors.name !== undefined"
             class="text-danger"
           >
-            Name is required
+            {{$i18n.t('branches.required_name')}}
           </label>
         </b-form-group>
       </b-col>
@@ -30,7 +30,7 @@
       <!-- phone -->
       <b-col cols="12">
         <b-form-group
-          label="Phone"
+          :label="$i18n.t('branches.phone')"
           label-for="vi-phone"
         >
           <b-input-group class="input-group-merge">
@@ -41,14 +41,14 @@
               id="vi-phone"
               v-model="branch.phone"
               type="number"
-              placeholder="Phone"
+              :placeholder="$i18n.t('branches.phone')"
             /><br>
           </b-input-group>
           <label
             v-if="Object.keys(errors).length > 0 && errors.phone !== undefined"
             class="text-danger"
           >
-            Phone is required
+            {{$i18n.t('branches.required_phone')}}
           </label>
         </b-form-group>
       </b-col>
@@ -56,15 +56,16 @@
       <!-- orgnization -->
       <b-col cols="12">
         <b-form-group
-          label="Organization"
+          :label="$i18n.t('branches.org')"
           label-for="vi-organization"
         >
           <b-input-group class="input-group-merge">
             <v-select
               v-model="branch.org"
-              placeholder="Organization..."
+              :placeholder="$i18n.t('branches.org')"
               :options="organizations"
               :reduce="org => org.id"
+              :dir="arabic ? 'rtl' : 'ltr'"
               label="name"
             />
           </b-input-group>
@@ -72,19 +73,19 @@
             v-if="Object.keys(errors).length > 0 && errors.org !== undefined"
             class="text-danger"
           >
-            Organization is required
+            {{$i18n.t('branches.required_org')}}
           </label>
         </b-form-group>
       </b-col>
 
       <!-- description -->
       <b-col cols="12">
-        <label for="textarea-default">Description</label>
+        <label for="textarea-default">{{$i18n.t('branches.desc')}}</label>
         <b-input-group class="input-group-merge">
           <b-form-textarea
             id="textarea-default"
             v-model="branch.desc"
-            placeholder="Description"
+            :placeholder="$i18n.t('branches.desc')"
             rows="3"
           /><br>
         </b-input-group>
@@ -92,7 +93,7 @@
           v-if="Object.keys(errors).length > 0 && errors.desc !== undefined"
           class="text-danger"
         >
-          Description is required
+          {{$i18n.t('branches.required_desc')}}
         </label>
       </b-col>
 
@@ -107,14 +108,14 @@
           variant="primary"
           class="mr-1"
         >
-          Submit
+          {{$i18n.t('branches.add_btn')}}
         </b-button>
         <b-button
           v-ripple.400="'rgba(186, 191, 199, 0.15)'"
           type="reset"
           variant="outline-secondary"
         >
-          Reset
+          {{$i18n.t('branches.reset_btn')}}
         </b-button>
       </b-col>
     </b-row>
@@ -129,6 +130,7 @@ import {
 import Ripple from 'vue-ripple-directive'
 import vSelect from 'vue-select'
 import axios from 'axios'
+import {mapGetters} from "vuex";
 
 export default {
   name: 'AddBranch',
@@ -153,6 +155,7 @@ export default {
   data() {
     return {
       organizations: [],
+        arabic:false,
       errors: {},
       branch: {
         name: '',
@@ -162,9 +165,20 @@ export default {
       },
     }
   },
+    computed:{
+      ...mapGetters({
+          "isArabic" : 'appConfig/get_iSrtl'
+      })
+    },
   created() {
     this.getAllOrganizations()
+      this.arabic = this.isArabic
   },
+    watch:{
+      'isArabic'(val){
+          this.arabic = val
+      }
+    },
   methods: {
     makeToast(variant = null, body) {
       this.$bvToast.toast(body, {
