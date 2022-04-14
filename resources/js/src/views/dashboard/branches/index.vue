@@ -87,6 +87,12 @@ export default {
 
         },
         {
+          label: 'Departments Count',
+          field: 'departments_count',
+          filterable: true,
+
+        },
+        {
           label: 'Address',
           field: 'address',
           filterable: true,

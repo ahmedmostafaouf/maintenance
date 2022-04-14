@@ -19,6 +19,7 @@ class BranchesResource extends JsonResource
             'name'=>$this->name,
             'phone'=>$this->phone,
             'address'=>$this->address,
+            'departments_count'=>@$this->departments->count(),
             'created_at'=>$this->created_at,
             'organization_id'=>@$this->organization->name ?? '..',
         ];

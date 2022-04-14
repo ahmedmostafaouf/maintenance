@@ -48,6 +48,10 @@ export default [
         route: 'add-organization',
         allows:gate.hasPermission('write organizations')
       },
+        {
+            title: 'Show_organization',
+            route: 'show-organization',
+        },
     ],
   },
   {
@@ -104,4 +108,3 @@ export default [
   },
 
 ]
-console.log(gate.hasPermission('write services'))
