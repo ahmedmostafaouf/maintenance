@@ -11,10 +11,10 @@ export default [
   },
 
   {
-    header: 'Roles & Permissions',
+    header: 'Roles_Permissions',
   },
   {
-    title: 'Roles Section',
+    title: 'Roles_Section',
     icon: 'AlertCircleIcon',
     allows: (gate.hasPermission('read roles') || gate.hasPermission('write roles')),
     children: [
@@ -24,71 +24,72 @@ export default [
         allows:gate.hasPermission('read roles'),
       },
       {
-        title: 'Assign Roles',
+        title: 'Assign_Roles',
         route: 'assign-role',
         allows:gate.hasPermission('write roles'),
       },
     ],
   },
   {
-    header: 'System Setup',
+    header: 'System_Setup',
   },
   {
     title: 'Organizations',
     icon: 'CopyIcon',
     allows: (gate.hasPermission('read organizations') || gate.hasPermission('write organizations')),
     children: [
-      {
-        title: 'Organizations',
-        route: 'organizations',
-        allows:gate.hasPermission('read organizations')
-      },
-      {
-        title: 'Add organization',
-        route: 'add-organization',
-        allows:gate.hasPermission('write organizations')
-      },
+        {
+            title: 'Organizations',
+            route: 'organizations',
+            allows:gate.hasPermission('read organizations')
+        },
+        {
+            title: 'Add_organization',
+            route: 'add-organization',
+            allows:gate.hasPermission('write organizations')
+        },
         {
             title: 'Show_organization',
             route: 'show-organization',
+            allows:gate.hasPermission('read organizations')
         },
     ],
   },
-  {
-    title: 'Department',
-    icon: 'PackageIcon',
-    allows: (gate.hasPermission('read departments') || gate.hasPermission('write departments')),
-    children: [
-      {
-        title: 'Department',
-        route: 'departments',
-        allows: gate.hasPermission('read departments')
-      },
-      {
-        title: 'Add Department',
-        route: 'add-department',
-        allows: gate.hasPermission('write departments')
-      },
-    ],
-  },
-  {
-    title: 'Branches',
-    icon: 'GitBranchIcon',
-    allows: (gate.hasPermission('read branches') || gate.hasPermission('write branches')),
-    children: [
-      {
-        title: 'Branch',
-        route: 'branches',
-        allows:gate.hasPermission('read branches'),
-      },
-      {
-        title: 'Add Branch',
-        route: 'add-branch',
-        allows:gate.hasPermission('write branches'),
-      },
-    ],
+    {
+        title: 'Branches',
+        icon: 'GitBranchIcon',
+        allows: (gate.hasPermission('read branches') || gate.hasPermission('write branches')),
+        children: [
+            {
+                title: 'Branch',
+                route: 'branches',
+                allows:gate.hasPermission('read branches'),
+            },
+            {
+                title: 'Add_Branch',
+                route: 'add-branch',
+                allows:gate.hasPermission('write branches'),
+            },
+        ],
 
-  },
+    },
+    {
+        title: 'Department',
+        icon: 'PackageIcon',
+        allows: (gate.hasPermission('read departments') || gate.hasPermission('write departments')),
+        children: [
+          {
+            title: 'Department',
+            route: 'departments',
+            allows: gate.hasPermission('read departments')
+          },
+          {
+            title: 'Add_Department',
+            route: 'add-department',
+            allows: gate.hasPermission('write departments')
+          },
+        ],
+    },
   {
     title: 'Services',
     icon: 'ServerIcon',
@@ -100,7 +101,7 @@ export default [
         allows:gate.hasPermission('read services')
       },
       {
-        title: 'Add Services',
+        title: 'Add_Services',
         route: 'add-service',
         allows:gate.hasPermission('write services')
       },
