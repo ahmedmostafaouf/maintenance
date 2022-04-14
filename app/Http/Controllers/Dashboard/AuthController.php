@@ -18,7 +18,7 @@ class AuthController extends Controller
         if (! $user || ! Hash::check($request->password, $user->password))
             return $this->validationError([ 'email' => [__('auth.failed')],]);
 
-        return $this->returnData('data', new UserResource($user), 'User Authenticated Successfully');
+        return $this->returnData('data', new UserResource($user->load('group')), 'User Authenticated Successfully');
     }
 
     /**this method signs out users by removing tokens

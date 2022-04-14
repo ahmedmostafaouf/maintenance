@@ -21,6 +21,9 @@ class BrancheController extends Controller
      */
     public function index(Request $request)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'read branches')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         $branches = Branch::branchesData($request);
         return BranchesResource::collection($branches);
     }
@@ -52,6 +55,9 @@ class BrancheController extends Controller
      */
     public function store(BranchesRequest $request)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'write branches')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         try{
             Branch::create([
                 'name' => $request->name,
@@ -85,6 +91,9 @@ class BrancheController extends Controller
      */
     public function edit($id)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'update branches')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         try{
             $branche = Branch::find($id);
             if($branche){
@@ -104,6 +113,9 @@ class BrancheController extends Controller
      */
     public function update(BranchesRequest $request,$id)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'update branches')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         $branche = Branch::find($id);
         try{
             $branche->update([
@@ -126,7 +138,9 @@ class BrancheController extends Controller
      */
     public function destroy(Branch $branch)
     {
-
+        if (auth('sanctum')->user()->cannot('admin', 'delete branches')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         try{
             if($branch){
                 $branch->delete();

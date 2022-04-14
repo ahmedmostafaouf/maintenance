@@ -88,7 +88,8 @@ export default {
       this.$ability.update(initialAbility)
 
       // Redirect to login page
-      this.$router.push({ name: 'auth-login' })
+      if(this.$router.name !== 'auth-login')
+          this.$router.push({ name: 'auth-login' })
     },
   },
   created(){

@@ -20,6 +20,9 @@ class OrganizationController extends Controller
      */
     public function index(Request $request)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'read organizations')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
          $organizations = Organization::filter($request)
                                      ->orderBy($request->field,$request->type)
                                      ->paginate( $request->per_page );
@@ -35,6 +38,9 @@ class OrganizationController extends Controller
      */
     public function store(OrganizationRequest $request)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'write organizations')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         $data = $request->except('logo');
         if( isset($request->logo) && $request->logo->isValid())
             $data['logo'] = imageUpload($request->logo, 'images/organization/logo');
@@ -52,6 +58,9 @@ class OrganizationController extends Controller
      */
     public function edit(Organization $organization)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'update organizations')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         return $this->returnData( 'organization', new OrganizationResource($organization), 'Organization Data Returned Successfully' );
     }
 
@@ -64,6 +73,9 @@ class OrganizationController extends Controller
      */
     public function update(OrganizationRequest $request, Organization $organization)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'update organizations')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         $data = $request->except('logo');
         if(isset($request->logo) && $request->logo->isValid())
             $data['logo'] = imageUpload($request->logo, 'images/organization/logo');
@@ -80,6 +92,9 @@ class OrganizationController extends Controller
      */
     public function destroy(Organization $organization)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'delete organizations')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         $organization->delete();
         return $this->returnSuccessMessage('Organization Deleted Successfully');
     }
