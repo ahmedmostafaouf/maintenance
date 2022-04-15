@@ -22,10 +22,16 @@ class RolesResource extends JsonResource
                 $permissionsCollection->push((object)$item);
             }
         }
+        $selected_count = $permissionsCollection
+            ->where('read',true)
+            ->where('write',true)
+            ->where('update',true)
+            ->where('delete',true)->count();
         return [
-            'id' => $this->id,
-            'name' => $this->roleName,
-            'permissions' => $permissionsCollection->toArray()
+            'id' => (int)$this->id,
+            'name' => (string)$this->roleName,
+            'permissions' => $permissionsCollection->toArray(),
+            'select_all' => (bool) ($selected_count == $permissionsCollection->count())
         ];
     }
 }

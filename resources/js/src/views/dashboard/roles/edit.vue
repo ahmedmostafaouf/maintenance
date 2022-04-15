@@ -21,7 +21,11 @@
             <table class="table table-responsive table-striped">
                 <thead>
                     <tr>
-                        <th class="text-center" colspan="5">Routes</th>
+                        <th class="text-center" colspan="3">Routes</th>
+                        <th class="text-center" colspan="2">
+                            <input type="checkbox" v-model="check_all" />
+                            Select All
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -68,6 +72,17 @@ import Ripple from 'vue-ripple-directive'
                 errors:{},
                 role:'',
                 all_permissions:[],
+                check_all:false
+            }
+        },
+        watch:{
+            check_all(new_val){
+                for(let permission of this.all_permissions){
+                    permission.read = new_val;
+                    permission.write = new_val;
+                    permission.update = new_val;
+                    permission.delete = new_val;
+                }
             }
         },
         methods:{
@@ -76,6 +91,7 @@ import Ripple from 'vue-ripple-directive'
                 .then(({data})=>{
                     this.all_permissions = data.role.permissions;
                     this.role = data.role.name;
+                    this.check_all = data.role.select_all;
                 })
             },
             edit(){
@@ -89,6 +105,7 @@ import Ripple from 'vue-ripple-directive'
                             user.permissions = data.permissions
                             localStorage.setItem('userData', JSON.stringify(user));
                         }
+                        this.$router.push({name:'roles'})
                     }
                 })
             },
