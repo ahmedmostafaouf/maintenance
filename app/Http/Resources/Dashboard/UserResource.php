@@ -23,6 +23,7 @@ class UserResource extends JsonResource
             'status' => $this->status,
             'role' => $this->role,
             'ability' => [["action"=> "manage", "subject"=> "all"]],
+            'group_id' => $this->role_id,
             'group' => @$this->group->roleName,
             'permissions' => json_decode($this->group->permissions),
         ];

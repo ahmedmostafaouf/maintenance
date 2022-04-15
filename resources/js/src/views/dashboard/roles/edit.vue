@@ -84,6 +84,11 @@ import Ripple from 'vue-ripple-directive'
                 .then(({data})=>{
                     if(data.status){
                         this.makeToast('success', data.message);
+                        let user = JSON.parse(this.$user);
+                        if(user.group_id == this.$route.params.id){
+                            user.permissions = data.permissions
+                            localStorage.setItem('userData', JSON.stringify(user));
+                        }
                     }
                 })
             },

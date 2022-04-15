@@ -101,7 +101,7 @@ class RoleController extends Controller
         $inputs['roleName'] = $request['role'];
         $inputs['permissions'] = $request['permissions'];
         $role->update($inputs);
-        return $this->returnSuccessMessage(__('role updated successfully'));
+        return $this->returnData('permissions',json_decode($request['permissions']),__('role updated successfully'));
     }
 
     /**
@@ -116,6 +116,9 @@ class RoleController extends Controller
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
         try{
+            if($role->id == auth()->user()->role_id){
+                return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+            }
             $role->delete();
             return $this->returnSuccessMessage('Service Deleted Succeffully');
          } catch (\Exception $e) {
