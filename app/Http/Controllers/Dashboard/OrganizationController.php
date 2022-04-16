@@ -50,7 +50,7 @@ class OrganizationController extends Controller
 
         $data['qr_code'] = generateQrcode($request->name);
         Organization::create($data);
-        $this->returnSuccessMessage('Organization Created Successfully');
+        return $this->returnSuccessMessage('Organization Created Successfully');
     }
 
     /**
@@ -107,7 +107,7 @@ class OrganizationController extends Controller
             $data['logo'] = imageUpload($request->logo, 'images/organization/logo');
 
         $organization->update($data);
-        $this->returnSuccessMessage('Organization Updated Successfully');
+        return $this->returnSuccessMessage('Organization Updated Successfully');
     }
 
     /**

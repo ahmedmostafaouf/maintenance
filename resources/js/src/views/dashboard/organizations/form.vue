@@ -554,11 +554,11 @@ export default {
       }
     },
     makeToast(variant = null, body) {
-      this.$bvToast.toast(body, {
-        title: `Variant ${variant || 'default'}`,
-        variant,
-        solid: true,
-      })
+      return this.$bvToast.toast(body, {
+            title: `Variant ${variant || 'default'}`,
+            variant,
+            solid: true,
+          })
     },
     getOrganization() {
       axios.get(`/organizations/${this.$route.params.id}/edit`)
