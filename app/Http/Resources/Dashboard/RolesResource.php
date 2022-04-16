@@ -14,20 +14,24 @@ class RolesResource extends JsonResource
      */
     public function toArray($request)
     {
-        $all_permissions = '';
-        // if($this->permissions){
-        //     foreach (json_decode($this->permissions) as $key => $value) {
-        //         $read = ($value->read) ? 'Yes' : 'No';
-        //         $write = ($value->read) ? 'Yes' : 'No';
-        //         $edit = ($value->update) ? 'Yes' : 'No';
-        //         $delete = ($value->delete) ? 'Yes' : 'No';
-        //         $all_permissions.=  $value->name .' => [ '. 'Read -> '. $read .' , Write -> '.$write.' , Edit -> '.$edit.' , Delete -> '.$delete.' ] '. "\r\n";
-        //     }
-        // }
+        $permissionsCollection  = collect(json_decode($this->permissions));
+        foreach (permissions() as $permission){
+            $checkPermission = $permissionsCollection->contains('name',$permission);
+            if(!$checkPermission){
+                $item = ['name'=>$permission,'read'=>false,'write'=>false,'update'=>false,'delete'=>false];
+                $permissionsCollection->push((object)$item);
+            }
+        }
+        $selected_count = $permissionsCollection
+            ->where('read',true)
+            ->where('write',true)
+            ->where('update',true)
+            ->where('delete',true)->count();
         return [
-            'id' => $this->id,
-            'name' => $this->roleName,
-            'permissions' => json_decode($this->permissions)
+            'id' => (int)$this->id,
+            'name' => (string)$this->roleName,
+            'permissions' => $permissionsCollection->toArray(),
+            'select_all' => (bool) ($selected_count == $permissionsCollection->count())
         ];
     }
 }

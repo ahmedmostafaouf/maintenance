@@ -1,5 +1,5 @@
 <template>
-    <div v-if="options">
+    <div>
         <div class="d-flex align-items-center">
             <b-avatar
                 rounded
@@ -8,56 +8,65 @@
                 class="mr-1"
             >
                 <feather-icon
-                    :icon="options.icon"
+                    icon="SunriseIcon"
                     size="20"
                 />
 
             </b-avatar>
             <div>
-                <h4 class="mb-0">
-                    {{ options.title }}
+                <h4 class="mb-0" >
+                    Departments
                 </h4>
-                <span>{{ options.subtitle }}</span>
             </div>
         </div>
 
-        <!-- collapse -->
+<!--         collapse -->
         <app-collapse
             id="faq-payment-qna"
             accordion
             type="margin"
             class="mt-2"
+            v-if="departments.length > 0"
         >
 
             <app-collapse-item
-                v-for="( data,index) in options.qandA"
+                v-for="( department,index) in departments"
                 :key="index"
-                :title="data.question"
+                :title="department.name + ' Department'"
+                :status = "department.status"
             >
-                {{ data.ans }}
+                <department-services :services="department.services"/>
             </app-collapse-item>
-
         </app-collapse>
-
-        <!--/ collapse -->
+        <app-collapse
+            id="faq-payment-qna"
+            accordion
+            type="margin"
+            class="mt-2 text-center"
+            v-else-if="departments.length<=0"
+        >
+            <span>No Departments ...</span>
+        </app-collapse>
     </div>
 </template>
 
 <script>
 import { BAvatar } from 'bootstrap-vue'
+import DepartmentServices from './DepartmentServices.vue'
 import AppCollapse from '@core/components/app-collapse/AppCollapse.vue'
 import AppCollapseItem from '@core/components/app-collapse/AppCollapseItem.vue'
-
 export default {
+    name:'OrganizationDepartments',
     components: {
         BAvatar,
+        DepartmentServices,
         AppCollapseItem,
         AppCollapse,
     },
     props: {
-        options: {
-            type: Object,
-            default: () => {},
+        departments: {
+            type: Array,
+            default: () => [],
         },
     },
 }

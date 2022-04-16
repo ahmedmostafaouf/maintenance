@@ -94,7 +94,7 @@ class RoleController extends Controller
         if (auth('sanctum')->user()->cannot('admin', 'update roles')) {
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
-        dd(json_decode($request['permissions']));
+//        dd(json_decode($request['permissions']));
         $this->validate($request,[
             'role'=> 'required|string',
             'permissions'=> 'required'
@@ -102,7 +102,7 @@ class RoleController extends Controller
         $inputs['roleName'] = $request['role'];
         $inputs['permissions'] = $request['permissions'];
         $role->update($inputs);
-        return $this->returnSuccessMessage(__('role updated successfully'));
+        return $this->returnData('permissions',json_decode($request['permissions']),__('role updated successfully'));
     }
 
     /**
@@ -117,6 +117,9 @@ class RoleController extends Controller
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
         try{
+            if($role->id == auth()->user()->role_id){
+                return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+            }
             $role->delete();
             return $this->returnSuccessMessage('Service Deleted Succeffully');
          } catch (\Exception $e) {

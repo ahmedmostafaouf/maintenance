@@ -32,8 +32,8 @@ class BrancheController extends Controller
         $organizations = Organization::all();
         return response()->json(['status'=>true,'data'=>$organizations]);
     }
-    public function getAllBranches(){
-        $branches= Branch::all();
+    public function getAllBranches($org_id){
+        $branches= Branch::whereOrganizationId($org_id)->get();
         return response()->json(['status'=>true,'data'=>$branches]);
     }
 

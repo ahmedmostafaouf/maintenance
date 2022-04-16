@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\OrganizationRequest;
 use App\Http\Resources\Dashboard\OrganizationResource;
 use App\Http\Traits\ResponseTrait;
+use App\Models\Branch;
+use App\Models\Department;
 use App\Models\Organization;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
@@ -50,6 +53,29 @@ class OrganizationController extends Controller
         $this->returnSuccessMessage('Organization Created Successfully');
     }
 
+    /**
+     * Show a newly created organization in storage.
+     *
+     * @param  Organization  $organization
+     * @return Response
+     */
+    public function show($id)
+    {
+        $organization = Organization::with('branches.departments.services')->find($id);
+        return $this->returnData( 'organization', $organization, 'Organization Data Returned Successfully' );
+    }
+
+    public function statistics($id){
+        $branches = Branch::whereOrganizationId($id)->count();
+        $departments = Department::whereOrganizationId($id)->pluck('id');
+        $services = Service::whereIn('department_id', $departments->toArray() )->count();
+        $statistics= [
+            ['icon' => 'GitMergeIcon', 'color'=>'light-success', 'count' => $branches, 'subtitle' => 'Branches', 'customClass'=>''],
+            ['icon' => 'CreditCardIcon', 'color'=>'light-danger', 'count' => $departments->count(), 'subtitle' => 'Departments', 'customClass'=>'mb-2 mb-sm-0'],
+            ['icon' => 'ServerIcon', 'color'=>'light-primary', 'count' => $services, 'subtitle' => 'Services', 'customClass'=>'mb-2 mb-xl-0'],
+        ];
+        return $this->returnData( 'statistics', $statistics, 'statistics Data Returned Successfully' );
+    }
     /**
      * Show the form for editing the specified organization.
      *
@@ -98,4 +124,5 @@ class OrganizationController extends Controller
         $organization->delete();
         return $this->returnSuccessMessage('Organization Deleted Successfully');
     }
+
 }

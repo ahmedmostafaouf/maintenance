@@ -19,57 +19,17 @@ class RoleSeeder extends Seeder
         Schema::disableForeignKeyConstraints();
         Role::truncate();
         Schema::enableForeignKeyConstraints();
-        $permissions = [
-            [
-                "name"=> "branches",
+        $tblPermissions = permissions();
+        $permissions=[];
+        foreach ($tblPermissions as $key=>$tblPermission){
+            $permissions[$key] =  [
+                "name"=> $tblPermission,
                 "read"=> true,
                 "write"=> true,
                 "delete"=> true,
                 "update"=> true,
-            ],
-            [
-                "name"=> "departments",
-                "read"=> true,
-                "write"=> true,
-                "delete"=> true,
-                "update"=> true,
-            ],
-            [
-                "name"=> "members",
-                "read"=> true,
-                "write"=> true,
-                "delete"=> true,
-                "update"=> true,
-            ],
-            [
-                "name"=> "organizations",
-                "read"=> true,
-                "write"=> true,
-                "delete"=> true,
-                "update"=> true,
-            ],
-            [
-                "name"=> "roles",
-                "read"=> true,
-                "write"=> true,
-                "delete"=> true,
-                "update"=> true,
-            ],
-            [
-                "name"=> "services",
-                "read"=> true,
-                "write"=> true,
-                "delete"=> true,
-                "update"=> true,
-            ],
-            [
-                "name"=> "users",
-                "read"=> true,
-                "write"=> true,
-                "delete"=> true,
-                "update"=> true,
-            ]
-        ];
+            ];
+        }
         Role::create([
             'roleName'=>'admin',
             'permissions'=>json_encode($permissions)

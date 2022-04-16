@@ -21,7 +21,11 @@
             <table class="table table-responsive table-striped">
                 <thead>
                     <tr>
-                        <th class="text-center" colspan="5">{{$i18n.t('roles.routes')}}</th>
+                        <th class="text-center" colspan="3">{{$i18n.t('roles.routes')}}</th>
+                        <th class="text-center" colspan="2">
+                            <input type="checkbox" v-model="check_all" />
+                            Select All
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,6 +71,17 @@ export default {
             errors:{},
             role:'',
             all_permissions:[],
+            check_all:false,
+        }
+    },
+    watch:{
+        check_all(new_val){
+            for(let permission of this.all_permissions){
+                permission.read = new_val;
+                permission.write = new_val;
+                permission.update = new_val;
+                permission.delete = new_val;
+            }
         }
     },
     methods:{
@@ -76,6 +91,7 @@ export default {
             .then((res)=>{
                 if(res.status === 200){
                     this.makeToast('success', res.data.message);
+                    this.$router.push({name:'roles'})
                 }
             }).catch((err) => {
                 console.log(err)

@@ -21,7 +21,7 @@
       </div>
     </template>
       <template v-slot:actions='{row}'>
-          <b-dropdown-item :to="{name:'edit-role',params:{'id':row.id}}">
+          <b-dropdown-item :to="{name:'edit-role',params:{'id':row.id}}"  v-if="$gate.hasPermission('update roles')">
               <feather-icon
                   icon="Edit2Icon"
                   class="mr-50"
@@ -29,7 +29,7 @@
               <span>{{$i18n.t('roles.edit')}}</span>
           </b-dropdown-item>
 
-          <b-dropdown-item @click="confirmText(row.id)">
+          <b-dropdown-item @click="confirmText(row.id)" v-if="$gate.hasPermission('delete roles')&&user.group_id!=row.id">
               <feather-icon
                   icon="TrashIcon"
                   class="mr-50"
@@ -70,6 +70,7 @@ export default {
     },
   data() {
     return {
+        user:'',
       url: '/roles',
       searchTerm: '',
       title: this.$i18n.t('roles.roles'),
@@ -94,12 +95,6 @@ export default {
       ],
 
     }
-  },
-  computed: {
-
-  },
-  created() {
-
   },
   methods: {
       confirmText(id) {
@@ -149,6 +144,9 @@ export default {
               }
           })
       },
-  }
+  },
+    mounted() {
+      this.user = JSON.parse(this.$user);
+    }
 }
 </script>
