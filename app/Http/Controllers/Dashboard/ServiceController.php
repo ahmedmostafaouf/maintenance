@@ -20,7 +20,9 @@ class ServiceController extends Controller
      */
     public function index(Request $request)
     {
-        $services = Service::getData($request);
+        $services = Service::getData($request)
+            ->orderBy($request->field,$request->type)
+            ->paginate( $request->per_page);
         return ServicesResource::collection($services);
     }
 

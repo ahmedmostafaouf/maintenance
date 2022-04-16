@@ -21,6 +21,14 @@ export default [
     },
   },
   {
+    path: '/dashboard/show-organization/:id',
+    name: 'show-organization',
+    component: () => import('@/views/dashboard/organizations/show.vue'),
+    meta: {
+      title: 'Show Organization',
+    },
+  },
+  {
     path: '/dashboard/organizations/:id/edit',
     name: 'edit-organization',
     component: () => import('@/views/dashboard/organizations/Edit.vue'),
@@ -34,6 +42,11 @@ export default [
     path: '/dashboard/assign-role',
     name: 'assign-role',
     component: () => import('@/views/dashboard/roles/assignRole.vue'),
+  },
+  {
+    path: '/dashboard/roles/:id/edit',
+    name: 'edit-role',
+    component: () => import('@/views/dashboard/roles/edit.vue'),
   },
   {
     path: '/dashboard/departments',

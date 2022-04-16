@@ -35,6 +35,13 @@
             />
             <span>Delete</span>
         </b-dropdown-item>
+        <b-dropdown-item :to="{name:'show-organization',params:{'id':row.id}}">
+            <feather-icon
+                icon="EyeIcon"
+                class="mr-50"
+            />
+            <span>Show</span>
+        </b-dropdown-item>
     </template>
   </table-data>
 </template>

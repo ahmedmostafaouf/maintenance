@@ -21,7 +21,7 @@
       </div>
     </template>
       <template v-slot:actions='{row}'>
-          <b-dropdown-item :to="{name:'edit-branch',params:{'id':row.id}}">
+          <b-dropdown-item :to="{name:'edit-role',params:{'id':row.id}}">
               <feather-icon
                   icon="Edit2Icon"
                   class="mr-50"
@@ -80,12 +80,12 @@ export default {
           filterable: true,
           sortable: true,
         },
-        {
-          label: 'Permissions',
-          field: 'permissions',
-          sortable: false,
+        // {
+        //   label: 'Permissions',
+        //   field: 'permissions',
+        //   sortable: false,
 
-        },
+        // },
         {
           label: 'Action',
           field: 'action',
@@ -116,11 +116,8 @@ export default {
               buttonsStyling: false,
           }).then(result => {
               if (result.value) {
-                    axios.delete(`/branches/${id}`, {
-                            headers: {
-                                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                        },
-                    }).then(response => {
+                    axios.delete(`/roles/${id}`)
+                    .then(response => {
                         this.$swal({
                             icon: 'success',
                             title: 'Deleted!',
@@ -129,6 +126,7 @@ export default {
                                 confirmButton: 'btn btn-success',
                             },
                         })
+                        Fire.$emit('deleted');
                     }).catch(error => {
                         this.$swal({
                             icon: 'error',
