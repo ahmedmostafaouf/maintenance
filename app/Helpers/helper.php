@@ -33,7 +33,7 @@ if(!function_exists('imageUpload')){
 
 if(!function_exists('permissions')){
     function permissions(){
-       $permissions = ['branches','departments','members','organizations','roles','services','users'];
+       $permissions = ['users','roles','organizations','branches','departments','services','members'];
         return $permissions;
     }
 }

@@ -21,6 +21,9 @@ class DepartmentController extends Controller
      */
     public function index(Request $request)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'read departments')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         $branches = Department::departmentData($request);
         return DepartmentsResource::collection($branches);
     }
@@ -43,6 +46,9 @@ class DepartmentController extends Controller
      */
     public function store(DepartmentRequest $request)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'write departments')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         try{
             Department::create($request->all());
             return $this->returnSuccessMessage('Department Stored Succeffully');
@@ -70,13 +76,11 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'update departments')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         try{
-
-
-            $departments=Department::findOrFail($id)->tosql();
-
-             
-
+            $departments=Department::findOrFail($id);
             if($departments){
                 return $this->returnData('departments',$departments);
             }
@@ -94,6 +98,9 @@ class DepartmentController extends Controller
      */
     public function update(Department $department,DepartmentRequest $request)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'update departments')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         try{
             if($department){
                $department->update($request->all());
@@ -112,6 +119,9 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'delete departments')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         try{
             if($department){
                 $department->delete();

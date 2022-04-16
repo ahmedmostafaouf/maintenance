@@ -16,7 +16,7 @@
             </div>
         </template>
         <template v-slot:actions='{row}'>
-            <b-dropdown-item :to="{name:'edit-service',params:{'id':row.id}}">
+            <b-dropdown-item :to="{name:'edit-service',params:{'id':row.id}}" v-if="$gate.hasPermission('update services')">
                 <feather-icon
                     icon="Edit2Icon"
                     class="mr-50"
@@ -24,7 +24,7 @@
                 <span>Edit</span>
               </b-dropdown-item>
 
-              <b-dropdown-item @click.prevent="dropRow(row.id)">
+              <b-dropdown-item @click.prevent="dropRow(row.id)"  v-if="$gate.hasPermission('delete services')">
                 <feather-icon
                     icon="TrashIcon"
                     class="mr-50"

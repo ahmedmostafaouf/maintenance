@@ -25,8 +25,13 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
 // Axios Mock Adapter
-import '@/@fake-db/db'
+import '@/@fake-db/db';
 
+// auth user
+Vue.prototype.$user = localStorage.getItem('userData');
+// gate
+import Gate from './Gate';
+Vue.prototype.$gate = new Gate(JSON.parse(Vue.prototype.$user));
 // BSV Plugin Registration
 Vue.use(ToastPlugin)
 Vue.use(ModalPlugin)
@@ -34,7 +39,6 @@ Vue.use(VueSweetalert2)
 
 // Composition API
 Vue.use(VueCompositionAPI)
-
 // Feather font icon - For form-wizard
 // * Shall remove it if not using font-icons of feather-icons - For form-wizard
 require('@core/assets/fonts/feather/iconfont.css') // For form-wizard

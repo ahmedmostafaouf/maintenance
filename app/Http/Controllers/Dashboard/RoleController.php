@@ -18,6 +18,9 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'read roles')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         $roles = Role::RolesData($request);
         return RolesResource::collection($roles);
     }
@@ -40,6 +43,9 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'write roles')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         $this->validate($request,[
             'role'=> 'required|string',
             'permissions'=> 'required'
@@ -69,6 +75,9 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'update roles')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         return $this->returnData('role',new RolesResource($role));
     }
 
@@ -81,6 +90,10 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'update roles')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
+//        dd(json_decode($request['permissions']));
         $this->validate($request,[
             'role'=> 'required|string',
             'permissions'=> 'required'
@@ -88,7 +101,7 @@ class RoleController extends Controller
         $inputs['roleName'] = $request['role'];
         $inputs['permissions'] = $request['permissions'];
         $role->update($inputs);
-        return $this->returnSuccessMessage(__('role updated successfully'));
+        return $this->returnData('permissions',json_decode($request['permissions']),__('role updated successfully'));
     }
 
     /**
@@ -99,7 +112,13 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        if (auth('sanctum')->user()->cannot('admin', 'delete roles')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         try{
+            if($role->id == auth()->user()->role_id){
+                return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+            }
             $role->delete();
             return $this->returnSuccessMessage('Service Deleted Succeffully');
          } catch (\Exception $e) {
