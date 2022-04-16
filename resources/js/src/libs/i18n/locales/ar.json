@@ -12,6 +12,28 @@
         "add_btn" : "حفظ",
         "reset_btn" : "إفراغ"
     },
+    "roles":{
+        "roles" : "الأدوار",
+        "serach":"بحث",
+        "edit":"تعديل",
+        "delete":"حذف",
+        "name":"الاسم",
+        "action":"التحكم",
+        "required_role":"الدور مطلوب",
+        "assign":"تعيين",
+        "routes":"الصفحات",
+        "read":"قراءة",
+        "write":"كتابة",
+        "update":"تعديل",
+
+        "branches":"الفروع",
+        "departments":"الأقسام",
+        "members":"الأعضاء",
+        "organizations":"المنظمات",
+        "services":"الخدمات",
+        "users":"المستخدمين"
+
+    },
   "message": {
     "title": "Titre de la carte",
       "test": "arabic",

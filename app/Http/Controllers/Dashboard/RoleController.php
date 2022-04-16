@@ -43,6 +43,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        
         if (auth('sanctum')->user()->cannot('admin', 'write roles')) {
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }

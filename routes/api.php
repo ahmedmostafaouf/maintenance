@@ -22,7 +22,7 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
     Route::resource('departments', "DepartmentController");
     Route::resource('branches', "BrancheController");
     Route::get('/all-organizations', "BrancheController@getAllOrganizations");
-    Route::get('/all-branches', "BrancheController@getAllBranches");
+    Route::get('/all-branches/{org_id}', "BrancheController@getAllBranches");
     Route::resource('services', "ServiceController");
     Route::resource('roles', "RoleController");
     Route::group(['prefix'=>'spinner'],function(){
