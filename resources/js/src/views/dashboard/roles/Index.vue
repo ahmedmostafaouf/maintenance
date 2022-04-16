@@ -9,10 +9,10 @@
       <div class="custom-search d-flex justify-content-end">
         <b-form-group>
           <div class="d-flex align-items-center">
-            <label class="mr-1">Search</label>
+            <label class="mr-1">{{$i18n.t('roles.serach')}}</label>
             <b-form-input
               v-model="searchTerm"
-              placeholder="Search"
+              :placeholder="$i18n.t('roles.serach')"
               type="text"
               class="d-inline-block"
             />
@@ -26,7 +26,7 @@
                   icon="Edit2Icon"
                   class="mr-50"
               />
-              <span>Edit</span>
+              <span>{{$i18n.t('roles.edit')}}</span>
           </b-dropdown-item>
 
           <b-dropdown-item @click="confirmText(row.id)">
@@ -34,7 +34,7 @@
                   icon="TrashIcon"
                   class="mr-50"
               />
-              <span>Delete</span>
+              <span>{{$i18n.t('roles.delete')}}</span>
           </b-dropdown-item>
 
       </template>
@@ -72,10 +72,10 @@ export default {
     return {
       url: '/roles',
       searchTerm: '',
-      title: 'Roles',
+      title: this.$i18n.t('roles.roles'),
       columns: [
         {
-          label: 'Name',
+          label: this.$i18n.t('roles.name'),
           field: 'name',
           filterable: true,
           sortable: true,
@@ -87,7 +87,7 @@ export default {
 
         // },
         {
-          label: 'Action',
+          label: this.$i18n.t('roles.action'),
           field: 'action',
           sortable: false,
         },

@@ -24,7 +24,7 @@ class UserResource extends JsonResource
             'role' => $this->role,
             'ability' => [["action"=> "manage", "subject"=> "all"]],
             'group' => @$this->group->roleName,
-            'permissions' => json_decode($this->group->permissions),
+            'permissions' => $this->group ?  json_decode($this->group->permissions) : [],
         ];
         return [
             'accessToken' => $this->createToken('token-name', ['server:update'])->plainTextToken,

@@ -12,6 +12,27 @@
         "add_btn" : "Save",
         "reset_btn" : "Reset"
     },
+    "roles":{
+        "roles" : "Roles",
+        "serach":"Search",
+        "edit":"Edit",
+        "delete":"Delete",
+        "name":"Name",
+        "action":"Action",
+        "required_role":"Role Is Required",
+        "assign":"Assign",
+        "routes":"Routes",
+        "read":"Read",
+        "write":"Write",
+        "update":"Update",
+
+        "branches":"branches",
+        "departments":"departments",
+        "members":"members",
+        "organizations":"organizations",
+        "services":"services",
+        "users":"users"
+    },
   "message": {
     "title": "Card Title",
     "test": "english",
