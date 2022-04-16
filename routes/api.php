@@ -18,14 +18,13 @@ Route::post('/login', 'AuthController@login');
 Route::group(['middleware'=>['auth:sanctum']],function () {
     Route::post('/logout', 'AuthController@signout');
     Route::resource('organizations', "OrganizationController");
+    Route::get('/organization-statistics/{id}', 'OrganizationController@statistics');
     Route::resource('departments', "DepartmentController");
     Route::resource('branches', "BrancheController");
     Route::get('/all-organizations', "BrancheController@getAllOrganizations");
     Route::get('/all-branches', "BrancheController@getAllBranches");
     Route::resource('services', "ServiceController");
-
     Route::resource('roles', "RoleController");
-
     Route::group(['prefix'=>'spinner'],function(){
         Route::get('departments', "SpinnersControler@departments");
         Route::get('permissions', "SpinnersControler@permissions");

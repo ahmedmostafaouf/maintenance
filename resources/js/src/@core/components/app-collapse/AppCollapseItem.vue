@@ -16,6 +16,9 @@
     >
       <slot name="header">
         <span class="lead collapse-title">{{ title }}</span>
+          <b-badge :variant="statusVariant(status)">
+              {{ (status=='0')?'In Active':"Active" }}
+          </b-badge>
       </slot>
     </b-card-header>
 
@@ -34,7 +37,7 @@
 
 <script>
 import {
-  BCard, BCardHeader, BCardBody, BCollapse,
+    BCard, BCardHeader, BCardBody, BCollapse, BBadge
 } from 'bootstrap-vue'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -44,6 +47,7 @@ export default {
     BCardHeader,
     BCardBody,
     BCollapse,
+    BBadge,
   },
   props: {
     isVisible: {
@@ -54,6 +58,10 @@ export default {
       type: String,
       required: true,
     },
+    status: {
+        type: Number,
+        required: true
+    }
   },
   data() {
     return {
@@ -65,6 +73,13 @@ export default {
   computed: {
     accordion() {
       return this.$parent.accordion ? `accordion-${this.$parent.collapseID}` : null
+    },
+    statusVariant() {
+          const statusColor = {
+              0: 'light-danger',
+              1: 'light-success',
+          }
+          return status => statusColor[status]
     },
   },
   created() {

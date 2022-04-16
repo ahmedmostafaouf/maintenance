@@ -464,11 +464,6 @@ export default {
     BButton,
     FormWizard,
     TabContent,
-    BRow,
-    BCol,
-    BFormGroup,
-    BFormInput,
-    vSelect,
     BFormFile,
     ToastificationContent,
   },
@@ -498,8 +493,8 @@ export default {
       filePreview: null,
       qr_code: '',
         status:[
-            {name:'Active',value:1},
-            {name:'In Active',value:0},
+            {name:'Active',value:'1'},
+            {name:'In Active',value:'0'},
         ],
     }
   },
@@ -548,7 +543,9 @@ export default {
     formSuccess(data) {
       this.errors = {}
       this.makeToast('success', data.data.message)
-      this.$router.push({ name: 'organizations' })
+      setTimeout(() => {
+         this.$router.push({ name: 'organizations' })
+      }, 1000)
     },
     formCatchError(error) {
       if (error.response) {
