@@ -120,7 +120,7 @@ class DepartmentController extends Controller
     public function destroy(Department $department)
     {
         if (auth('sanctum')->user()->cannot('admin', 'delete departments')) {
-            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+            return  \responsenp()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
         try{
             if($department){
@@ -128,6 +128,7 @@ class DepartmentController extends Controller
             }
             return $this->returnSuccessMessage('department Deleted Succeffully');
         } catch (\Exception $e) {
+            dd($e);
             return $this->returnError(500,'err');
         }
     }

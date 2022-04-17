@@ -20,6 +20,7 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
     Route::resource('organizations', "OrganizationController");
     Route::get('/organization-statistics/{id}', 'OrganizationController@statistics');
     Route::resource('departments', "DepartmentController");
+    Route::resource('employees', "EmployeeController");
     Route::resource('branches', "BrancheController");
     Route::get('/all-organizations', "BrancheController@getAllOrganizations");
     Route::get('/all-branches/{org_id}', "BrancheController@getAllBranches");
@@ -28,6 +29,8 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
     Route::group(['prefix'=>'spinner'],function(){
         Route::get('departments', "SpinnersControler@departments");
         Route::get('permissions', "SpinnersControler@permissions");
+        Route::get('roles', "SpinnersControler@roles");
+
     });
 
 });

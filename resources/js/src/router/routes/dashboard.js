@@ -81,6 +81,26 @@ export default [
         },
 
     },
+    {
+        path: '/dashboard/employees',
+        name: 'employees',
+        component: () => import('@/views/dashboard/employee/index.vue'),
+    },
+    {
+        path: '/dashboard/employee/:id/edit',
+        name: 'edit-employee',
+        component: () => import('@/views/dashboard/employee/edit-employee.vue'),
+    },
+    {
+        path: '/dashboard/employee/:id/show',
+        name: 'view-employee',
+        component: () => import('@/views/dashboard/employee/view.vue'),
+    },
+    {
+        path: '/dashboard/add-employee',
+        name: 'add-employee',
+        component: () => import('@/views/dashboard/employee/add-employee.vue'),
+    },
   {
     path: '/dashboard/roles',
     name: 'roles',
