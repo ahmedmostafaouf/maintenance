@@ -44,7 +44,7 @@
                 {{ (props.row.status=='0')?'In Active':"Active" }}
               </b-badge>
             </span>
-            <!-- Column: Status -->
+            <!-- Column: website_url -->
             <span v-else-if="props.column.field === 'website_url'">
               <a
                 target="_blank"
@@ -58,11 +58,19 @@
                 <span class="align-middle">website</span>
               </a>
             </span>
-            <!-- Column: Image -->
+            <!-- Column: Image Org -->
             <span v-else-if="props.column.field === 'logo'">
               <b-avatar
                 :src="props.row.logo"
                 class="mx-1"
+              />
+            </span>
+
+              <!-- Column: Image Employee -->
+              <span v-else-if="props.column.field === 'image'">
+              <b-avatar
+                  :src="props.row.image"
+                  class="mx-1"
               />
             </span>
             <!-- Column: Action -->

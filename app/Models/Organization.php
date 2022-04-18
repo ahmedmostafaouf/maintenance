@@ -44,4 +44,8 @@ class Organization extends Model
             $query->where( 'name', 'LIKE', '%' . $request['searchTerm'] . '%' );
         });
     }
+
+    public function users(){
+        return $this->morphMany(User::class, 'assignable');
+    }
 }
