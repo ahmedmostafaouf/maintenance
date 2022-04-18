@@ -45,4 +45,8 @@ class Branch extends Model
             ->orderBy($req->field,$req->type)
             ->paginate( $req->per_page );
     }
+
+    public function users(){
+        return $this->morphMany(User::class, 'assignable');
+    }
 }

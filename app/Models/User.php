@@ -80,4 +80,8 @@ class User extends Authenticatable
             ->orderBy($req->field,$req->type)
             ->paginate($req->per_page );
     }
+
+    public function assignable(){
+        return $this->morphTo();
+    }
 }
