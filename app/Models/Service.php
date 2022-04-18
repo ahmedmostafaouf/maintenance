@@ -14,20 +14,34 @@ class service extends model
 {
     use hasfactory,softdeletes;
 
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'name','status','desc','queue_number','range_time','department_id'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function department(){
         return $this->belongsto(department::class,'department_id');
     }
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function members(){
         return $this->belongstomany(member::class, 'member_services');
     }
 
-    public function scopegetdata($query,$req){
+    /**
+     * @param $query
+     * @param $req
+     * @return mixed
+     */
+    public function scopegetdata($query, $req){
         return $query->when((isset($req['searchterm']) && $req['searchterm'] != null),function($query) use ($req){
             $query->where( 'name', 'like', '%' . $req['searchterm'] . '%' );
         });
@@ -44,6 +58,9 @@ class service extends model
         );
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
     public function users(){
         return $this->morphmany(user::class, 'assignable');
     }
