@@ -66,6 +66,7 @@
                             :options="organizations"
                             :reduce="org => org.id"
                             label="name"
+                            @input="getOrgBranches"
                         />
                     </b-input-group>
                     <label
@@ -218,7 +219,7 @@ export default {
     },
     created() {
        this.getAllOrganizations();
-       this.getBranches();
+    //    this.getBranches();
     },
     methods:{
         makeToast(variant = null, body) {
@@ -246,8 +247,11 @@ export default {
                     this.errors = error.response.data.errors
                 })
         },
-        getBranches(){
-            axios.get('all-branches', {
+        getOrgBranches(){
+            this.getBranches(this.department.organization_id)
+        },
+        getBranches(id){
+            axios.get(`all-branches/${id}`, {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                 },

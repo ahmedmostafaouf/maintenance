@@ -17,4 +17,7 @@ class Role extends Model
             ->orderBy($req->field,$req->type)
             ->paginate( $req->per_page );
     }
+    public function getRoleNameAtripute(){
+
+    }
 }

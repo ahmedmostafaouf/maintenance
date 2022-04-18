@@ -30,6 +30,28 @@ if(!function_exists('imageUpload')){
         return $imageName;
     }
 }
+if(!function_exists('TypeUser')){
+    function TypeUser($type){
+        switch ($type) {
+            case 1:
+                return 'Admin';
+    break;
+            case 2:
+                return 'organization_manager';
+    break;
+            case 3:
+                return 'branch_manager';
+    break;
+            case 4:
+                return 'department_manager';
+    break;
+            case 5:
+                return 'service_operator';
+    break;
+        }
+
+    }
+}
 
 if(!function_exists('permissions')){
     function permissions(){

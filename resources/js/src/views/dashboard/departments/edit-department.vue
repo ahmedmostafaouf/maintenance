@@ -66,6 +66,7 @@
                             :options="organizations"
                             :reduce="org => org.id"
                             label="name"
+                            @input="getOrgBranches"
                         />
                     </b-input-group>
                     <label
@@ -218,8 +219,8 @@
         },
         created() {
             this.getAllOrganizations();
-            this.getBranches();
             this.getDepartement(this.$route.params.id)
+
         },
         methods:{
             makeToast(variant = null, body) {
@@ -228,6 +229,10 @@
                     variant,
                     solid: true,
                 })
+            },
+            getOrgBranches(){
+                this.department.branch_id = ''
+                this.getBranches(this.department.organization_id)
             },
             editDepartment(){
                 const instance = this
@@ -261,12 +266,13 @@
                     this.department.branch_id=response.data.departments.branch_id
                     this.department.organization_id=response.data.departments.organization_id
                     this.department.status=response.data.departments.status
+                   this.getBranches(this.department.organization_id);
                 }
 
             });
             },
-            getBranches(){
-                axios.get('all-branches', {
+            getBranches(id){
+                axios.get(`all-branches/${id}`, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
