@@ -13,7 +13,6 @@ use App\Http\Controllers\ApplicationController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/{any}', [ApplicationController::class, 'index'])->where('any', '.*');
 
 

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class ApplicationController extends Controller
 {
@@ -11,4 +13,5 @@ class ApplicationController extends Controller
     {
         return view('application');
     }
+
 }
