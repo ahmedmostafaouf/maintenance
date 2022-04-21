@@ -35,19 +35,19 @@ if(!function_exists('TypeUser')){
         switch ($type) {
             case 1:
                 return 'Admin';
-    break;
+                break;
             case 2:
                 return 'organization_manager';
-    break;
+                break;
             case 3:
                 return 'branch_manager';
-    break;
+                break;
             case 4:
                 return 'department_manager';
-    break;
+                break;
             case 5:
                 return 'service_operator';
-    break;
+                break;
         }
 
     }

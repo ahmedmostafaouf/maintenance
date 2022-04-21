@@ -211,7 +211,18 @@
                     </label>
                 </b-form-group>
             </b-col>
-
+            <!-- Assignable -->
+            <b-col cols="12" v-if="assign_dropdown">
+                <b-form-group label="assign to" label-for="vi-status">
+                    <b-input-group class="input-group-merge">
+                        <v-select v-model="employee.assignable_id" :options="assignable_list" :reduce="assign => assign.id" label="name"
+                                  placeholder="assign to ..."/>
+                    </b-input-group>
+                    <label v-if="Object.keys(errors).length > 0 && errors.assignable_id !== undefined" class="text-danger">
+                        {{this.errors.role_id[0]}}
+                    </label>
+                </b-form-group>
+            </b-col>
 
             <!-- reset and submit -->
             <b-col
@@ -283,6 +294,7 @@
         data(){
             return{
                 errors: {},
+                assign_dropdown:false,
                 status:[
                     {name:'Active',value:'1'},
                     {name:'In Active',value:'0'},
@@ -295,6 +307,7 @@
                     {name:'Service_operator',value:'5'},
                 ],
                 roles:[],
+                assignable_list:[],
                 employee:{
                     name:'',
                     phone:'',
@@ -304,14 +317,15 @@
                     type:'',
                     status:'',
                     password_confirmation:'',
-                    password:''
+                    password:'',
+                    assignable_id:''
                 }
             };
         },
-        created() {
-            this.getRoles()
-            // this.getAllOrganizations();
-            //    this.getBranches();
+        watch:{
+          'employee.type'(val){
+              this.assignable(val)
+          }
         },
         methods:{
             makeToast(variant = null, body) {
@@ -329,12 +343,7 @@
                     }
                 }
                 const instance = this
-                axios.post('/employees', formData, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                        'content-type': 'multipart/form-data',
-                    },
-                }).then(response => {
+                axios.post('/employees', formData).then(response => {
                     this.errors = {}
                     this.makeToast('success', 'Employee Stored Succeffully')
                     setTimeout(() => {
@@ -347,24 +356,43 @@
                     })
             },
             getRoles(){
-                axios.get(`spinner/roles`, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                    },
-                }).then(response => {
+                axios.get(`spinner/roles`).then(response => {
                     this.roles = response.data.roles
                 })
             },
-            // getAllOrganizations() {
-            //     axios.get('all-organizations', {
-            //         headers: {
-            //             Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-            //         },
-            //     }).then(response => {
-            //         this.organizations = response.data.data
-            //     })
-            // },
-        }
+            assignable(val){
+                if(val==2){
+                    axios.get(`/spinner/organizations`).then(({data})=>{
+                        this.assignable_list = data.organizations;
+                        this.assign_dropdown=true;
+                    })
+                }if(val==3){
+                    axios.get(`/spinner/branches`).then(({data})=>{
+                        this.assignable_list = data.branches;
+                        this.assign_dropdown=true;
+                    })
+                }if(val==4){
+                    axios.get(`/spinner/departments`).then(({data})=>{
+                        this.assignable_list = data.departments;
+                        this.assign_dropdown=true;
+                    })
+                }if(val==5){
+                    axios.get(`/spinner/services`).then(({data})=>{
+                        this.assignable_list = data.services;
+                        this.assign_dropdown=true;
+                    })
+                }else{
+                    this.assign_dropdown=false;
+                    this.assignable_list = [];
+                    this.employee.assignable_id=''
+                }
+            }
+        },
+        created() {
+            this.getRoles()
+            // this.getAllOrganizations();
+            //    this.getBranches();
+        },
     }
 </script>
 

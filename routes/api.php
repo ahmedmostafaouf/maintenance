@@ -28,8 +28,12 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
     Route::resource('services', "ServiceController");
     Route::resource('roles', "RoleController");
     Route::group(['prefix'=>'spinner'],function(){
+        Route::get('organizations', "SpinnersControler@organizations");
+        Route::get('branches', "SpinnersControler@branches");
         Route::get('departments', "SpinnersControler@departments");
+        Route::get('services', "SpinnersControler@services");
         Route::get('permissions', "SpinnersControler@permissions");
+        Route::get('roles', "SpinnersControler@roles");
         Route::get('roles', "SpinnersControler@roles");
 
     });

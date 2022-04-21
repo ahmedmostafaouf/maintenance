@@ -9,7 +9,26 @@ export default [
     route: 'apps-email',
     icon: 'HomeIcon',
   },
-
+    {
+        header: 'System_Users',
+    },
+    {
+        title: 'Employee',
+        icon: 'PackageIcon',
+        allows: (gate.hasPermission('read users') || gate.hasPermission('write users')),
+        children: [
+            {
+                title: 'Employee',
+                route: 'employees',
+                allows: gate.hasPermission('read users')
+            },
+            {
+                title: 'Add_Employee',
+                route: 'add-employee',
+                allows: gate.hasPermission('write users')
+            },
+        ],
+    },
   {
     header: 'Roles_Permissions',
   },
@@ -33,23 +52,6 @@ export default [
   {
     header: 'System_Setup',
   },
-    {
-        title: 'Employee',
-        icon: 'PackageIcon',
-        allows: (gate.hasPermission('read users') || gate.hasPermission('write users')),
-        children: [
-            {
-                title: 'Employee',
-                route: 'employees',
-                allows: gate.hasPermission('read users')
-            },
-            {
-                title: 'Add_Employee',
-                route: 'add-employee',
-                allows: gate.hasPermission('write users')
-            },
-        ],
-    },
   {
     title: 'Organizations',
     icon: 'CopyIcon',

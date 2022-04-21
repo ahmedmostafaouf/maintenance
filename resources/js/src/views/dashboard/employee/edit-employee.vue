@@ -224,7 +224,18 @@
                     </label>
                 </b-form-group>
             </b-col>
-
+            <!-- Assignable -->
+            <b-col cols="12" v-if="assign_dropdown">
+                <b-form-group label="assign to" label-for="vi-status">
+                    <b-input-group class="input-group-merge">
+                        <v-select v-model="employee.assignable_id" :options="assignable_list" :reduce="assign => assign.id" label="name"
+                                  placeholder="assign to ..."/>
+                    </b-input-group>
+                    <label v-if="Object.keys(errors).length > 0 && errors.assignable_id !== undefined" class="text-danger">
+                        {{this.errors.role_id[0]}}
+                    </label>
+                </b-form-group>
+            </b-col>
 
             <!-- reset and submit -->
             <b-col
@@ -298,6 +309,7 @@
         data(){
             return{
                 errors: {},
+                assign_dropdown:false,
                 status:[
                     {name:'Active',value:1},
                     {name:'In Active',value:0},
@@ -310,6 +322,7 @@
                     {name:'Service_operator',value:5},
                 ],
                 roles:[],
+                assignable_list:[],
                 image:'',
                 employee:{
                     name:'',
@@ -320,13 +333,15 @@
                     type:'',
                     status:'',
                     password_confirmation:'',
-                    password:''
+                    password:'',
+                    assignable_id:''
                 }
             };
         },
-        created() {
-            this.getRoles()
-            this.getEmployee(this.$route.params.id)
+        watch:{
+            'employee.type'(val){
+                this.assignable(val)
+            }
         },
         methods:{
             makeToast(variant = null, body) {
@@ -385,8 +400,39 @@
                             })
                         }
                     })
+            },
+            assignable(val){
+                if(val==2){
+                    axios.get(`/spinner/organizations`).then(({data})=>{
+                        this.assignable_list = data.organizations;
+                        this.assign_dropdown=true;
+                    })
+                }if(val==3){
+                    axios.get(`/spinner/branches`).then(({data})=>{
+                        this.assignable_list = data.branches;
+                        this.assign_dropdown=true;
+                    })
+                }if(val==4){
+                    axios.get(`/spinner/departments`).then(({data})=>{
+                        this.assignable_list = data.departments;
+                        this.assign_dropdown=true;
+                    })
+                }if(val==5){
+                    axios.get(`/spinner/services`).then(({data})=>{
+                        this.assignable_list = data.services;
+                        this.assign_dropdown=true;
+                    })
+                }else{
+                    this.assign_dropdown=false;
+                    this.assignable_list = [];
+                    // this.employee.assignable_id=''
+                }
             }
 
+        },
+        created() {
+            this.getRoles()
+            this.getEmployee(this.$route.params.id)
         }
     }
 </script>

@@ -7,6 +7,10 @@ use App\Http\Requests\Dashboard\EmloyeeRequest;
 use App\Http\Resources\Dashboard\EmployeeResource;
 use App\Http\Resources\Dashboard\UserResource;
 use App\Http\Traits\ResponseTrait;
+use App\Models\Branch;
+use App\Models\Department;
+use App\Models\Organization;
+use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -23,7 +27,7 @@ class EmployeeController extends Controller
         if (auth('sanctum')->user()->cannot('admin', 'read users')) {
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
-        $users = User::where('name','!=','Admin')->UserData($request);
+        $users = User::where('email','!=','admin@gmail.com')->UserData($request);
         return EmployeeResource::collection($users);
     }
 
@@ -49,8 +53,9 @@ class EmployeeController extends Controller
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
         $data = $request->except('image');
-        if( isset($request->image) && $request->image->isValid())
+        if (isset($request->image) && $request->image->isValid())
             $data['image'] = imageUpload($request->image, 'images/employee/image');
+        $data = $this->assignableModel($request, $data);
         User::create($data);
         $this->returnSuccessMessage('Employee Created Successfully');
     }
@@ -58,34 +63,33 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        $employee=User::findOrFail($id);
-        $employee= new EmployeeResource($employee);
+        $user = User::findOrFail($id);
+        $employee= new EmployeeResource($user);
         return $this->returnData('employee',$employee,'Employee Returned Success');
-
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
-       $employee=User::findOrFail($id);
-       return $this->returnData('employee',$employee,'Employee Returned Success');
+        $user = User::findOrFail($id);
+       return $this->returnData('employee',$user,'Employee Returned Success');
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
     public function update(EmloyeeRequest $request, $id)
@@ -93,33 +97,51 @@ class EmployeeController extends Controller
         $data=$request->except(['image']);
         if( isset($request->image) && $request->image->isValid())
             $data['image'] = imageUpload($request->image, 'images/employee/image');
-
-        $employee=User::findOrFail($id);
-     $employee->update($data);
+        $data = $this->assignableModel($request, $data);
+        $user = User::findOrFail($id);
+        $user->update($data);
         $this->returnSuccessMessage('Employee Updated Successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
         if (auth('sanctum')->user()->cannot('admin', 'delete users')) {
-            return  \responsenp()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
         try{
-            $employee=User::findOrFail($id);
-
-            if($employee){
-                $employee->delete();
+            $user = User::findOrFail($id);
+            if($user){
+                $user->delete();
             }
             return $this->returnSuccessMessage('Employee Deleted Succeffully');
         } catch (\Exception $e) {
             dd($e);
             return $this->returnError(500,'err');
         }
+    }
+
+    /**
+     * @param EmloyeeRequest|Request $request
+     * @param array $data
+     * @return array
+     */
+    protected function assignableModel(EmloyeeRequest|Request $request, array $data): array
+    {
+        if ($request['type'] == 2) {
+            $data['assignable_type'] = (new Organization())->getMorphClass();
+        } elseif ($request['type'] == 3) {
+            $data['assignable_type'] = (new Branch())->getMorphClass();
+        } elseif ($request['type'] == 4) {
+            $data['assignable_type'] = (new Department())->getMorphClass();
+        } elseif ($request['type'] == 5) {
+            $data['assignable_type'] = (new Service())->getMorphClass();
+        }
+        return $data;
     }
 }
