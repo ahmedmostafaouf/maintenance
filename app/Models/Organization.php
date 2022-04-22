@@ -15,8 +15,8 @@ class Organization extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name','desc','lat','long','email','address','token','instance_id','temp_msg',
-        'phone','logo','qr_code','website_url','status'
+        'name','desc','lat','long','email','address','token','instance_id','welcome_msg',
+        'error_msg', 'department_msg', 'service_msg','phone','logo','qr_code','website_url','status'
     ];
 
     /**
@@ -48,4 +48,5 @@ class Organization extends Model
     public function users(){
         return $this->morphMany(User::class, 'assignable');
     }
+
 }

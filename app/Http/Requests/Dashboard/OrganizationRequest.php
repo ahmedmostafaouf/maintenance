@@ -35,6 +35,9 @@ class OrganizationRequest extends FormRequest
             'desc' => 'required|string|min:20|max:255',
             'instance_id' => 'required|string',
             'temp_msg' => 'required|string|min:20|max:255',
+            'error_msg' => 'required|string|min:20|max:255',
+            'department_msg' => 'required|string|min:20|max:255',
+            'service_msg' => 'required|string|min:20|max:255',
             'token' => 'required|string',
             'logo' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
         ];

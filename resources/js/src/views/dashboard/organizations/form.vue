@@ -404,9 +404,9 @@
             </b-form-group>
           </b-col>
           <!-- temp_msg -->
-          <b-col cols="12">
+          <b-col cols="6">
             <b-form-group
-              label="Temp Message"
+              label="Welcome Message"
               label-for="vi-temp_msg"
             >
               <b-input-group class="input-group-merge">
@@ -418,7 +418,7 @@
                   v-model="organization.temp_msg"
                   rows="5"
                   type="text"
-                  placeholder="Temp Message"
+                  placeholder="Welcome Message"
                 />
               </b-input-group>
               <label
@@ -426,6 +426,87 @@
                 class="text-danger"
               >
                 {{ errors.temp_msg[0] }}
+              </label>
+            </b-form-group>
+          </b-col>
+
+            <!-- error_msg -->
+          <b-col cols="6">
+            <b-form-group
+              label="Error Message"
+              label-for="vi-error_msg"
+            >
+              <b-input-group class="input-group-merge">
+                <b-input-group-prepend is-text>
+                  <feather-icon icon="MessageCircleIcon" />
+                </b-input-group-prepend>
+                <b-form-textarea
+                  id="vi-error_msg"
+                  v-model="organization.error_msg"
+                  rows="5"
+                  type="text"
+                  placeholder="Error Message"
+                />
+              </b-input-group>
+              <label
+                v-if="Object.keys(errors).length > 0 && errors.error_msg !== undefined"
+                class="text-danger"
+              >
+                {{ errors.error_msg[0] }}
+              </label>
+            </b-form-group>
+          </b-col>
+
+            <!-- department_msg -->
+          <b-col cols="6">
+            <b-form-group
+              label="Department Message"
+              label-for="vi-dept_msg"
+            >
+              <b-input-group class="input-group-merge">
+                <b-input-group-prepend is-text>
+                  <feather-icon icon="MessageCircleIcon" />
+                </b-input-group-prepend>
+                <b-form-textarea
+                  id="vi-dept_msg"
+                  v-model="organization.department_msg"
+                  rows="5"
+                  type="text"
+                  placeholder="Department Message"
+                />
+              </b-input-group>
+              <label
+                v-if="Object.keys(errors).length > 0 && errors.department_msg !== undefined"
+                class="text-danger"
+              >
+                {{ errors.department_msg[0] }}
+              </label>
+            </b-form-group>
+          </b-col>
+
+            <!-- service_msg -->
+          <b-col cols="6">
+            <b-form-group
+              label="Sevice Message"
+              label-for="vi-service_msg"
+            >
+              <b-input-group class="input-group-merge">
+                <b-input-group-prepend is-text>
+                  <feather-icon icon="MessageCircleIcon" />
+                </b-input-group-prepend>
+                <b-form-textarea
+                  id="vi-service_msg"
+                  v-model="organization.service_msg"
+                  rows="5"
+                  type="text"
+                  placeholder="Sevice Message"
+                />
+              </b-input-group>
+              <label
+                v-if="Object.keys(errors).length > 0 && errors.service_msg !== undefined"
+                class="text-danger"
+              >
+                {{ errors.service_msg[0] }}
               </label>
             </b-form-group>
           </b-col>
@@ -488,7 +569,9 @@ export default {
         logo: null,
         qr_code: '',
         status: '',
-
+        error_msg:'',
+        department_msg:'',
+        service_msg:'',
       },
       filePreview: null,
       qr_code: '',
@@ -565,6 +648,7 @@ export default {
         .then(({ data }) => {
           if (data.status) {
             Object.keys(this.organization).forEach(key => {
+                console.log(data.organization[key])
               if (key == 'logo') this.filePreview = data.organization[key]
               else this.organization[key] = data.organization[key]
             })

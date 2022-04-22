@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class service extends model
+class Service extends model
 {
     use hasfactory,softdeletes;
 
@@ -25,7 +25,7 @@ class service extends model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function department(){
-        return $this->belongsto(department::class,'department_id');
+        return $this->belongsto(Department::class,'department_id');
     }
 
 
@@ -33,7 +33,7 @@ class service extends model
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function members(){
-        return $this->belongstomany(member::class, 'member_services');
+        return $this->belongstomany(Member::class, 'member_services');
     }
 
     /**

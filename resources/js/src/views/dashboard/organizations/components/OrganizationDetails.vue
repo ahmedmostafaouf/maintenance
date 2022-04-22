@@ -104,7 +104,16 @@
                         <span class="mr-1 text-light font-weight-bold">Instance Id: </span>{{organization.instance_id}}
                     </div>
                     <div class="text-body mb-1">
-                        <span class="mr-1 text-light font-weight-bold">Instance Id: </span>{{organization.temp_msg}}
+                        <span class="mr-1 text-light font-weight-bold">Welcome Message: </span>{{organization.welcome_msg}}
+                    </div>
+                                        <div class="text-body mb-1">
+                        <span class="mr-1 text-light font-weight-bold">Error Message: </span>{{organization.error_msg}}
+                    </div>
+                                        <div class="text-body mb-1">
+                        <span class="mr-1 text-light font-weight-bold">Department Message: </span>{{organization.department_msg}}
+                    </div>
+                                        <div class="text-body mb-1">
+                        <span class="mr-1 text-light font-weight-bold">Service Message: </span>{{organization.service_msg}}
                     </div>
                 </b-card>
             </b-col>
