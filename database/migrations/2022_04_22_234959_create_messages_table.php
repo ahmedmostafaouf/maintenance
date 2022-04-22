@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->bigInteger('id')->unsigned()->autoIncrement();
             $table->string('msg_id',255)->nullable();
-            $table->unsignedBigInteger('contact_id')->nullable();
-            $table->foreign('contact_id')->references('id')->on('contacts');
+            $table->unsignedBigInteger('member_id')->nullable();
+            $table->foreign('member_id')->references('id')->on('members');
             $table->longText('body')->nullable();
             $table->string('media_url',255)->nullable();
             $table->string('msg_type',255)->nullable();

@@ -12,7 +12,7 @@ class Member extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name','phone'
+        'name','phone', 'status', 'is_oline', 'last_seen'
     ];
 
     public function services(){

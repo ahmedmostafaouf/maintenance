@@ -49,4 +49,9 @@ class Branch extends Model
     public function users(){
         return $this->morphMany(User::class, 'assignable');
     }
+
+    public function messages()
+    {
+        return $this->morphMany(Message::class, 'reservable');
+    }
 }
