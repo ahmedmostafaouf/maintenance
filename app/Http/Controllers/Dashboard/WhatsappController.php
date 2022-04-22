@@ -21,8 +21,7 @@ class WhatsappController extends Controller
     private const WHATSAPP_SEND_API = 'https://ifmibot.com/api/send.php';
     protected $contactName;
     protected $contactNumber;
-    protected $instance_id;
-    protected $token;
+    protected $organization;
     protected $member_id = null;
 
     /**webHook
@@ -30,14 +29,13 @@ class WhatsappController extends Controller
      * @param Request $request
      */
     public function webHook(Request $request){
+        $message = '';
         $organization = Organization::with('branches.departments.services')->where('instance_id', $request->instance_id)->first();
         if($organization->exists()){
-            $this->token = $organization->token;
-            $this->instance_id = $organization->instance_id;
+            $this->organization = $organization;
             if($request->event = 'message'){
                 $messages = $request['data']['messages'][0];
                 if(!$messages['key']['fromMe']){
-                    //Storage::put('ex.txt', json_encode($request->all()));
                     $this->contactNumber = explode('@',$messages['key']['remoteJid'])[0];
                     $this->contactName = $messages['pushName'];
                     $this->member_id = $this->createMember();
@@ -50,16 +48,16 @@ class WhatsappController extends Controller
                         if($reservedStep){
                             $message = $this->makeReservation($reservedStep, $reservedId);
                         }else{
-                            $message = ['in Correct Choice ...'];
+                            $message = $this->organization->error_msg;
                         }
-                        $this->sendMessage( 'text', $message);
                     } else {
                         // does not contain two words, or an underscore so send org branches
-                        $branchesMessage = '';
+                        $message = str_replace("{member_name}", $this->contactName , $organization->welcome_msg) . "\r\n\r\nHere's our branches to get started:\r\n";
                         foreach ($organization->branches as $branch)
-                            $branchesMessage .=" {$branch->name}:  BYKL_{$branch->id} , ";
-                        $this->sendMessage('text', [$organization->temp_msg, ' Select Organization Branch and send its Code To us .', $branchesMessage ]);
+                            $message .="- {$branch->name}: ( BYKL_{$branch->id} )\r\n";
+                        $message .= "\r\nTo get started please respond with the {branch} code like (BYKL_15)";
                     }
+                    $this->sendMessage('text',$message);
                 }
             }
 
@@ -74,19 +72,18 @@ class WhatsappController extends Controller
      * @return array|string[]
      */
     private function makeReservation($reservedStep, $reservedId){
-        $messages =[];
         switch ($reservedStep){
             case 'branch':
-                $messages = $this->getDepartmentMessages($reservedId);
+                $message = $this->getDepartmentMessages($reservedId);
                 break;
             case 'department':
-                $messages = $this->getServicesMessages($reservedId);
+                $message = $this->getServicesMessages($reservedId);
                 break;
             case 'service':
-                $messages = $this->addMemberToService($reservedId);
+                $message = $this->addMemberToService($reservedId);
                 break;
         }
-        return $messages;
+        return $message;
     }
 
     /**get Department Messages
@@ -95,16 +92,16 @@ class WhatsappController extends Controller
      * @return string[]
      */
     private function getDepartmentMessages($reservedId){
-        $message = '';
         $departments = Department::where(['branch_id' => $reservedId, 'status' =>1])->get();
         if($departments->count() > 0){
+            $message = $this->organization->department_msg."\r\n\r\n";
             foreach ($departments as $department)
-                $message .=" {$department->name}: DXLE_{$department->id} ,";
-            $messages = [ ' Select Branch Department and send its Code To us .', $message];
+                $message .="- {$department->name}: ( DXLE_{$department->id} )\r\n";
+            $message .= "\r\nTo get started please respond with the {Department} code like (DXLE_15)";
         }else{
-            $messages = [ 'Sorry this Branch Doesn\'t have Departments yet kindly choose other Branch.'];
+            $message = $this->organization->error_msg;
         }
-        return  $messages;
+        return  $message;
     }
 
     /**getServicesMessages Related to specific department
@@ -113,16 +110,17 @@ class WhatsappController extends Controller
      * @return string[]
      */
     private function getServicesMessages($reservedId){
-        $message='';
         $services = Service::where(['department_id' => $reservedId, 'status' =>1])->get();
         if( $services->count() > 0 ){
+            $message = $this->organization->service_msg."\r\n\r\n";
             foreach ($services as $service)
-                $message .=" {$service->name}: SPOU_{$service->id} ,";
-            $messages = [ ' Select Department Service and send its Code To us .', $message];
+                $message .="- {$service->name}: ( SPOU_{$service->id} )\r\n";
+
+            $message .= "\r\nTo get started please respond with the {Service} code like (SPOU_15)";
         }else{
-            $messages = [ 'Sorry this Department Doesn\'t have Services yet kindly choose other Department.'];
+            $message = $this->organization->error_msg;
         }
-        return  $messages;
+        return  $message;
     }
 
     /**addMemberToService to finish booking
@@ -132,34 +130,32 @@ class WhatsappController extends Controller
     private function addMemberToService($reservedId){
         $service = Service::find($reservedId);
         if($service->exists()){
-            $messages = ["Booked successfully , Your Window number is {$service->queue_number}"];
+            $message = str_replace("{window_number}", $service->queue_number, $this->organization->success_msg);
             MemberService::create(['member_id' => $this->member_id, 'service_id' => $service->id,]);
         }else{
-            $messages = [ 'Sorry Something Wrong happened , try again later.'];
+            $message = $this->organization->error_msg;
         }
-        return $messages;
+        return $message;
     }
 
     /** sendMessage
      * @param $type
      * @param $messages
      */
-    private function sendMessage($type, $messages){
-        foreach ($messages as $message){
-            $response = Http::post(self::WHATSAPP_SEND_API."?number=$this->contactNumber&type=$type&message=$message&instance_id=$this->instance_id&access_token=$this->token");
-            if($response->successful()){
-                $responseBody = json_decode($response->body());
-                if($responseBody->status == 'success'){
-                    Message::create([
-                        'msg_id' => $responseBody->data->key->id,
-                        'member_id' => $this->member_id,
-                        'body' => $message,
-                        'msg_type' => $type,
-                        'from_me' => 1,
-                        'msg_date' => Carbon::now(),
-                        'contact_number' => $responseBody->data->key->remoteJid,
-                    ]);
-                }
+    private function sendMessage($type, $message){
+        $response = Http::post(self::WHATSAPP_SEND_API."?number={$this->contactNumber}&type={$type}&message={$message}&instance_id={$this->organization->instance_id}&access_token={$this->organization->token}");
+        if($response->successful()){
+            $responseBody = json_decode($response->body());
+            if($responseBody->status == 'success'){
+                Message::create([
+                    'msg_id' => $responseBody->data->key->id,
+                    'member_id' => $this->member_id,
+                    'body' => $message,
+                    'msg_type' => $type,
+                    'from_me' => 1,
+                    'msg_date' => Carbon::now(),
+                    'contact_number' => $responseBody->data->key->remoteJid,
+                ]);
             }
         }
     }
