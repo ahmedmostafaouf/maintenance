@@ -59,3 +59,14 @@ if(!function_exists('permissions')){
         return $permissions;
     }
 }
+
+if(!function_exists('reservationKeyWords')){
+    function reservationKeyWords($word){
+        $keyWords = [
+            'branch'=>'BYKL',
+            'department'=>'DXLE',
+            'service'=>'SPOU'
+        ];
+        return  array_search($word, $keyWords, true);
+    }
+}

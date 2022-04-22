@@ -15,8 +15,12 @@ return new class extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('phone');
+            $table->string('name',255);
+            $table->bigInteger('phone');
+            $table->text('image')->nullable();
+            $table->integer('status')->default(0)->comment('active->1, inactive->0');
+            $table->integer('is_online')->default(0)->comment('online->1, offline->0');
+            $table->dateTime('last_seen')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\Dashboard\SpinnersControler;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,7 +14,10 @@ use App\Http\Controllers\ApplicationController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('webhook', [SpinnersControler::class, 'webhookRecieve']);
 
 Route::get('/{any}', [ApplicationController::class, 'index'])->where('any', '.*');
+
+
 
 
