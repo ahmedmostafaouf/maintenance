@@ -1,49 +1,62 @@
 <template>
-  <table-data
-    :title-prop="title"
-    :search-term-prop="searchTerm"
-    :columns-prop="columns"
-    :url="url"
-  >
-    <template v-slot:searchDiv>
-      <div class="custom-search d-flex justify-content-end">
-        <b-form-group>
-          <div class="d-flex align-items-center">
-            <label class="mr-1">Search</label>
-            <b-form-input
-              v-model="searchTerm"
-              placeholder="Search"
-              type="text"
-              class="d-inline-block"
-            />
-          </div>
-        </b-form-group>
-      </div>
-    </template>
-    <template v-slot:actions="{row}">
-      <b-dropdown-item :to="{name:'edit-organization',params:{'id':row.id}}">
-        <feather-icon
-          icon="Edit2Icon"
-          class="mr-50"
-        />
-        <span>Edit</span>
-      </b-dropdown-item>
-        <b-dropdown-item @click.prevent="dropRow(row.id)">
-            <feather-icon
-                icon="TrashIcon"
-                class="mr-50"
-            />
-            <span>Delete</span>
-        </b-dropdown-item>
-        <b-dropdown-item :to="{name:'show-organization',params:{'id':row.id}}">
-            <feather-icon
-                icon="EyeIcon"
-                class="mr-50"
-            />
-            <span>Show</span>
-        </b-dropdown-item>
-    </template>
-  </table-data>
+    <div>
+        <b-row class="mb-1">
+            <b-col cols="12" >
+                <router-link  class="btn btn-primary float-right" :to="{name: 'add-organization'}" tag="button">
+                    <feather-icon
+                        icon="PlusSquareIcon"
+                        class="mr-50"
+                    />
+                    <span class="align-middle">Add</span>
+                </router-link>
+            </b-col>
+        </b-row>
+        <table-data
+            :title-prop="title"
+            :search-term-prop="searchTerm"
+            :columns-prop="columns"
+            :url="url"
+        >
+            <template v-slot:searchDiv>
+                <div class="custom-search d-flex justify-content-end">
+                    <b-form-group>
+                        <div class="d-flex align-items-center">
+                            <label class="mr-1">Search</label>
+                            <b-form-input
+                                v-model="searchTerm"
+                                placeholder="Search"
+                                type="text"
+                                class="d-inline-block"
+                            />
+                        </div>
+                    </b-form-group>
+                </div>
+            </template>
+            <template v-slot:actions="{row}">
+                <b-dropdown-item :to="{name:'edit-organization',params:{'id':row.id}}">
+                    <feather-icon
+                        icon="Edit2Icon"
+                        class="mr-50"
+                    />
+                    <span>Edit</span>
+                </b-dropdown-item>
+                <b-dropdown-item @click.prevent="dropRow(row.id)">
+                    <feather-icon
+                        icon="TrashIcon"
+                        class="mr-50"
+                    />
+                    <span>Delete</span>
+                </b-dropdown-item>
+                <b-dropdown-item :to="{name:'show-organization',params:{'id':row.id}}">
+                    <feather-icon
+                        icon="EyeIcon"
+                        class="mr-50"
+                    />
+                    <span>Show</span>
+                </b-dropdown-item>
+            </template>
+        </table-data>
+    </div>
 </template>
 
 <script>

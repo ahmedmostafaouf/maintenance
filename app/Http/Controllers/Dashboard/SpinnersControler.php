@@ -25,4 +25,9 @@ class SpinnersControler extends Controller
         $roles=Role::select([ 'roleName as name' , 'id'])->get();
         return $this->returnData('roles',$roles);
     }
+
+    public function webhookRecieve()
+    {
+        
+    }
 }

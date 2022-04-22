@@ -10,37 +10,58 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Service extends Model
+class service extends model
 {
-    use HasFactory,SoftDeletes;
+    use hasfactory,softdeletes;
 
+    /**
+     * @var string[]
+     */
     protected $fillable = [
         'name','status','desc','queue_number','range_time','department_id'
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function department(){
-        return $this->belongsTo(Department::class,'department_id');
+        return $this->belongsto(department::class,'department_id');
     }
 
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function members(){
-        return $this->belongsToMany(Member::class, 'member_services');
+        return $this->belongstomany(member::class, 'member_services');
     }
 
-    public function scopeGetData($query,$req){
-        return $query->when((isset($req['searchTerm']) && $req['searchTerm'] != null),function($query) use ($req){
-            $query->where( 'name', 'LIKE', '%' . $req['searchTerm'] . '%' );
+    /**
+     * @param $query
+     * @param $req
+     * @return mixed
+     */
+    public function scopegetdata($query, $req){
+        return $query->when((isset($req['searchterm']) && $req['searchterm'] != null),function($query) use ($req){
+            $query->where( 'name', 'like', '%' . $req['searchterm'] . '%' );
         });
     }
 
     /**
-     * Interact with the user's Created at.
+     * interact with the user's created at.
      *
-     * @return Attribute
+     * @return attribute
     */
-    public function createdAt(): Attribute{
-        return new Attribute(
-            get: fn ($value) => Carbon::parse($value)->format('Y-m-d'),
+    public function createdat(): attribute{
+        return new attribute(
+            get: fn ($value) => carbon::parse($value)->format('y-m-d'),
         );
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
+     */
+    public function users(){
+        return $this->morphmany(user::class, 'assignable');
     }
 }
