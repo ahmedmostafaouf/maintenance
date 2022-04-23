@@ -28,6 +28,7 @@ return new class extends Migration
             $table->text('error_msg');
             $table->text('department_msg');
             $table->text('service_msg');
+            $table->text('success_msg');
             $table->string('phone');
             $table->string('logo')->nullable();
             $table->text('qr_code');
