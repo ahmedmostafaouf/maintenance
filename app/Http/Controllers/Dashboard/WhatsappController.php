@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Branch;
 use App\Models\Department;
 use App\Models\Member;
 use App\Models\MemberService;
@@ -13,7 +12,6 @@ use App\Models\Service;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class WhatsappController extends Controller
@@ -37,6 +35,7 @@ class WhatsappController extends Controller
                 $messages = $request['data']['messages'][0];
                 $this->createMessage($messages['key']['id'], $messages['message']['conversation'], $request['data']['type'], 1, $messages['key']['remoteJid']);
                 if(!$messages['key']['fromMe']){
+                    //Storage::put('tt.txt' , json_encode($request->all()));
                     $this->contactNumber = explode('@',$messages['key']['remoteJid'])[0];
                     $this->contactName = $messages['pushName'];
                     $this->member_id = $this->createMember();
@@ -52,7 +51,7 @@ class WhatsappController extends Controller
                             $message = $this->organization->error_msg;
                         }
                     } else {
-                        // does not contain two words, or an underscore so send org branches
+                        // does not contain two words, or an underscore so send Welcome Message
                         $message = str_replace("{member_name}", $this->contactName , $organization->welcome_msg) . "\r\n\r\nHere's our branches to get started:\r\n";
                         foreach ($organization->branches as $branch)
                             $message .="- {$branch->name}: ( BYKL_{$branch->id} )\r\n";
@@ -131,12 +130,12 @@ class WhatsappController extends Controller
     private function addMemberToService($reservedId){
         $service = Service::find($reservedId);
         if($service->exists()){
-            $memberService = MemberService::where(['member_id' => $this->member_id, 'service_id' => $service->id, 'status'=>0|1])->get();
-            if($memberService->exists()){
-                $message = str_replace("{window_number}", $service->queue_number, $this->organization->success_msg);
+            $memberService = MemberService::where(['member_id' => $this->member_id, 'status'=>[0,1]])->get();
+            if($memberService->count()>0){
+                $message = "You already booked Before on service( {$service->name} ), Your Window number is {$service->queue_number}";
             }else{
                 MemberService::create(['member_id' => $this->member_id, 'service_id' => $service->id]);
-                $message = "You already booked Before, Your Window number is {$this->member_id}";
+                $message = str_replace("{window_number}", $service->queue_number, $this->organization->success_msg);
             }
         }else{
             $message = $this->organization->error_msg;
