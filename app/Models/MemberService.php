@@ -12,4 +12,8 @@ class MemberService extends Model
     protected $fillable = [
         'member_id','service_id','status','member_type','feedback','completed_feedback','current_members_service',
     ];
+
+    public function service(){
+        return  $this->belongsTo(Service::class, 'service_id');
+    }
 }

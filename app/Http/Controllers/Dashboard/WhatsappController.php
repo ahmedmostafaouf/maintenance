@@ -130,9 +130,9 @@ class WhatsappController extends Controller
     private function addMemberToService($reservedId){
         $service = Service::find($reservedId);
         if($service->exists()){
-            $memberService = MemberService::where(['member_id' => $this->member_id, 'status'=>[0,1]])->get();
-            if($memberService->count()>0){
-                $message = "You already booked Before on service( {$service->name} ), Your Window number is {$service->queue_number}";
+            $memberService = MemberService::with('service')->where(['member_id' => $this->member_id, 'status'=>[0,1]])->first();
+            if($memberService->exists()){
+                $message = "You already booked Before on service( {$memberService->service->name} ), Your Window number is {$memberService->service->queue_number}";
             }else{
                 MemberService::create(['member_id' => $this->member_id, 'service_id' => $service->id]);
                 $message = str_replace("{window_number}", $service->queue_number, $this->organization->success_msg);
