@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Branch;
 use App\Models\Department;
 use App\Models\Member;
 use App\Models\MemberService;
@@ -29,17 +28,24 @@ class WhatsappController extends Controller
      * @param Request $request
      */
     public function webHook(Request $request){
+       // dd($request->all());
         $message = '';
         $organization = Organization::with('branches.departments.services')->where('instance_id', $request->instance_id)->first();
+
         if($organization->exists()){
             $this->organization = $organization;
+          //  dd($request->event);
             if($request->event = 'message'){
                 $messages = $request['data']['messages'][0];
+                $this->createMessage($messages['key']['id'], $messages['message']['conversation'], $request['data']['type'], 1, $messages['key']['remoteJid']);
                 if(!$messages['key']['fromMe']){
+                    //Log::info(json_encode($request->all()));
+                    Storage::put('tt.txt' , json_encode($request->all()));
                     $this->contactNumber = explode('@',$messages['key']['remoteJid'])[0];
                     $this->contactName = $messages['pushName'];
                     $this->member_id = $this->createMember();
                     $conversation = $messages['message']['conversation'];
+                    //dd($conversation);
                     // contains an underscore and is two words
                     if ( preg_match('/^[a-z]+_[0-9]+$/i', $conversation) ) {
                         $splitText = explode('_', $conversation);
@@ -51,7 +57,7 @@ class WhatsappController extends Controller
                             $message = $this->organization->error_msg;
                         }
                     } else {
-                        // does not contain two words, or an underscore so send org branches
+                        // does not contain two words, or an underscore so send Welcome Message
                         $message = str_replace("{member_name}", $this->contactName , $organization->welcome_msg) . "\r\n\r\nHere's our branches to get started:\r\n";
                         foreach ($organization->branches as $branch)
                             $message .="- {$branch->name}: ( BYKL_{$branch->id} )\r\n";
@@ -130,8 +136,13 @@ class WhatsappController extends Controller
     private function addMemberToService($reservedId){
         $service = Service::find($reservedId);
         if($service->exists()){
-            $message = str_replace("{window_number}", $service->queue_number, $this->organization->success_msg);
-            MemberService::create(['member_id' => $this->member_id, 'service_id' => $service->id,]);
+            $memberService = MemberService::with('service')->where(['member_id' => $this->member_id, 'status'=>[0,1]])->first();
+            if($memberService->exists()){
+                $message = "You already booked Before on service( {$memberService->service->name} ), Your Window number is {$memberService->service->queue_number}";
+            }else{
+                MemberService::create(['member_id' => $this->member_id, 'service_id' => $service->id]);
+                $message = str_replace("{window_number}", $service->queue_number, $this->organization->success_msg);
+            }
         }else{
             $message = $this->organization->error_msg;
         }
@@ -147,19 +158,29 @@ class WhatsappController extends Controller
         if($response->successful()){
             $responseBody = json_decode($response->body());
             if($responseBody->status == 'success'){
-                Message::create([
-                    'msg_id' => $responseBody->data->key->id,
-                    'member_id' => $this->member_id,
-                    'body' => $message,
-                    'msg_type' => $type,
-                    'from_me' => 1,
-                    'msg_date' => Carbon::now(),
-                    'contact_number' => $responseBody->data->key->remoteJid,
-                ]);
+                $this->createMessage($responseBody->data->key->id, $message, $type, 1, $responseBody->data->key->remoteJid);
             }
         }
     }
 
+    /** Create Message
+     * @param $message_id
+     * @param $message
+     * @param $type
+     * @param $from_me
+     * @param $contact_number
+     */
+    private function createMessage($message_id, $message, $type, $fromMe, $contact_number){
+        Message::create([
+            'msg_id' => $message_id,
+            'member_id' => $this->member_id,
+            'body' => $message,
+            'msg_type' => $type,
+            'from_me' => $fromMe,
+            'msg_date' => Carbon::now(),
+            'contact_number' => $contact_number,
+        ]);
+    }
     /**createMember
      * @return mixed
      */
