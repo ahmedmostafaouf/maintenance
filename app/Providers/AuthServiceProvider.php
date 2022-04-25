@@ -28,6 +28,8 @@ class AuthServiceProvider extends ServiceProvider
 
         //
         Gate::define('admin',function (User $user,$cr_role){
+
+
             if($user->status){
                 if(!$user->group()->exists())
                     return false;

@@ -4,16 +4,17 @@ use Illuminate\Support\Facades\File;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 if(!function_exists('generateQrcode')){
-    function generateQrcode($organizationName){
+    function generateQrcode($organizationName,$organizationphone){
         $qrcode = $organizationName.'_'.time().'_qrcode'.'.svg';
         $path = public_path('images/organization/qrcode');
+        $whatsapp='https://wa.me/'.$organizationphone.'?text=Hello....';
         if(!File::isDirectory($path)){
             File::makeDirectory($path, 0777, true, true);
         }
         QrCode::size(500)
             ->backgroundColor(255,255,204)
             ->format('svg')
-            ->generate($organizationName,$path.'/'.$qrcode);
+            ->generate($whatsapp,$path.'/'.$qrcode);
 
         return $qrcode;
     }
@@ -35,19 +36,19 @@ if(!function_exists('TypeUser')){
         switch ($type) {
             case 1:
                 return 'Admin';
-    break;
+                break;
             case 2:
                 return 'organization_manager';
-    break;
+                break;
             case 3:
                 return 'branch_manager';
-    break;
+                break;
             case 4:
                 return 'department_manager';
-    break;
+                break;
             case 5:
                 return 'service_operator';
-    break;
+                break;
         }
 
     }

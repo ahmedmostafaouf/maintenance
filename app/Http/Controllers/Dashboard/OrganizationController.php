@@ -42,6 +42,7 @@ class OrganizationController extends Controller
     public function store(OrganizationRequest $request)
     {
 
+
         if (auth('sanctum')->user()->cannot('admin', 'write organizations')) {
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
@@ -49,7 +50,7 @@ class OrganizationController extends Controller
         if( isset($request->logo) && $request->logo->isValid())
             $data['logo'] = imageUpload($request->logo, 'images/organization/logo');
 
-        $data['qr_code'] = generateQrcode($request->name);
+        $data['qr_code'] = generateQrcode($request->name,$request->phone);
         $data['welcome_msg'] = $data['temp_msg'];
         $data['success_msg'] = 'GOOOOOOOOOOOD';
         Organization::create($data);

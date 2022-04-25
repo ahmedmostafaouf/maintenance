@@ -15,7 +15,7 @@ export default class Gate{
                     return true;
                 else if((permission.update ? 'update ' : '') + permission.name == cr_role)
                     return true;
-                else if((permission.update ? 'delete ' : '') + permission.name == cr_role)
+                else if((permission.delete ? 'delete ' : '') + permission.name == cr_role)
                     return true;
                 else
                     continue;
