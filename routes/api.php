@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/login', 'AuthController@login');
-
+//adsasdasdasd
 Route::group(['middleware'=>['auth:sanctum']],function () {
     Route::post('/logout', 'AuthController@signout');
     Route::resource('organizations', "OrganizationController");
