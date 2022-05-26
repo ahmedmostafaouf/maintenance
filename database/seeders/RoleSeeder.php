@@ -31,7 +31,7 @@ class RoleSeeder extends Seeder
             ];
         }
         Role::create([
-            'roleName'=>'admin',
+            'roleName'=>'مدير النظام',
             'permissions'=>json_encode($permissions)
         ]);
     }

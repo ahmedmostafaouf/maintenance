@@ -24,7 +24,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','email','password','image','type','phone','status','role_id','assignable_type','assignable_id'
+        'name','email','password','image','phone','status','role_id'
     ];
 
     /**
@@ -74,8 +74,14 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'role_id');
     }
     public function scopeUserData($query,$req){
+
         return $query->when((isset($req['searchTerm']) && $req['searchTerm'] != null),function($query) use ($req){
             $query->where( 'name', 'LIKE', '%' . $req['searchTerm'] . '%' );
+        })->when((isset($req['status_filter'])&&$req['status_filter']!=="null"),function ($query) use($req){
+            $query->where( 'status',$req['status_filter']);
+
+        })->when((isset($req['role_filter'])&&  $req['role_filter']!=="null"),function ($query) use($req){
+            $query->where('role_id',$req['role_filter']);
         })
             ->orderBy($req->field,$req->type)
             ->paginate($req->per_page );

@@ -10,6 +10,7 @@ use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DepartmentController extends Controller
 {
@@ -21,11 +22,11 @@ class DepartmentController extends Controller
      */
     public function index(Request $request)
     {
-        if (auth('sanctum')->user()->cannot('admin', 'read departments')) {
+        if (auth('sanctum')->user()->cannot('admin', 'read department')) {
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
-        $branches = Department::departmentData($request);
-        return DepartmentsResource::collection($branches);
+        $departments = Department::departmentData($request);
+        return DepartmentsResource::collection($departments);
     }
 
     /**
@@ -46,12 +47,12 @@ class DepartmentController extends Controller
      */
     public function store(DepartmentRequest $request)
     {
-        if (auth('sanctum')->user()->cannot('admin', 'write departments')) {
+        if (auth('sanctum')->user()->cannot('admin', 'write department')) {
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
         try{
             Department::create($request->all());
-            return $this->returnSuccessMessage('Department Stored Succeffully');
+            return $this->returnSuccessMessage('تم الانشاء بنجاح');
         } catch (ValidationException $e) {
             return $this->validationError($e,'validation err');
         }
@@ -76,7 +77,7 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-        if (auth('sanctum')->user()->cannot('admin', 'update departments')) {
+        if (auth('sanctum')->user()->cannot('admin', 'update department')) {
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
         try{
@@ -98,7 +99,7 @@ class DepartmentController extends Controller
      */
     public function update(Department $department,DepartmentRequest $request)
     {
-        if (auth('sanctum')->user()->cannot('admin', 'update departments')) {
+        if (auth('sanctum')->user()->cannot('admin', 'update department')) {
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
         try{
@@ -119,8 +120,8 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        if (auth('sanctum')->user()->cannot('admin', 'delete departments')) {
-            return  \responsenp()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        if (auth('sanctum')->user()->cannot('admin', 'delete department')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
         try{
             if($department){
@@ -132,4 +133,12 @@ class DepartmentController extends Controller
             return $this->returnError(500,'err');
         }
     }
+    public function bulk_delete($ids){
+        Department::whereIn('id',explode(',',$ids))->delete();
+        return $this->returnSuccessMessage('تم الحذف بنجاح');
+    }
+    public function export(){
+        return Excel::download(new UsersExport(), 'device.xlsx');
+    }
+
 }

@@ -26,13 +26,13 @@
             >
               <span class="brand-logo">
                 <b-img
-                  :src="appLogoImage"
+                  src="http://www.maint-hos.com/public/assets/img/90x90.jpg"
                   alt="logo"
                 />
               </span>
               <h2 class="brand-text">
                 <!-- {{ appName }} -->
-                Bot
+                صيانة
               </h2>
             </b-link>
           </li>

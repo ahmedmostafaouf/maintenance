@@ -2,18 +2,18 @@
   <div class="auth-wrapper auth-v2">
     <b-row class="auth-inner m-0">
 
-      <!-- Brand logo-->
-      <b-link class="brand-logo">
-        <!-- <vuexy-logo /> -->
+<!--      &lt;!&ndash; Brand logo&ndash;&gt;-->
+<!--      <b-link class="brand-logo">-->
+<!--        &lt;!&ndash; <vuexy-logo /> &ndash;&gt;-->
 
-        <b-img
-        :src="logoAppImg"
-        style="width:30px;height:30px;"
-        />
-        <h2 class="brand-text text-primary ml-1">
-          Bot
-        </h2>
-      </b-link>
+<!--        <b-img-->
+<!--        :src="logoAppImg"-->
+<!--        style="width:30px;height:30px;"-->
+<!--        />-->
+<!--        <h2 class="brand-text text-primary ml-1">-->
+<!--          Bot-->
+<!--        </h2>-->
+<!--      </b-link>-->
       <!-- /Brand logo-->
 
       <!-- Left Text-->
@@ -46,10 +46,10 @@
             class="mb-1 font-weight-bold"
             title-tag="h2"
           >
-            Welcome to Bot! 👋
+           مرحبا بك في مستشفى المخواة العام ! 👋
           </b-card-title>
           <b-card-text class="mb-2">
-            Please sign-in to your account and start the adventure
+              الرجاء تسجيل الدخول إلى حسابك وبدء المغامرة
           </b-card-text>
           <b-alert
             variant="primary"
@@ -66,14 +66,14 @@
               @submit.prevent="login"
             >
               <b-form-group
-                label="Email"
+                label="الاميل او الاسم"
                 label-for="login-email"
               >
                 <validation-provider
                   #default="{ errors }"
                   name="Email"
                   vid="email"
-                  rules="required|email"
+                  rules="required"
                 >
                   <b-form-input
                     id="login-email"
@@ -87,12 +87,7 @@
               </b-form-group>
               <!-- forgot password -->
               <b-form-group>
-                <!--                <div class="d-flex justify-content-between">
-                  <label for="login-password">Password</label>
-                  <b-link :to="{name:'auth-forgot-password'}">
-                    <small>Forgot Password?</small>
-                  </b-link>
-                </div>-->
+
                 <validation-provider
                   #default="{ errors }"
                   name="Password"
@@ -110,7 +105,7 @@
                       class="form-control-merge"
                       :type="passwordFieldType"
                       name="login-password"
-                      placeholder="Password"
+                      placeholder="كلمة المرور"
                     />
                     <b-input-group-append is-text>
                       <feather-icon
@@ -131,8 +126,13 @@
                   v-model="status"
                   name="checkbox-1"
                 >
-                  Remember Me
+                 تذكرني
                 </b-form-checkbox>
+                  <div class="d-flex justify-content-between">
+                      <b-link :to="{name:'auth-forgot-password'}">
+                          <small>هل نسيت كلمة المرور؟</small>
+                      </b-link>
+                  </div>
               </b-form-group>
 
               <!-- submit buttons -->
@@ -142,7 +142,7 @@
                 block
                 :disabled="invalid"
               >
-                Sign in
+               سجل الان
               </b-button>
             </b-form>
           </validation-observer>
@@ -249,10 +249,10 @@ export default {
                   component: ToastificationContent,
                   position: 'top-right',
                   props: {
-                    title: `Welcome ${userData.name || userData.email}`,
+                    title: ` مرحبا  ${userData.name || userData.email}`,
                     icon: 'CoffeeIcon',
                     variant: 'success',
-                    text: `You have successfully logged in as ${userData.role}. Now you can start to explore!`,
+                    text: `انت سجلت الدخول بنجاح  ك_ ${userData.group}. الان يمكن ان تبدأ التصفح!`,
                   },
                 })
               })

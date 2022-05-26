@@ -16,13 +16,11 @@ class DepartmentsResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name'=>$this->name,
-            'phone'=>$this->phone,
+            'name'=>@$this->name,
+            'desc'=>$this->desc,
             'status'=>$this->status,
             'created_at'=>$this->created_at,
-            'services_count'=>@$this->services->count(),
-            'organization_id'=>@$this->organization->name ?? '..',
-            'branch_id'=>@$this->branch->name ?? '..',
+            'user'=>$this->user->name,
         ];
     }
 }

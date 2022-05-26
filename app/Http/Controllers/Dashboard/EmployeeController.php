@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\EmloyeeRequest;
 use App\Http\Resources\Dashboard\EmployeeResource;
 use App\Http\Resources\Dashboard\UserResource;
 use App\Http\Traits\ResponseTrait;
-use App\Models\Branch;
 use App\Models\Department;
 use App\Models\Organization;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EmployeeController extends Controller
 {
@@ -55,7 +56,6 @@ class EmployeeController extends Controller
         $data = $request->except('image');
         if (isset($request->image) && $request->image->isValid())
             $data['image'] = imageUpload($request->image, 'images/employee/image');
-        $data = $this->assignableModel($request, $data);
         User::create($data);
         $this->returnSuccessMessage('Employee Created Successfully');
     }
@@ -97,7 +97,6 @@ class EmployeeController extends Controller
         $data=$request->except(['image']);
         if( isset($request->image) && $request->image->isValid())
             $data['image'] = imageUpload($request->image, 'images/employee/image');
-        $data = $this->assignableModel($request, $data);
         $user = User::findOrFail($id);
         $user->update($data);
         $this->returnSuccessMessage('Employee Updated Successfully');
@@ -125,23 +124,13 @@ class EmployeeController extends Controller
             return $this->returnError(500,'err');
         }
     }
-
-    /**
-     * @param EmloyeeRequest|Request $request
-     * @param array $data
-     * @return array
-     */
-    protected function assignableModel(EmloyeeRequest|Request $request, array $data): array
-    {
-        if ($request['type'] == 2) {
-            $data['assignable_type'] = (new Organization())->getMorphClass();
-        } elseif ($request['type'] == 3) {
-            $data['assignable_type'] = (new Branch())->getMorphClass();
-        } elseif ($request['type'] == 4) {
-            $data['assignable_type'] = (new Department())->getMorphClass();
-        } elseif ($request['type'] == 5) {
-            $data['assignable_type'] = (new Service())->getMorphClass();
-        }
-        return $data;
+    public function export(){
+        return Excel::download(new UsersExport(), 'users.xlsx');
     }
+    public function bulk_delete($ids){
+        User::whereIn('id',explode(',',$ids))->delete();
+        return $this->returnSuccessMessage('تم الحذف بنجاح');
+    }
+
+
 }

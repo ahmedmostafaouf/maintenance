@@ -2,39 +2,39 @@
      <b-row>
         <b-col cols="4">
             <b-form-group
-            label="Roles"
+            label="الرتب"
             label-for="vi-roles"
             >
             <b-input-group class="input-group-merge">
-                 <b-form-input id="vi-name" v-model="role" placeholder="Name" />
+                 <b-form-input id="vi-name" v-model="role" :placeholder="الاسم" />
             </b-input-group>
             <label
                 v-if="Object.keys(errors).length > 0 && errors.rol !== undefined"
                 class="text-danger"
             >
-                Role is required
+                {{this.errors[0]}}
             </label>
             </b-form-group>
         </b-col>
         <b-col cols="12">
-            <button class="btn btn-success mt-2 mb-2" :loading="is_sending" :disabled="is_sending" @click="edit">Update</button>
+            <button class="btn btn-success mt-2 mb-2" :loading="is_sending" :disabled="is_sending" @click="edit">تعديل</button>
             <table class="table table-responsive table-striped">
                 <thead>
                     <tr>
-                        <th class="text-center" colspan="3">Routes</th>
+                        <th class="text-center" colspan="3">الرتب</th>
                         <th class="text-center" colspan="2">
                             <input type="checkbox" v-model="check_all" />
-                            Select All
+                            اختيار الكل
                         </th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="r in all_permissions" :key="r.name">
-                        <td>{{r.name}}</td>
-                        <td>read <input type="checkbox" v-model="r.read" /></td>
-                        <td>write <input type="checkbox" v-model="r.write" /></td>
-                        <td>update <input type="checkbox" v-model="r.update" /></td>
-                        <td>delete <input type="checkbox" v-model="r.delete" /></td>
+                        <td>{{ $i18n.t(`roles.${r.name}`)}}</td>
+                        <td>{{$i18n.t('roles.read')}} <input type="checkbox" v-model="r.read" /></td>
+                        <td>{{$i18n.t('roles.write')}} <input type="checkbox" v-model="r.write" /></td>
+                        <td>{{$i18n.t('roles.update')}} <input type="checkbox" v-model="r.update" /></td>
+                        <td>{{$i18n.t('roles.delete')}} <input type="checkbox" v-model="r.delete" /></td>
                     </tr>
                 </tbody>
             </table>

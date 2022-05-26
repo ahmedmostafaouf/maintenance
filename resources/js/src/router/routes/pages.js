@@ -19,4 +19,24 @@ export default [
       redirectIfLoggedIn: true,
     },
   },
+    {
+    path: '/forget',
+    name: 'auth-forgot-password',
+    component: () => import('@/views/pages/forget/index.vue'),
+    meta: {
+      layout: 'full',
+      resource: 'Auth',
+      redirectIfLoggedIn: true,
+    },
+  },
+    {
+    path: '/reste-passeod',
+    name: 'auth-reset-password',
+    component: () => import('@/views/pages/forget/reset.vue'),
+    meta: {
+      layout: 'full',
+      resource: 'Auth',
+      redirectIfLoggedIn: true,
+    },
+  },
 ]

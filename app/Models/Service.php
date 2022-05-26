@@ -16,50 +16,38 @@ class Service extends model
      * @var string[]
      */
     protected $fillable = [
-        'name','status','desc','queue_number','range_time','department_id'
+        'name','status','desc'
     ];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function department(){
-        return $this->belongsto(Department::class,'department_id');
+    public function maintenances(){
+        return $this->hasMany(Maintenance::class,'service_id');
     }
 
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
-    public function members(){
-        return $this->belongstomany(Member::class, 'member_services');
-    }
 
     /**
      * @param $query
      * @param $req
      * @return mixed
      */
-    public function scopegetdata($query, $req){
-        return $query->when((isset($req['searchterm']) && $req['searchterm'] != null),function($query) use ($req){
-            $query->where( 'name', 'like', '%' . $req['searchterm'] . '%' );
-        });
+    public function scopeServiceData($query,$req){
+        return $query->when((isset($req['searchTerm']) && $req['searchTerm'] !=="null"),function($query) use ($req){
+            $query->where( 'name', 'LIKE', '%' . $req['searchTerm'] . '%' );
+        })->when((isset($req['status_filter'])&&$req['status_filter']!=="null"),function ($query) use($req){
+            $query->where( 'status',$req['status_filter']);
+
+        })
+            ->orderBy($req->field,$req->type)
+            ->paginate($req->per_page );
     }
 
-    /**
-     * interact with the user's created at.
-     *
-     * @return attribute
-    */
     public function createdat(): attribute{
         return new attribute(
             get: fn ($value) => carbon::parse($value)->format('y-m-d'),
         );
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
-     */
-    public function users(){
-        return $this->morphmany(user::class, 'assignable');
-    }
 }

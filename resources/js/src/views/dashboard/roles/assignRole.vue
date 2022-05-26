@@ -2,29 +2,29 @@
      <b-row>
         <b-col cols="4">
             <b-form-group
-            :label="$i18n.t('roles.roles')"
+            label="اضافة رتبه "
             label-for="vi-roles"
             >
             <b-input-group class="input-group-merge">
-                 <b-form-input id="vi-name" v-model="role" :placeholder="$i18n.t('roles.name')" />
+                 <b-form-input id="vi-name" v-model="role" placeholder="اسم الرتبة" />
             </b-input-group>
             <label
-                v-if="Object.keys(errors).length > 0 && errors.rol !== undefined"
+                v-if="Object.keys(errors).length > 0"
                 class="text-danger"
             >
-                {{$i18n.t('roles.required_role')}}
+                {{this.errors[0]}}
             </label>
             </b-form-group>
         </b-col>
         <b-col cols="12">
-            <button class="btn btn-success mt-2 mb-2" :loading="is_sending" :disabled="is_sending" @click="assignRole">{{$i18n.t('roles.assign')}}</button>
+            <button class="btn btn-success mt-2 mb-2" :loading="is_sending" :disabled="is_sending" @click="assignRole">اضافة</button>
             <table class="table table-responsive table-striped">
                 <thead>
                     <tr>
-                        <th class="text-center" colspan="3">{{$i18n.t('roles.routes')}}</th>
+                        <th class="text-center" colspan="3">الرتب</th>
                         <th class="text-center" colspan="2">
                             <input type="checkbox" v-model="check_all" />
-                            Select All
+                           اختيار الكل
                         </th>
                     </tr>
                 </thead>
@@ -93,8 +93,8 @@ export default {
                     this.makeToast('success', res.data.message);
                     this.$router.push({name:'roles'})
                 }
-            }).catch((err) => {
-                console.log(err)
+            }).catch((error) => {
+                this.errors=error.response.data.errors.role
             })
 
         },

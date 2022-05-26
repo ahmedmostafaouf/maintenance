@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->text('image')->nullable();
-            $table->integer('type')->comment('1=>admin,2=>organization_manager,3=>branch_manager,4=>department_manager,5=>service_operator');
             $table->tinyInteger('status')->default(1)->comment('1->Active, 0->inActive');
             $table->foreignId('role_id')->nullable()->constrained('roles')->onDelete('cascade');
             $table->timestamp('email_verified_at')->nullable();

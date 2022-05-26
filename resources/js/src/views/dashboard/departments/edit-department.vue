@@ -5,7 +5,7 @@
             <!-- first name -->
             <b-col cols="12">
                 <b-form-group
-                    label="Name"
+                    :label="$t('global.name')"
                     label-for="vi-name"
                 >
                     <b-input-group class="input-group-merge">
@@ -15,7 +15,7 @@
                         <b-form-input
                             id="vi-name"
                             v-model="department.name"
-                            placeholder="Name"
+                            :placeholder="$t('global.name')"
                         /><br>
                     </b-input-group>
                     <label
@@ -27,90 +27,18 @@
                 </b-form-group>
             </b-col>
 
-            <!-- phone -->
-            <b-col cols="12">
-                <b-form-group
-                    label="Phone"
-                    label-for="vi-phone"
-                >
-                    <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="SmartphoneIcon" />
-                        </b-input-group-prepend>
-                        <b-form-input
-                            id="vi-phone"
-                            v-model="department.phone"
-                            type="number"
-                            placeholder="Phone"
-                        /><br>
-                    </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.phone !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.phone[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
-
-            <!-- orgnization -->
-            <b-col cols="12">
-                <b-form-group
-                    label="Organization"
-                    label-for="vi-organization"
-                >
-                    <b-input-group class="input-group-merge">
-                        <v-select
-                            v-model="department.organization_id"
-                            placeholder="Organization..."
-                            :options="organizations"
-                            :reduce="org => org.id"
-                            label="name"
-                            @input="getOrgBranches"
-                        />
-                    </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.organization_id !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.organization_id[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
-            <!-- Branch -->
-            <b-col cols="12">
-                <b-form-group
-                    label="Branches"
-                    label-for="vi-branch"
-                >
-                    <b-input-group class="input-group-merge">
-                        <v-select
-                            v-model="department.branch_id"
-                            placeholder="Branches..."
-                            :options="branches"
-                            :reduce="branch => branch.id"
-                            label="name"
-                        />
-                    </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.branch_id !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.branch_id[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
             <!-- status -->
             <b-col cols="12">
                 <b-form-group
-                    label="Status"
+                    :label="$t('global.status')"
                     label-for="vi-status"
                 >
                     <b-input-group class="input-group-merge">
                         <v-select
                             v-model="department.status"
-                            placeholder="Status..."
+                            :placeholder="$t('global.status')+'...'"
                             :options="status"
+                            dir="rtl"
                             :reduce="sta => sta.value"
                             label="name"
                         />
@@ -123,15 +51,39 @@
                     </label>
                 </b-form-group>
             </b-col>
+            <!-- status -->
+            <b-col cols="12">
+                <b-form-group
+                    label="المدير المسؤول"
+                    label-for="vi-status"
+                >
+                    <b-input-group class="input-group-merge">
+                        <v-select
+                            v-model="department.user_id"
+                            placeholder="المدير المسؤول"
+                            :options="users"
+                            dir="rtl"
+                            :reduce="sta => sta.id"
+                            label="name"
+                        />
+                    </b-input-group>
+                    <label
+                        v-if="Object.keys(errors).length > 0 && errors.user_id !== undefined"
+                        class="text-danger"
+                    >
+                        {{this.errors.user_id[0]}}
+                    </label>
+                </b-form-group>
+            </b-col>
 
             <!-- description -->
             <b-col cols="12">
-                <label for="textarea-default">Description</label>
+                <label for="textarea-default">{{$t('global.desc')}}</label>
                 <b-input-group class="input-group-merge">
                     <b-form-textarea
                         id="textarea-default"
                         v-model="department.desc"
-                        placeholder="Description"
+                        :placeholder="$t('global.desc')"
                         rows="3"
                     /><br>
                 </b-input-group>
@@ -155,14 +107,14 @@
                     variant="primary"
                     class="mr-1"
                 >
-                    Submit
+                    {{$t('global.save')}}
                 </b-button>
                 <b-button
                     v-ripple.400="'rgba(186, 191, 199, 0.15)'"
                     type="reset"
                     variant="outline-secondary"
                 >
-                    Reset
+                    {{$t('global.reset')}}
                 </b-button>
             </b-col>
         </b-row>
@@ -179,7 +131,7 @@
     import axios from 'axios'
 
     export default {
-        name: 'EditDepartment',
+        name: 'AddDepartment',
         components: {
             BRow,
             vSelect,
@@ -200,27 +152,24 @@
         },
         data(){
             return{
-                branches:[],
-                organizations:[],
                 errors: {},
                 status:[
-                    {name:'Active',value:1},
-                    {name:'In Active',value:0},
+                    {name:'نشط',value:1},
+                    {name:'غير نشط',value:0},
                 ],
+                users:[],
                 department:{
+                    id:'',
                     name:'',
-                    phone:'',
                     desc:'',
-                    branch_id:'',
-                    organization_id:'',
-                    status:''
+                    status:'',
+                    'user_id':''
                 }
             };
         },
         created() {
-            this.getAllOrganizations();
-            this.getDepartement(this.$route.params.id)
-
+            this.getDepartment();
+            this.getUsers();
         },
         methods:{
             makeToast(variant = null, body) {
@@ -230,22 +179,40 @@
                     solid: true,
                 })
             },
-            getOrgBranches(){
-                this.department.branch_id = ''
-                this.getBranches(this.department.organization_id)
+            getDepartment(){
+                let id=this.$route.params.id
+                axios.get(`department/${id}/edit`,{
+                    headers:{
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    }
+                }).then(response=>{
+                    if(response.status){
+                        this.department.id=response.data.departments.id
+                        this.department.name=response.data.departments.name
+                        this.department.desc=response.data.departments.desc
+                        this.department.status=response.data.departments.status
+                        this.department.user_id=response.data.departments.user_id
+                    }
+
+                });
+            },
+            getUsers(){
+                axios.get(`/spinner/get-users/${status}`)
+                    .then(response=> this.users = response.data.users)
+                    .catch(error=>console.log(error))
             },
             editDepartment(){
                 const instance = this
                 let id=this.$route.params.id
-                axios.put(`/departments/${id}`, this.department, {
+                axios.put(`department/${id}`, this.department, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
                 }).then(response => {
                     this.errors = {}
-                    this.makeToast('success', 'Department Stored Succeffully')
+                    this.makeToast('success', response.data.message)
                     setTimeout(() => {
-                        instance.$router.push({ name: 'departments' })
+                        instance.$router.push({ name: 'department' })
                     }, 1000)
                 })
                     .catch(error => {
@@ -253,42 +220,8 @@
                         this.errors = error.response.data.errors
                     })
             },
-            getDepartement(id){
-            axios.get(  `departments/${id}/edit`,{
-               headers:{
-                   Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-               }
-            }).then(response=>{
-                if(response.status){
-                    this.department.name=response.data.departments.name
-                    this.department.phone=response.data.departments.phone
-                    this.department.desc=response.data.departments.desc
-                    this.department.branch_id=response.data.departments.branch_id
-                    this.department.organization_id=response.data.departments.organization_id
-                    this.department.status=response.data.departments.status
-                   this.getBranches(this.department.organization_id);
-                }
 
-            });
-            },
-            getBranches(id){
-                axios.get(`all-branches/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                    },
-                }).then(response => {
-                    this.branches = response.data.data
-                })
-            },
-            getAllOrganizations() {
-                axios.get('all-organizations', {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
-                    },
-                }).then(response => {
-                    this.organizations = response.data.data
-                })
-            },
+
         }
     }
 </script>

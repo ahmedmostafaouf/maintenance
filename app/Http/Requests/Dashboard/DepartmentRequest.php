@@ -24,12 +24,10 @@ class DepartmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'phone' => 'required|min:3',
+            'name' => 'required|unique:departments,name,'.$this->id,
             'status' => 'required',
-            'branch_id' => 'required',
-            'organization_id' => 'required',
             'desc' => 'required',
+            'user_id' => 'required',
         ];
     }
 }

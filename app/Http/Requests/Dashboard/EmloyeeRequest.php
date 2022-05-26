@@ -30,7 +30,6 @@ class EmloyeeRequest extends FormRequest
             'password' => 'sometimes|min:6|max:25|confirmed',
             'phone'=>'required|numeric',
             'role_id'=>'required',
-            'type'=>'required',
             'status'=>'required|in:1,0',
 
         ];

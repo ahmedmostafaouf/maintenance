@@ -3,13 +3,13 @@
         <b-row>
             <b-col cols="12">
                 <b-form-group
-                    label="Image"
+                    :label="$i18n.t('users.image')"
                     label-for="vi-image"
                 >
             <b-input-group class="input-group-merge">
                 <b-form-file
                     v-model="employee.image"
-                    placeholder="Choose a file or drop it here..."
+                    :placeholder="$t('users.imageDesc')"
                     drop-placeholder="Drop file here..."
                 />
             </b-input-group>
@@ -19,7 +19,7 @@
             <!-- name -->
             <b-col cols="12">
                 <b-form-group
-                    label="Name"
+                    :label="$i18n.t('users.name')"
                     label-for="vi-name"
                 >
                     <b-input-group class="input-group-merge">
@@ -29,7 +29,7 @@
                         <b-form-input
                             id="vi-name"
                             v-model="employee.name"
-                            placeholder="Name"
+                            :placeholder="$i18n.t('users.name')"
                         /><br>
                     </b-input-group>
                     <label
@@ -40,10 +40,34 @@
                     </label>
                 </b-form-group>
             </b-col>
+            <!-- name -->
+            <b-col cols="12">
+                <b-form-group
+                    :label="$i18n.t('users.username')"
+                    label-for="vi-name"
+                >
+                    <b-input-group class="input-group-merge">
+                        <b-input-group-prepend is-text>
+                            <feather-icon icon="UserIcon" />
+                        </b-input-group-prepend>
+                        <b-form-input
+                            id="vi-username"
+                            v-model="employee.username"
+                            :placeholder="$i18n.t('users.username')"
+                        /><br>
+                    </b-input-group>
+                    <label
+                        v-if="Object.keys(errors).length > 0 && errors.username !== undefined"
+                        class="text-danger"
+                    >
+                        {{this.errors.username[0]}}
+                    </label>
+                </b-form-group>
+            </b-col>
             <!-- Email -->
             <b-col cols="12">
                 <b-form-group
-                    label="Email"
+                    :label="$i18n.t('users.email')"
                     label-for="vi-email"
                 >
                     <b-input-group class="input-group-merge">
@@ -54,7 +78,7 @@
                             id="vi-email"
                             v-model="employee.email"
                             type="email"
-                            placeholder="Email"
+                            :placeholder="$i18n.t('users.email')"
                         />
                     </b-input-group>
                     <label
@@ -69,7 +93,7 @@
             <!-- phone -->
             <b-col cols="12">
                 <b-form-group
-                    label="Phone"
+                    :label="$i18n.t('users.phone')"
                     label-for="vi-phone"
                 >
                     <b-input-group class="input-group-merge">
@@ -80,7 +104,7 @@
                             id="vi-phone"
                             v-model="employee.phone"
                             type="number"
-                            placeholder="Phone"
+                            :placeholder="$i18n.t('users.phone')"
                         /><br>
                     </b-input-group>
                     <label
@@ -94,7 +118,7 @@
             <!-- password -->
             <b-col cols="12">
                 <b-form-group
-                    label="password"
+                    :label="$i18n.t('users.password')"
                     label-for="vi-password"
                 >
                     <b-input-group class="input-group-merge">
@@ -105,7 +129,7 @@
                             id="vi-password"
                             v-model="employee.password"
                             type="password"
-                            placeholder="password"
+                            :placeholder="$i18n.t('users.password')"
                         /><br>
                     </b-input-group>
                     <label
@@ -119,7 +143,7 @@
             <!-- phone -->
             <b-col cols="12">
                 <b-form-group
-                    label="confirm_password"
+                    :label="$i18n.t('users.confirm_password')"
                     label-for="vi-phone"
                 >
                     <b-input-group class="input-group-merge">
@@ -130,7 +154,7 @@
                             id="vi-password_confirmation"
                             v-model="employee.password_confirmation"
                             type="password"
-                            placeholder="password_confirmation"
+                            :placeholder="$i18n.t('users.confirm_password')"
                         /><br>
                     </b-input-group>
                     <label
@@ -142,41 +166,19 @@
                 </b-form-group>
             </b-col>
 
-            <!-- Type -->
-            <b-col cols="12">
-                <b-form-group
-                    label="type"
-                    label-for="vi-type"
-                >
-                    <b-input-group class="input-group-merge">
-                        <v-select
-                            v-model="employee.type"
-                            placeholder="Type..."
-                            :options="types"
-                            :reduce="type => type.value"
-                            label="name"
-                        />
-                    </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.type !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.type[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
             <!-- status -->
             <b-col cols="12">
                 <b-form-group
-                    label="Status"
+                    :label="$i18n.t('users.status')"
                     label-for="vi-status"
                 >
                     <b-input-group class="input-group-merge">
                         <v-select
                             v-model="employee.status"
-                            placeholder="Status..."
+                            :placeholder="$i18n.t('users.status')"
                             :options="status"
                             :reduce="sta => sta.value"
+                            dir="rtl"
                             label="name"
                         />
                     </b-input-group>
@@ -191,16 +193,17 @@
             <!-- Roles -->
             <b-col cols="12">
                 <b-form-group
-                    label="roles"
+                    :label="$i18n.t('users.roles')"
                     label-for="vi-status"
                 >
                     <b-input-group class="input-group-merge">
                         <v-select
                             v-model="employee.role_id"
-                            placeholder="Roles..."
+                            :placeholder="$i18n.t('users.roles')"
                             :options="roles"
                             :reduce="rol => rol.id"
                             label="name"
+                            dir="rtl"
                         />
                     </b-input-group>
                     <label
@@ -211,18 +214,7 @@
                     </label>
                 </b-form-group>
             </b-col>
-            <!-- Assignable -->
-            <b-col cols="12" v-if="assign_dropdown">
-                <b-form-group label="assign to" label-for="vi-status">
-                    <b-input-group class="input-group-merge">
-                        <v-select v-model="employee.assignable_id" :options="assignable_list" :reduce="assign => assign.id" label="name"
-                                  placeholder="assign to ..."/>
-                    </b-input-group>
-                    <label v-if="Object.keys(errors).length > 0 && errors.assignable_id !== undefined" class="text-danger">
-                        {{this.errors.role_id[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
+
 
             <!-- reset and submit -->
             <b-col
@@ -235,14 +227,14 @@
                     variant="primary"
                     class="mr-1"
                 >
-                    Submit
+                    {{$i18n.t('users.submit')}}
                 </b-button>
                 <b-button
                     v-ripple.400="'rgba(186, 191, 199, 0.15)'"
                     type="reset"
                     variant="outline-secondary"
                 >
-                    Reset
+                    {{$i18n.t('users.reset')}}
                 </b-button>
             </b-col>
         </b-row>
@@ -296,29 +288,21 @@
                 errors: {},
                 assign_dropdown:false,
                 status:[
-                    {name:'Active',value:'1'},
-                    {name:'In Active',value:'0'},
+                    {name:'نشط',value:'1'},
+                    {name:'غير نشط',value:'0'},
                 ],
-                types:[
-                    {name:'Admin',value:'1'},
-                    {name:'Organization_manger',value:'2'},
-                    {name:'Branch_manger',value:'3'},
-                    {name:'Department_manger',value:'4'},
-                    {name:'Service_operator',value:'5'},
-                ],
+
                 roles:[],
-                assignable_list:[],
                 employee:{
                     name:'',
+                    username:"",
                     phone:'',
                     email:'',
                     role_id:'',
                     image:null,
-                    type:'',
                     status:'',
                     password_confirmation:'',
                     password:'',
-                    assignable_id:''
                 }
             };
         },

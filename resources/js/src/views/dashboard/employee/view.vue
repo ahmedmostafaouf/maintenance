@@ -59,14 +59,13 @@
                                                 :to="{ name: 'edit-employee', params: { id: userData.id } }"
                                                 variant="primary"
                                             >
-                                                Edit
+                                                {{$t('users.show.edit')}}
                                             </b-button>
                                             <b-button  @click.prevent="dropRow($route.params.id)"
                                                 variant="outline-danger"
                                                 class="ml-1"
                                             >
-                                                Delete
-                                            </b-button>
+                                                {{$t('users.show.delete')}}                                            </b-button>
                                         </div>
                                     </div>
                                 </div>
@@ -87,7 +86,7 @@
                                             <h5 class="mb-0">
                                                 {{userData.created_at}}
                                             </h5>
-                                            <small>Created At</small>
+                                            <small>{{$t('users.show.created_at')}}</small>
                                         </div>
                                     </div>
 
@@ -107,7 +106,7 @@
                                                 icon="UserIcon"
                                                 class="mr-75"
                                             />
-                                            <span class="font-weight-bold">Username</span>
+                                            <span class="font-weight-bold">{{$t('users.show.username')}}</span>
                                         </th>
                                         <td class="pb-50">
                                             {{ userData.name }}
@@ -119,7 +118,7 @@
                                                 icon="CheckIcon"
                                                 class="mr-75"
                                             />
-                                            <span class="font-weight-bold">Status</span>
+                                            <span class="font-weight-bold">{{$t('users.show.status')}}</span>
                                         </th>
                                         <td class="pb-50 text-capitalize">
                                             {{ (userData.status==1)?'Active':'InActive' }}
@@ -131,22 +130,10 @@
                                                 icon="StarIcon"
                                                 class="mr-75"
                                             />
-                                            <span class="font-weight-bold">Role</span>
+                                            <span class="font-weight-bold">{{$t('users.show.role')}}</span>
                                         </th>
                                         <td class="pb-50 text-capitalize">
                                             {{ userData.group }}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th class="pb-50">
-                                            <feather-icon
-                                                icon="FlagIcon"
-                                                class="mr-75"
-                                            />
-                                            <span class="font-weight-bold">Type</span>
-                                        </th>
-                                        <td class="pb-50">
-                                            {{ userData.type }}
                                         </td>
                                     </tr>
                                     <tr>
@@ -155,7 +142,7 @@
                                                 icon="PhoneIcon"
                                                 class="mr-75"
                                             />
-                                            <span class="font-weight-bold">Contact</span>
+                                            <span class="font-weight-bold">{{$t('users.show.contact')}}</span>
                                         </th>
                                         <td>
                                             {{ userData.phone }}
@@ -178,8 +165,8 @@
                         no-body
                     >
                         <b-card-body>
-                            <b-card-title>Permissions</b-card-title>
-                            <b-card-sub-title>Permission according to roles</b-card-sub-title>
+                            <b-card-title>{{$t('users.show.permissions')}}</b-card-title>
+                            <b-card-sub-title>{{$t('users.show.permission_according_to_roles')}}</b-card-sub-title>
                         </b-card-body>
                         <b-table
                             striped

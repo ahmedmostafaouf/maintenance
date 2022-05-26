@@ -15,15 +15,9 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('name')->unique();
             $table->text('desc')->nullable();
-            $table->string('phone');
-            $table->tinyInteger('status')->default(1)->comment('0 InActive ,1 Active');
-            $table->unsignedBigInteger('branch_id')->nullable();
-            $table->unsignedBigInteger('organization_id')->nullable();
-            $table->foreign('branch_id')->references('id')->on('branches');
-            $table->foreign('organization_id')->references('id')->on('organizations');
-            $table->softDeletes();
+            $table->tinyInteger('status')->default(0)->comment("0=>inactive,1=>active");
             $table->timestamps();
         });
     }

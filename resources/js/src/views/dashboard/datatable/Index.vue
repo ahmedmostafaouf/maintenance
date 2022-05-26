@@ -23,6 +23,8 @@
             disableSelectInfo: true,
             selectAllByGroup: true,
           }"
+          @on-select-all="onSelectAll"
+          @on-selected-rows-change="onSelectAll"
           @on-sort-change="onSortChange"
         >
 
@@ -106,7 +108,7 @@
               <!-- page length -->
               <div class="d-flex align-items-center mb-0 mt-1">
                 <span class="text-nowrap ">
-                  Showing 1 to
+                  {{$t('global.showing')}} 1 {{$t('global.to')}}
                 </span>
                 <b-form-select
                   v-model="pageLength"
@@ -114,7 +116,7 @@
                   class="mx-1"
                   @input="onPerPageChange"
                 />
-                <span class="text-nowrap"> of {{ props.total }} entries </span>
+                <span class="text-nowrap"> {{$t('global.of')}} {{ props.total }} {{$t('global.entries')}} </span>
               </div>
 
               <!-- pagination -->
@@ -181,7 +183,7 @@ export default {
     BRow,
     BCol,
   },
-  props: ['columnsProp', 'titleProp', 'url', 'searchTermProp'],
+  props: ['columnsProp', 'titleProp', 'url', 'searchTermProp','datatableFilter'],
   data() {
     return {
       isLoading: false,
@@ -227,6 +229,10 @@ export default {
       this.searchTerm = val
       this.loadItems()
     },
+      datatableFilter(val){
+      let url =`${this.url}?searchTerm=${this.searchTerm}&page=${this.serverParams.page}&per_page=${this.serverParams.perPage}&field=${this.serverParams.sort.field}&type=${this.serverParams.sort.type}` +val;
+      this.loadItems(url);
+      },
   },
   mounted() {
     if (this.$route.name == 'roles') {
@@ -242,7 +248,7 @@ export default {
   },
   methods: {
     getdata() {
-      alert(1)
+
     },
     updateParams(newProps) {
       this.serverParams = { ...this.serverParams, ...newProps }
@@ -251,6 +257,12 @@ export default {
       this.serverParams.page = val
       this.loadItems()
     },
+      onSelectAll(params){
+        Fire.$emit('getselected',params)
+      },
+      onSelectRow(params){
+        console.log(params)
+      },
 
     onPerPageChange() {
       this.serverParams.perPage = this.pageLength
@@ -272,9 +284,10 @@ export default {
       })
       this.loadItems()
     },
-    loadItems() {
+    loadItems(url='') {
       this.isLoading = true
-      axios.get(`${this.url}?searchTerm=${this.searchTerm}&page=${this.serverParams.page}&per_page=${this.serverParams.perPage}&field=${this.serverParams.sort.field}&type=${this.serverParams.sort.type}`).then(response => {
+        url=url?url:`${this.url}?searchTerm=${this.searchTerm}&page=${this.serverParams.page}&per_page=${this.serverParams.perPage}&field=${this.serverParams.sort.field}&type=${this.serverParams.sort.type}`
+      axios.get(url).then(response => {
         this.isLoading = false
         this.rows = response.data.data
         this.totalRecords = response.data.meta.total
