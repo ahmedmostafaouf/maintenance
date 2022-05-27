@@ -55,6 +55,14 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
     Route::delete('maintenance/bulk_delete/{ids}', "MaintenanceController@bulk_delete");
     Route::get('maintenance/export', "MaintenanceController@export");
 
+    Route::resource('category', "CategoryController");
+    Route::delete('category/bulk_delete/{ids}', "CategoryController@bulk_delete");
+    Route::get('category/export', "CategoryController@export");
+
+    Route::resource('system', "SystemController");
+    Route::delete('system/bulk_delete/{ids}', "SystemController@bulk_delete");
+    Route::get('system/export', "SystemController@export");
+
     Route::resource('roles', "RoleController");
     Route::group(['prefix'=>'spinner'],function(){
         Route::get('all-departments', "SpinnersControler@departments");
@@ -63,6 +71,10 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
         Route::get('all-service', "SpinnersControler@all_service");
         Route::get('get-stocks/{status}',"SpinnersControler@getStocks");
         Route::get('get-users/',"SpinnersControler@getusers");
+        Route::get('get-categories/{main_cat}',"SpinnersControler@getcategories");
+        Route::get('get-main-categories',"SpinnersControler@getMaincategories");
+        Route::get('get-branch-cat/{cat}',"SpinnersControler@getBranchcategories");
+        Route::get('get-branch2-cat/{cat}',"SpinnersControler@getBranch2categories");
 
 
     });

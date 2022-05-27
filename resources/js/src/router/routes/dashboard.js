@@ -120,6 +120,40 @@ export default [
         component: () => import('@/views/dashboard/technical/add-technical.vue'),
     },
 
+    //category
+    {
+        path: '/dashboard/category',
+        name: 'category',
+        component: () => import('@/views/dashboard/category/index.vue'),
+    },
+    {
+        path: '/dashboard/category/:id/edit',
+        name: 'edit-category',
+        component: () => import('@/views/dashboard/category/edit-category.vue'),
+    },
+    {
+        path: '/dashboard/add-category',
+        name: 'add-category',
+        component: () => import('@/views/dashboard/category/add-category.vue'),
+    },
+
+    //category
+    {
+        path: '/dashboard/system',
+        name: 'system',
+        component: () => import('@/views/dashboard/system/index.vue'),
+    },
+    {
+        path: '/dashboard/system/:id/edit',
+        name: 'edit-system',
+        component: () => import('@/views/dashboard/system/edit-system.vue'),
+    },
+    {
+        path: '/dashboard/add-system',
+        name: 'add-system',
+        component: () => import('@/views/dashboard/system/add-system.vue'),
+    },
+
     {
         path: '/dashboard/service',
         name: 'service',

@@ -175,5 +175,41 @@ export default [
             },
         ],
     },
+    //category
+    {
+        title: 'اقسام الانظمة',
+        icon: 'PackageIcon',
+        allows: (gate.hasPermission('read category') || gate.hasPermission('write category')),
+        children: [
+            {
+                title: 'اقسام الانظمة',
+                route: 'category',
+                allows: gate.hasPermission('read category')
+            },
+            {
+                title: 'اضافة قسم للنظام',
+                route: 'add-category',
+                allows: gate.hasPermission('write category')
+            },
+        ],
+    },
+    //systems
+    {
+        title: 'الانظمة',
+        icon: 'PackageIcon',
+        allows: (gate.hasPermission('read system') || gate.hasPermission('write system')),
+        children: [
+            {
+                title: 'الانظمة',
+                route: 'system',
+                allows: gate.hasPermission('read system')
+            },
+            {
+                title: 'اضافة نظام',
+                route: 'add-system',
+                allows: gate.hasPermission('write system')
+            },
+        ],
+    },
 
 ]

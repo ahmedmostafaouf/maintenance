@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Branch;
+use App\Models\Category;
 use App\Models\Department;
 use App\Models\Organization;
 use App\Models\Role;
@@ -44,6 +45,27 @@ class SpinnersControler extends Controller
     public function getusers(){
         $users=User::whereStatus(1)->where('role_id','!=',1)->get();
         return $this->returnData('users',$users);
+
+    }
+    public function getcategories($main_cat){
+
+        $categories=Category::where('main_cat',1)->get();
+        return $this->returnData('categories',$categories);
+
+    }
+    public function getMaincategories(){
+        $categories=Category::where('parent',0)->get();
+        return $this->returnData('categories',$categories);
+
+    }
+    public function getBranchcategories($cat){
+        $categories=Category::where('parent',$cat)->get();
+        return $this->returnData('categories',$categories);
+
+    }
+    public function getBranch2categories($cat){
+        $categories=Category::where('parent',$cat)->get();
+        return $this->returnData('categories',$categories);
 
     }
 

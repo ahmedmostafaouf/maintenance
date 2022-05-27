@@ -46,19 +46,15 @@
                 {{ (props.row.status=='0')?'In Active':"Active" }}
               </b-badge>
             </span>
+
+
             <!-- Column: website_url -->
-            <span v-else-if="props.column.field === 'website_url'">
-              <a
-                target="_blank"
-                class="btn btn-primary website"
-                :href="props.row.website_url"
-              >
-                <feather-icon
-                  icon="Link2Icon"
-                  class="mr-50"
-                />
-                <span class="align-middle">website</span>
-              </a>
+            <span v-else-if="props.column.field === 'main_cat'">
+              <ul>
+                  <li v-for="(value, name) in props.row.main_cat">
+                      <small class="text-danger">{{name}}</small> :: {{value}}
+                  </li>
+              </ul>
             </span>
             <!-- Column: Image Org -->
             <span v-else-if="props.column.field === 'logo'">
