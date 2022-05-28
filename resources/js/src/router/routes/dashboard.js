@@ -185,6 +185,19 @@ export default [
         name: 'add-stock',
         component: () => import('@/views/dashboard/stock/add-stock.vue'),
     },
-
-
+    {
+        path: '/dashboard/securities',
+        name: 'securities',
+        component: () => import('@/views/dashboard/SecurityAnnouncement/index.vue'),
+    },
+    {
+        path: '/dashboard/add-securities',
+        name: 'add-securities',
+        component: () => import('@/views/dashboard/SecurityAnnouncement/create.vue'),
+    },
+    {
+        path: '/dashboard/edit-securities',
+        name: 'edit-securities',
+        component: () => import('@/views/dashboard/SecurityAnnouncement/edit.vue'),
+    },
 ]

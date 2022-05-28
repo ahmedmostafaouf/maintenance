@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Exports\UsersExport;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\ServiceRequest;
 use App\Http\Resources\Dashboard\ServiceResource;

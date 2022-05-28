@@ -48,13 +48,9 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
     Route::resource('technical', "TechnicalController");
     Route::delete('technical/bulk_delete/{ids}', "TechnicalController@bulk_delete");
     Route::get('technical/export', "TechnicalController@export");
-
-
-
     Route::resource('maintenance', "MaintenanceController");
     Route::delete('maintenance/bulk_delete/{ids}', "MaintenanceController@bulk_delete");
     Route::get('maintenance/export', "MaintenanceController@export");
-
     Route::resource('category', "CategoryController");
     Route::delete('category/bulk_delete/{ids}', "CategoryController@bulk_delete");
     Route::get('category/export', "CategoryController@export");
@@ -79,4 +75,7 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
 
     });
 
+    //security declarations
+    Route::resource('security-announcement', 'SecurityController');
+    Route::post('security/bulk-delete/{ids}', 'SecurityController@bulkDelete');
 });

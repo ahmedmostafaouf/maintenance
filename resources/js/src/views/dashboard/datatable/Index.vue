@@ -47,7 +47,11 @@
               </b-badge>
             </span>
 
-
+            <span v-else-if="props.column.field === 'securityStatus'">
+              <b-badge :variant="securityStatusVariant(props.row.status)">
+                {{ (props.row.status=='0')?'معلق':"تم التاكيد" }}
+              </b-badge>
+            </span>
             <!-- Column: website_url -->
             <span v-else-if="props.column.field === 'main_cat'">
               <ul>
@@ -211,6 +215,13 @@ export default {
       }
       return status => statusColor[status]
     },
+      securityStatusVariant() {
+          const statusColor = {
+              0: 'light-warning',
+              1: 'light-success',
+          }
+          return status => statusColor[status]
+      },
     direction() {
       if (store.state.appConfig.isRTL) {
         this.dir = true

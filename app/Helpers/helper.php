@@ -56,7 +56,7 @@ if(!function_exists('TypeUser')){
 
 if(!function_exists('permissions')){
     function permissions(){
-       $permissions = ['users','roles','maintenance','service','department','device','stock','technical','request_stock','car','system','category'];
+       $permissions = ['users','roles','maintenance','service','department','device','stock','technical','request_stock','car','system','category', 'securities'];
         return $permissions;
     }
 }

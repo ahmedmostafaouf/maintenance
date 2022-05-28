@@ -211,5 +211,29 @@ export default [
             },
         ],
     },
+    //security announcement
+    {
+        title: 'التصريحات الامنيه',
+        icon: 'PackageIcon',
+        allows: (gate.hasPermission('read securities') || gate.hasPermission('write securities')),
+        children: [
+            {
+                title: 'التصريحات الامنيه',
+                route: 'securities',
+                allows: gate.hasPermission('read securities')
+            },
+            {
+                title: 'اضافة تصريح امني',
+                route: 'add-securities',
+                allows: gate.hasPermission('write securities')
+            },
+            {
+                title: 'تعديل  تصريح امني',
+                route: 'edit-securities',
+                allows: gate.hasPermission('update securities')
+            }
+        ],
+    },
+
 
 ]

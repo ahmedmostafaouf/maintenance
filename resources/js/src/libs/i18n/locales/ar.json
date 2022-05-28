@@ -39,7 +39,11 @@
         "stock": "المخزون",
         "technical": "الفنيين",
         "car": "السيارات",
-        "request_stock": "طلب صرف"
+        "request_stock": "طلب صرف",
+        "system": "الانظمه",
+        "category": "اقسام الانظمه",
+        "securities": "التصريحات الامنيه"
+
 
 
     },
@@ -109,8 +113,28 @@
         "manufacturer_comp": "الشركة المصنعة",
         "agent": "الوكيل",
         "type": "النوع",
-        "request_order": "امر صرف"
-
+        "request_order": "امر صرف",
+        "company_name": "اسم الشركه",
+        "required-department": "القسم المطلوب",
+        "work_reason": "الغرض من العمل",
+        "responsible": "الشخص المسئول",
+        "working_duration": "مده العمل",
+        "month": "الشهر",
+        "visitor_name": "اسم الشخص المصرح له بالدخول",
+        "national_id": "رقم الهويه",
+        "residence": "الاقامه",
+        "nationality": "الجنسيه",
+        "involve_chemicals": "هل يشمل العمل مواد كيميائية؟",
+        "work_noisy":"هل يشكل العمل ضوضاء؟",
+        "include_elevations": "هل يشمل العمل ارتفاعات؟",
+        "confined_spaces":"هل يشمل العمل أماكن ضيقة؟",
+        "services_separation": "هل يشمل فصل خدمات الكهرباء – الماء ؟",
+        "flammable_materials":"هل يشمل مواد سريعة الاشتعال ؟",
+        "entry_gate": "بوابه الدخول",
+        "guard_name":"اسم الحارس",
+        "entry_time":"وقت الدخول",
+        "business_responsible":"اسم المسئول عن ااعمال بالشركه",
+        "choose": "برجاء الاختيار..."
     },
     "forget": {
         "forget_password": "هل نسيت كلمة السر",

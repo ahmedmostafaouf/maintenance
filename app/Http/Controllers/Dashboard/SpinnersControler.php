@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Http\Traits\ResponseTrait;
-use App\Models\Branch;
 use App\Models\Category;
 use App\Models\Department;
 use App\Models\Organization;
 use App\Models\Role;
-use App\Models\service;
+use App\Models\Service;
 use App\Models\Stock;
 use App\Models\User;
 use Illuminate\Http\Request;
