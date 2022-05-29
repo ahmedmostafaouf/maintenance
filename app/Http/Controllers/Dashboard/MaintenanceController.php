@@ -49,8 +49,9 @@ class MaintenanceController extends Controller
         if (auth('sanctum')->user()->cannot('admin', 'write maintenance')) {
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
-
-        Maintenance::create($request->all());
+           $data=['name'=>$request->name,'status'=>$request->status,'desc'=>$request->desc,'type'=>$request->type];
+          $maintenance= Maintenance::create($data);
+        $maintenance->services()->sync($request->service_id);
         $this->returnSuccessMessage('تم انشاء الصيانة بنجاح');
     }
 

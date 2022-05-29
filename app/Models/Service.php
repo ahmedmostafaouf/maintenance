@@ -49,5 +49,8 @@ class Service extends model
             get: fn ($value) => carbon::parse($value)->format('y-m-d'),
         );
     }
+    public function maintenancess(){
+        return $this->belongsToMany(Maintenance::class,'maintenance_services','service_id','maintenance_id','id','id');
+    }
 
 }

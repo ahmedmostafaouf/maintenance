@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('maintenances', function (Blueprint $table) {
+        Schema::create('maintenance_services', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->text('desc')->nullable();
-            $table->tinyInteger('status')->default(0)->comment('0=>inactive ,1=>active');
-            $table->softDeletes();
+            $table->unsignedBigInteger('service_id')->nullable();
+            $table->foreign('service_id')->references('id')->on('services');
+            $table->unsignedBigInteger('maintenance_id')->nullable();
+            $table->foreign('maintenance_id')->references('id')->on('maintenances');
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('maintenances');
+        Schema::dropIfExists('maintenance_services');
     }
 };
