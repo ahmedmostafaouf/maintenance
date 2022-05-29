@@ -13,7 +13,7 @@ class Maintenance extends Model
     use HasFactory;
     use SoftDeletes;
     protected $fillable = [
-        'name','status','desc','service_id'
+        'name','status','desc','type'
     ];
 
     public function service(){
@@ -35,5 +35,8 @@ class Maintenance extends Model
         return new Attribute(
             get: fn ($value) => carbon::parse($value)->format('y-m-d'),
         );
+    }
+    public function services(){
+        return $this->belongsToMany(Service::class,'maintenance_services','maintenance_id','service_id','id','id');
     }
 }

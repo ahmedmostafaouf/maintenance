@@ -14,10 +14,12 @@ class MaintenanceResource extends JsonResource
      */
     public function toArray($request)
     {
+        $service=$this->services->pluck('name')->toArray();
+
         return [
             'id' => $this->id,
             'name' => @$this->name,
-            'service' => @$this->service->name,
+            'service' => @implode(',',$service),
             'desc' => ($this->desc)??'لا يوجد وصف',
             'status' => $this->status,
             'created_at' => $this->created_at,

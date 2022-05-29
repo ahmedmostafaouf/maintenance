@@ -39,6 +39,7 @@
                             :options="services"
                             :reduce="service => service.id"
                             label="name"
+                            multiple
                             dir="rtl"
                         />
                     </b-input-group>
@@ -47,6 +48,29 @@
                         class="text-danger"
                     >
                         {{this.errors.service_id[0]}}
+                    </label>
+                </b-form-group>
+            </b-col>
+            <!-- Type -->
+            <b-col cols="12">
+                <b-form-group
+                    label="اختر النوع"
+                    label-for="vi-branch"
+                >
+                    <b-input-group class="input-group-merge">
+                        <b-form-radio-group
+                            v-model="maintenance.type"
+                            :options="options"
+                            class="demo-inline-spacing"
+                            name="radio-validation"
+                        >
+                        </b-form-radio-group>
+                    </b-input-group>
+                    <label
+                        v-if="Object.keys(errors).length > 0 && errors.type !== undefined"
+                        class="text-danger"
+                    >
+                        {{this.errors.type[0]}}
                     </label>
                 </b-form-group>
             </b-col>
@@ -122,7 +146,7 @@
 
 <script>
 import {
-    BRow, BCol, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton, BInputGroup, BInputGroupPrepend, BFormTextarea, BFormValidFeedback,
+    BRow, BCol,BFormRadioGroup, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton, BInputGroup, BInputGroupPrepend, BFormTextarea, BFormValidFeedback,
     BFormInvalidFeedback,
 } from 'bootstrap-vue'
 import Ripple from 'vue-ripple-directive'
@@ -145,6 +169,7 @@ export default {
         BInputGroupPrepend,
         BForm,
         BButton,
+        BFormRadioGroup,
     },
     directives: {
         Ripple,
@@ -157,11 +182,17 @@ export default {
                 {name:'نشط',value:1},
                 {name:'غير نشط',value:0},
             ],
+            options: [
+                { text: 'مرتبط باجهزة', value: '1' },
+                { text: ' مرتبط بسيارات', value: '2' },
+                { text: 'لاشئ', value: '3' },
+            ],
             maintenance:{
                 name:'',
                 desc:'',
                 service_id:'',
-                status:''
+                status:'',
+                type:''
             }
         };
     },

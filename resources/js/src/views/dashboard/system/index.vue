@@ -74,11 +74,14 @@
                 <span>{{$t('global.edit')}}</span>
             </b-dropdown-item>
 
-            <b-dropdown-item >
+            <b-dropdown-item
+                v-b-modal.modal-prevent-closing
+                @click="modalRequestSystem(row.id)"
+            >
                 <feather-icon
                     icon="TrashIcon"
                     class="mr-50"
-                    v-b-modal.modal-prevent-closing
+
                 />
                 <span>صيانة</span>
             </b-dropdown-item>
@@ -104,51 +107,42 @@
 
             <b-form >
                 <b-row>
+
                     <!-- status -->
-                    <b-col cols="6" >
-                        <b-form-group
-                            label="اختر الحالة"
+                    <b-col cols="12" >
+                        <b-form-group v-for="(item,index) in categories" :key="index"
+                            :label="item.name"
                             label-for="vi-status"
                         >
                             <b-input-group class="input-group-merge">
-                                <v-select
-                                    placeholder=" اختر الحالة... "
-                                    :options="status"
-
-                                    dir="rtl"
-                                    class="selectField"
-                                    :reduce="sta => sta.value"
-                                    label="name"
-                                />
+                                <b-form-radio-group
+                                    v-model="categories[index].id"
+                                    :options="options"
+                                    :key="index"
+                                    :value="index"
+                                    class="demo-inline-spacing"
+                                    name="radio-validation"
+                                >
+                                </b-form-radio-group>
                             </b-input-group>
-                        </b-form-group>
-                    </b-col>
-
-                    <!-- type -->
-                    <b-col cols="6">
-                        <b-form-group
-                            label="النوع"
-                            label-for="vi-status"
-                        >
+                            <br>
+                            <label for="textarea-default">{{$t('global.desc')}}</label>
                             <b-input-group class="input-group-merge">
-                                <b-form-input
-                                    id="vi-type"
-
-                                    disabled
-                                />
+                                <b-form-textarea
+                                    id="textarea-default"
+                                    v-model="system.note"
+                                    :placeholder="$t('global.desc')"
+                                    rows="3"
+                                /><br>
                             </b-input-group>
                         </b-form-group>
                     </b-col>
 
 
                 </b-row>
-
-
-
             </b-form>
             <template #modal-footer>
-                <b-button block  variant="gradient-primary" class="" block @click="RequestSave">حفظ الطلب</b-button>
-                <b-button block  variant="gradient-success" class="" block @click="RequestDone">تنفيذ الطلب</b-button>
+                <b-button block  variant="gradient-primary" class="" block @click="RequestSave">حفظ </b-button>
                 <b-button block  variant="gradient-dark" class="" block @click="$refs['my-modal'].hide()">غلق</b-button>
             </template>
         </b-modal>
@@ -158,7 +152,19 @@
 <script>
     import axios from 'axios'
     import {
-      BButton,  BCard, BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdownItem, BDropdown, BRow, BCol,
+        BButton,
+        BCard,
+        BAvatar,
+        BBadge,
+        BPagination,
+        BFormGroup,
+        BFormInput,
+        BFormSelect,
+        BDropdownItem,
+        BDropdown,
+        BRow,
+        BCol,
+        BInputGroup, BForm, BFormRadioGroup,BFormTextarea
     } from 'bootstrap-vue'
     import tableData from '../datatable/Index'
     import vSelect from 'vue-select'
@@ -180,7 +186,11 @@
             BRow,
             BCol,
             BButton,
-            vSelect
+            vSelect,
+            BInputGroup,
+            BForm,
+            BFormRadioGroup,
+            BFormTextarea
         },
         data() {
             return {
@@ -191,6 +201,15 @@
                     {name:'نشط',value:1},
                     {name:'غير نشط',value:0},
                 ],
+                options: [
+                    { text: 'يعمل ', value: '1' },
+                    { text: 'لا يعمل ', value: '2' },
+                ],
+                system:{
+                  action:'',
+                  note:'',
+                },
+                categories:[],
                 appendFilter:'',
                 selected_rows:"",
                 datatable:{
@@ -319,7 +338,24 @@
             },
 
             modalRequestSystem(id){
-
+                axios.get(`/system/${id}/edit`).then(response => {
+                    if(response.status){
+                        this.categories=response.data.system.categories
+                    }
+                })
+            },
+            RequestSave(){
+                axios.post('/system', this.maintenance, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                    },
+                }).then(response => {
+                    this.errors = {}
+                    this.makeToast('success', 'egood')
+                    setTimeout(() => {
+                        instance.$router.push({ name: 'maintenance' })
+                    }, 1000)
+                })
             }
         },
     }

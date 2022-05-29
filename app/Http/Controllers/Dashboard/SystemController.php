@@ -93,7 +93,8 @@ class SystemController extends Controller
      */
     public function edit($id)
     {
-        //
+       $system= System::with('categories')->findOrFail($id);
+        return $this->returnData('system',$system);
     }
 
     /**

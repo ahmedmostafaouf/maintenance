@@ -28,6 +28,7 @@ class MaintenanceRequest extends FormRequest
             "desc"=>"sometimes|nullable|min:10",
             "status"=>"required",
             "service_id"=>"required",
+            "type"=>"required",
         ];
     }
 }
