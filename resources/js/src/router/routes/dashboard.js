@@ -196,7 +196,7 @@ export default [
         component: () => import('@/views/dashboard/SecurityAnnouncement/create.vue'),
     },
     {
-        path: '/dashboard/edit-securities',
+        path: '/dashboard/securities/:id/edit',
         name: 'edit-securities',
         component: () => import('@/views/dashboard/SecurityAnnouncement/edit.vue'),
     },

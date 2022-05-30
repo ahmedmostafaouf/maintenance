@@ -227,11 +227,6 @@ export default [
                 route: 'add-securities',
                 allows: gate.hasPermission('write securities')
             },
-            {
-                title: 'تعديل  تصريح امني',
-                route: 'edit-securities',
-                allows: gate.hasPermission('update securities')
-            }
         ],
     },
 

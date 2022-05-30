@@ -667,6 +667,9 @@ export default {
     },
     created() {
         this.getDepartments();
+        if(this.submitType == 'edit'){
+            this.getData()
+        }
     },
     methods:{
         makeToast(variant = null, body) {
@@ -699,9 +702,28 @@ export default {
                     })
             }
             else if (this.submitType == 'edit'){
-                alert("Edit HEY")
+                let id = this.$route.params.id
+                axios.put(`/security-announcement/${id}`, this.data, {headers: authHeader,})
+                    .then(response => {
+                        this.errors = {}
+                        this.makeToast('success', response.data.message)
+                        setTimeout(() => {
+                            instance.$router.push({ name: 'securities' })
+                        }, 1000)
+                    })
+                    .catch(error => {
+                        this.makeToast('warning', error.response.data.message)
+                        this.errors = error.response.data.errors
+                    })
             }
         },
+        getData(){
+            let id = this.$route.params.id
+            console.log(id)
+            axios.get(`/security-announcement/${id}/edit`).then(response => {
+                this.data = response.data.data
+            })
+        }
     }
 }
 </script>

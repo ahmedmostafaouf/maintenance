@@ -38,6 +38,10 @@ class SecurityController extends Controller
         if (auth('sanctum')->user()->cannot('admin', 'write securities')) {
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
+
+        if (auth('sanctum')->user()->cannot('admin', 'write securities')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
         Security::create(self::handleFormData($request));
         $this->returnSuccessMessage('تم انشاء الخدمة بنجاح');
     }
@@ -46,7 +50,9 @@ class SecurityController extends Controller
      * @param $request
      * @return array
      */
-    private function handleFormData($request) :array{
+    private function handleFormData($request) :array
+    {
+
         $status = ( auth()->user()->role_id == User::ADMIN_ROLE )? Security::STATUS_CONFIRMED : Security::STATUS_PENDING;
         $data = array_merge($request->except('start_time', 'end_time'), ['status' => $status]);
         $data['start_date'] = date('Y-m-d H:i:s', strtotime("$request->start_date $request->start_time"));
@@ -55,7 +61,35 @@ class SecurityController extends Controller
         return $data;
     }
 
-    public function bulkDelete($ids){
+    /**edit
+     * @param $id
+     * @return SecurityResource|JsonResponse
+     */
+    public function edit($id)
+    {
+        if (auth('sanctum')->user()->cannot('admin', 'update securities')) {
+            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
+        }
+        $data = Security::find($id);
+        return new SecurityResource($data);
+    }
+
+    /**update
+     * @param $id
+     * @param SecurityRequest $request
+     */
+    public function update($id, SecurityRequest $request)
+    {
+        $security = Security::find($id);
+        $security->update(self::handleFormData($request));
+        $this->returnSuccessMessage('تم تعديل الخدمة بنجاح');
+    }
+    /**bulkDelete
+     * @param $ids
+     * @return array
+     */
+    public function bulkDelete($ids)
+    {
         Security::whereIn('id',explode(',',$ids))->delete();
         return $this->returnSuccessMessage('تم الحذف بنجاح');
     }

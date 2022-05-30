@@ -54,11 +54,9 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
     Route::resource('category', "CategoryController");
     Route::delete('category/bulk_delete/{ids}', "CategoryController@bulk_delete");
     Route::get('category/export', "CategoryController@export");
-
     Route::resource('system', "SystemController");
     Route::delete('system/bulk_delete/{ids}', "SystemController@bulk_delete");
     Route::get('system/export', "SystemController@export");
-
     Route::resource('roles', "RoleController");
     Route::group(['prefix'=>'spinner'],function(){
         Route::get('all-departments', "SpinnersControler@departments");
@@ -71,8 +69,6 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
         Route::get('get-main-categories',"SpinnersControler@getMaincategories");
         Route::get('get-branch-cat/{cat}',"SpinnersControler@getBranchcategories");
         Route::get('get-branch2-cat/{cat}',"SpinnersControler@getBranch2categories");
-
-
     });
 
     //security declarations
