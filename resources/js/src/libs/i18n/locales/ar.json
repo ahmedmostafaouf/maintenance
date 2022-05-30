@@ -42,7 +42,8 @@
         "request_stock": "طلب صرف",
         "system": "الانظمه",
         "category": "اقسام الانظمه",
-        "securities": "التصريحات الامنيه"
+        "securities": "التصريحات الامنيه",
+        "maintenance_orders": "طلبات الصيانه"
 
 
 

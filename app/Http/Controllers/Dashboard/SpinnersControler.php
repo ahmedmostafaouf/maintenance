@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Category;
 use App\Models\Department;
+use App\Models\Maintenance;
 use App\Models\Organization;
 use App\Models\Role;
 use App\Models\Service;
@@ -67,5 +68,8 @@ class SpinnersControler extends Controller
         return $this->returnData('categories',$categories);
 
     }
-
+    public function getMaintenanceTypes(){
+        $maintenanceTypes = Maintenance::where('status', true)->get();
+        return $this->returnData('maintenanceTypes',$maintenanceTypes);
+    }
 }

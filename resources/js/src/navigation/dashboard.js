@@ -70,6 +70,24 @@ export default [
         ],
     },
     {
+        title: ' طلبات الصيانه',
+        icon: 'PackageIcon',
+        allows: (gate.hasPermission('read maintenance') || gate.hasPermission('write maintenance')),
+        children: [
+            {
+                title: ' طلبات الصيانه',
+                route: 'maintenanceOrders',
+                allows: gate.hasPermission('read maintenance_orders')
+            },
+            {
+                title: 'اضافة  طلب الصيانه',
+                route: 'add-maintenanceOrders',
+                allows: gate.hasPermission('write maintenance_orders')
+            },
+        ],
+    },
+
+    {
         title: 'الخدمات',
         icon: 'PackageIcon',
         allows: (gate.hasPermission('read service') || gate.hasPermission('write service')),

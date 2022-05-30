@@ -185,6 +185,7 @@ export default [
         name: 'add-stock',
         component: () => import('@/views/dashboard/stock/add-stock.vue'),
     },
+    //securities
     {
         path: '/dashboard/securities',
         name: 'securities',
@@ -199,5 +200,21 @@ export default [
         path: '/dashboard/securities/:id/edit',
         name: 'edit-securities',
         component: () => import('@/views/dashboard/SecurityAnnouncement/edit.vue'),
+    },
+    //Maintenance Orders
+    {
+        path: '/dashboard/maintenance-orders',
+        name: 'maintenanceOrders',
+        component: () => import('@/views/dashboard/MaintenanceOrders/index.vue'),
+    },
+    {
+        path: '/dashboard/maintenance-orders',
+        name: 'add-maintenanceOrders',
+        component: () => import('@/views/dashboard/MaintenanceOrders/create.vue'),
+    },
+    {
+        path: '/dashboard/maintenance-orders/:id/edit',
+        name: 'edit-maintenanceOrders',
+        component: () => import('@/views/dashboard/MaintenanceOrders/edit.vue'),
     },
 ]
