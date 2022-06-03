@@ -38,10 +38,6 @@ class SecurityController extends Controller
         if (auth('sanctum')->user()->cannot('admin', 'write securities')) {
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
-
-        if (auth('sanctum')->user()->cannot('admin', 'write securities')) {
-            return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
-        }
         Security::create(self::handleFormData($request));
         $this->returnSuccessMessage('تم انشاء الخدمة بنجاح');
     }

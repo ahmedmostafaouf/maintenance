@@ -16,9 +16,14 @@ class Maintenance extends Model
         'name','status','desc','type'
     ];
 
-    public function service(){
+    const MAINTENANCE_HAS_DEVICES_TYPE = '1';
+    const MAINTENANCE_HAS_CARS_TYPE = '2';
+    const MAINTENANCE_HAS_NOTHING_TYPE = '3';
+
+
+/*    public function service(){
         return $this->belongsTo(Service::class,'service_id');
-    }
+    }*/
     public function scopeMaintenanceData($query,$req){
         return $query->when((isset($req['searchTerm']) && $req['searchTerm'] !=="null"),function($query) use ($req){
             $query->where( 'name', 'LIKE', '%' . $req['searchTerm'] . '%' );

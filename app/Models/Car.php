@@ -20,4 +20,12 @@ class Car extends Model
             ->orderBy($req->field,$req->type)
             ->paginate($req->per_page );
     }
+
+    /**
+     * Get all the order cars.
+     */
+    public function relatable()
+    {
+        return $this->morphMany(MaintenanceOrder::class, 'relatable_type');
+    }
 }

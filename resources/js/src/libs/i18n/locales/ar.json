@@ -86,6 +86,7 @@
         }
     },
     "global": {
+        "location":  "اللوكيشن",
         "action":  "اوبشن",
         "edit": "تعديل",
         "delete": "حذف",
@@ -100,7 +101,9 @@
         "reset":  "تفريغ",
         "add_maintenance":  "اضافة نوع صيانة",
         "maintenance":  "انواع الصيانة",
-        "device": "الاجهزة",
+        "services": "اضافه الخدمه",
+        "cars": "السيارات",
+        "devices": "الاجهزة",
         "department": "الاقسام",
         "showing": "اظهار",
         "to": "الي",

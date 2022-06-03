@@ -26,6 +26,14 @@ return new class extends Migration
             $table->text('location');
             $table->text('desc');
             $table->text('image')->nullable();
+            $table->tinyInteger('type')->comment('1->devices, 2->cars, 3->nothing');
+
+            $table->unsignedBigInteger('device_id')->nullable();
+            $table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade')->onUpdate('cascade');
+
+            $table->unsignedBigInteger('car_id')->nullable();
+            $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade')->onUpdate('cascade');
+
             $table->timestamps();
             $table->softDeletes();
         });

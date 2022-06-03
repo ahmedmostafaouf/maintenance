@@ -37,7 +37,7 @@
                 </div>
             </template>
             <template v-slot:actions='{row}'>
-                <b-dropdown-item :to="{name:'edit-securities',params:{'id':row.id}}">
+                <b-dropdown-item :to="{name:'edit-maintenanceOrders',params:{'id':row.id}}">
                     <feather-icon
                         icon="Edit2Icon"
                         class="mr-50"
@@ -89,9 +89,9 @@ export default {
                 {name:'معلق',value:'1'},
                 {name:'تم التاكيد',value:'0'},
             ],
-            url: '/security-announcement',
+            url: '/maintenance-orders',
             searchTerm: '',
-            title: 'التصاريح الامنيه',
+            title: 'طلبات الصيانه',
             appendFilter:'',
             selected_rows:"",
             datatable:{
@@ -100,38 +100,38 @@ export default {
             },
             columns: [
                 {
+                    label: 'نوع الصيانه',
+                    field: 'maintenance_type',
+                    filterable: true,
+                    sortable: true,
+                },
+                {
                     label: 'اسم القسم',
                     field: 'department',
                     filterable: true,
                     sortable: true,
                 },
                 {
-                    label: 'اسم الزائر',
-                    field: 'visitor_name',
+                    label: 'اسم الخدمه',
+                    field: 'service',
                     filterable: true,
                     sortable: true,
                 },
                 {
-                    label: 'اسم الشركه',
-                    field: 'company_name',
+                    label: 'اسم الجهاز',
+                    field: 'device',
                     filterable: true,
                     sortable: true,
                 },
                 {
-                    label: 'الشخص المسئول',
-                    field: 'responsible',
+                    label: 'اسم السياره',
+                    field: 'car',
                     filterable: true,
                     sortable: true,
                 },
                 {
-                    label: 'مده العمل',
-                    field: 'working_duration',
-                    filterable: true,
-                    sortable: true,
-                },
-                {
-                    label: 'الحاله',
-                    field: 'securityStatus',
+                    label: 'اللوكيشن',
+                    field: 'location',
                     filterable: true,
                     sortable: true,
                 },
@@ -163,7 +163,7 @@ export default {
     methods: {
         selectedDeleted(){
             if(this.selected_rows.length>0){
-                this.dropRow(this.selected_rows,'security/bulk-delete');
+                this.dropRow(this.selected_rows,'maintenance-orders/bulk-delete');
             }else {
                 this.$swal({
                     icon: 'warning',
@@ -184,7 +184,7 @@ export default {
             this.appendFilter=appendedFilter;
         },
         dropRow(id,url) {
-            let RoutUrl=url?url:"/security/bulk-delete"
+            let RoutUrl=url?url:"/maintenance-orders/bulk-delete"
             this.$swal({
                 title: 'هل انت متأكد ؟ ',
                 text: "تريد حذف هذا!",

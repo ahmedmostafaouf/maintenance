@@ -208,7 +208,7 @@ export default [
         component: () => import('@/views/dashboard/MaintenanceOrders/index.vue'),
     },
     {
-        path: '/dashboard/maintenance-orders',
+        path: '/dashboard/maintenance-orders/create',
         name: 'add-maintenanceOrders',
         component: () => import('@/views/dashboard/MaintenanceOrders/create.vue'),
     },

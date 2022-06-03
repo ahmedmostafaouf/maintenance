@@ -69,12 +69,26 @@
             </span>
 
               <!-- Column: Image Employee -->
-              <span v-else-if="props.column.field === 'image'">
+            <span v-else-if="props.column.field === 'image'">
               <b-avatar
                   :src="props.row.image"
                   class="mx-1"
               />
             </span>
+              <!-- Column: Image Employee -->
+              <span v-else-if="props.column.field === 'location'">
+
+                <b-button
+                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                    variant="relief-info"
+                    class="btn-icon"
+                >
+                 <a :href="props.row.location" target="_blank">
+                      <feather-icon icon="LinkIcon" />
+                 </a>
+                </b-button>
+
+              </span>
             <!-- Column: Action -->
             <span v-else-if="props.column.field === 'action'">
               <span>
@@ -159,7 +173,7 @@
 
 <script>
 import {
-  BCard, BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdownItem, BDropdown, BRow, BCol,
+    BButton,BCard, BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdownItem, BDropdown, BRow, BCol,
 } from 'bootstrap-vue'
 import { VueGoodTable } from 'vue-good-table'
 import 'prismjs/themes/prism-tomorrow.css'
@@ -182,6 +196,7 @@ export default {
     BDropdown,
     BRow,
     BCol,
+      BButton
   },
   props: ['columnsProp', 'titleProp', 'url', 'searchTermProp','datatableFilter'],
   data() {
