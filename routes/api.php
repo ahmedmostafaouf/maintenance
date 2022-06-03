@@ -71,6 +71,7 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
         Route::get('get-branch2-cat/{cat}',"SpinnersControler@getBranch2categories");
         Route::get('get-maintenance-types',"SpinnersControler@getMaintenanceTypes");
         Route::get('get-services-maintenance-type/{maintenance_id}',"SpinnersControler@getServicesInMaintenanceType");
+        Route::get('get-maintenance-order-statuses',"SpinnersControler@getMaintenanceOrderStatus");
     });
 
     //security declarations
@@ -80,4 +81,5 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
     //maintenance orders
     Route::resource('maintenance-orders', 'MaintenanceOrderController');
     Route::delete('maintenance-orders/bulk-delete/{ids}', 'MaintenanceOrderController@bulkDelete');
+    Route::post('maintenance-orders/bulk-change-status', 'MaintenanceOrderController@bulkChangeStatus');
 });

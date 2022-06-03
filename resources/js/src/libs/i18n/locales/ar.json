@@ -87,6 +87,7 @@
     },
     "global": {
         "location":  "اللوكيشن",
+        "comment": "التعليق",
         "action":  "اوبشن",
         "edit": "تعديل",
         "delete": "حذف",

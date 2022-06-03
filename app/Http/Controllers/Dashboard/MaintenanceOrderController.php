@@ -110,4 +110,12 @@ class MaintenanceOrderController extends Controller
         MaintenanceOrder::whereIn('id',explode(',',$ids))->delete();
         return $this->returnSuccessMessage('تم الحذف بنجاح');
     }
+
+    public function bulkChangeStatus( Request $request)
+    {
+        $request->validate(['status' => 'required|numeric']);
+        MaintenanceOrder::whereIn('id', $request->ids)
+                        ->update(['status' => $request->status, 'comment' => $request->comment]);
+        return $this->returnSuccessMessage('تم التعديل بنجاح');
+    }
 }

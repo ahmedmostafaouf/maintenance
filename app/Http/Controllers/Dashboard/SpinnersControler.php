@@ -9,6 +9,7 @@ use App\Models\Category;
 use App\Models\Department;
 use App\Models\Device;
 use App\Models\Maintenance;
+use App\Models\MaintenanceOrder;
 use App\Models\Organization;
 use App\Models\Role;
 use App\Models\Service;
@@ -107,5 +108,17 @@ class SpinnersControler extends Controller
         $maintenance['related_data'] = $related_data;
         return $this->returnData('maintenance', $maintenance);
 
+    }
+
+    public function getMaintenanceOrderStatus(){
+        $status = [
+            ['id' => MaintenanceOrder::WAITING_STATUS, 'name' => 'قيد الانتظار'],
+            ['id' => MaintenanceOrder::IN_PROGRESS_STATUS, 'name' => 'جاري التنفيذ'],
+            ['id' => MaintenanceOrder::IN_DONE_STATUS, 'name' => 'تم التنفيذ'],
+            ['id' => MaintenanceOrder::HANGING_STATUS, 'name' => 'معلق'],
+            ['id' => MaintenanceOrder::SUPLLY_DONE_STATUS, 'name' => 'بانتظار التوريد'],
+            ['id' => MaintenanceOrder::SUPLLY_ALREADY_DONE_STATUS, 'name' => 'تم التوريد'],
+        ];
+        return $this->returnData('status', $status);
     }
 }

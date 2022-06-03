@@ -21,9 +21,16 @@
                         </div>
                     </b-form-group>
                     <b-form-group>
-                        <b-col
-                            class="mr-2">
+                        <b-col class="mr-2">
+                            <b-button
+                                variant="gradient-info"
+                                class="btn-icon"
+                                @click="selectedChangeStatus"
+                            >
+                                <feather-icon icon="EditIcon" />
+                            </b-button>
                             <!-- Remove Button -->
+
                             <b-button
                                 variant="gradient-danger"
                                 class="btn-icon"
@@ -32,6 +39,7 @@
                                 <feather-icon icon="Trash2Icon" />
                             </b-button>
                         </b-col>
+
                     </b-form-group>
 
                 </div>
@@ -55,16 +63,32 @@
 
             </template>
         </table-data>
+        <ChangeStatus :selected_rows="selected_rows" />
     </div>
 </template>
 
 <script>
 import axios from 'axios'
 import {
-    BButton, BCard, BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdownItem, BDropdown, BRow, BCol,
+    BButton,
+    BCard,
+    BAvatar,
+    BBadge,
+    BPagination,
+    BFormGroup,
+    BFormInput,
+    BFormSelect,
+    BDropdownItem,
+    BDropdown,
+    BRow,
+    BCol,
+    VBModal,
 } from 'bootstrap-vue'
 import tableData from '../datatable/Index'
 import vSelect from 'vue-select'
+import ChangeStatus from './ChangeStatus'
+
+
 export default {
     components: {
         tableData,
@@ -79,7 +103,9 @@ export default {
         BDropdownItem,
         BDropdown,
         BRow,
-        BCol,vSelect
+        BCol,
+        vSelect,
+        ChangeStatus
 
 
     },
@@ -130,10 +156,16 @@ export default {
                     sortable: true,
                 },
                 {
+                    label: this.$t('global.status'),
+                    field: 'order_status',
+                    sortable: false,
+
+                },
+                {
                     label: 'اللوكيشن',
                     field: 'location',
-                    filterable: true,
-                    sortable: true,
+                    filterable: false,
+                    sortable: false,
                 },
                 {
                     label: this.$t('global.action'),
@@ -164,6 +196,20 @@ export default {
         selectedDeleted(){
             if(this.selected_rows.length>0){
                 this.dropRow(this.selected_rows,'maintenance-orders/bulk-delete');
+            }else {
+                this.$swal({
+                    icon: 'warning',
+                    title: 'خطأ!',
+                    text: 'يجب اختيار عدد من العناصر للمسح',
+                    customClass: {
+                        confirmButton: 'btn btn-warning',
+                    },
+                })
+            }
+        },
+        selectedChangeStatus(){
+            if(this.selected_rows.length>0){
+                this.$bvModal.show('modal-primary')
             }else {
                 this.$swal({
                     icon: 'warning',

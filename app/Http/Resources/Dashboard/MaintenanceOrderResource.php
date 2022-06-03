@@ -38,6 +38,7 @@ class MaintenanceOrderResource extends JsonResource
                 'device' => $this->device?->name ?? '...',
                 'car' => $this->car?->type ?? '...',
                 'location' => $this->location,
+                'order_status' => $this->currentStatus(),
                 'image' => asset('orders/' . $this->image)
             ];
         }

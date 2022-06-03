@@ -25,6 +25,8 @@ return new class extends Migration
             $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade')->onUpdate('cascade');
             $table->text('location');
             $table->text('desc');
+            $table->text('comment')->nullable();
+            $table->text('status')->default(0);
             $table->text('image')->nullable();
             $table->tinyInteger('type')->comment('1->devices, 2->cars, 3->nothing');
 

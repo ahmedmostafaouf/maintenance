@@ -173,11 +173,23 @@
 
 <script>
 import {
-    BButton,BCard, BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdownItem, BDropdown, BRow, BCol,
+    BButton,
+    BCard,
+    BAvatar,
+    BBadge,
+    BPagination,
+    BFormGroup,
+    BFormInput,
+    BFormSelect,
+    BDropdownItem,
+    BDropdown,
+    BRow,
+    BCol,
+    VBModal,
 } from 'bootstrap-vue'
 import { VueGoodTable } from 'vue-good-table'
 import 'prismjs/themes/prism-tomorrow.css'
-
+import Ripple from 'vue-ripple-directive'
 import axios from 'axios'
 import store from '@/store/index'
 
@@ -199,6 +211,9 @@ export default {
       BButton
   },
   props: ['columnsProp', 'titleProp', 'url', 'searchTermProp','datatableFilter'],
+    directives: {
+        Ripple,
+    },
   data() {
     return {
       isLoading: false,
