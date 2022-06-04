@@ -1,6 +1,6 @@
 <template>
   <b-card
-    v-if="data"
+    v-if="welcome"
     text-variant="center"
     class="card card-congratulations"
   >
@@ -26,11 +26,8 @@
       />
     </b-avatar>
     <h1 class="mb-1 mt-50 text-white">
-      Congratulations {{ data.name }},
+      {{ welcome }}
     </h1>
-    <b-card-text class="m-auto w-75">
-      You have done <strong>{{ data.saleToday }}%</strong> more sales today. Check your new badge in your profile.
-    </b-card-text>
   </b-card>
 </template>
 
@@ -46,11 +43,7 @@ export default {
     BImg,
     BCardText,
   },
-  props: {
-    data: {
-      type: Object,
-      default: () => {},
-    },
-  },
+  props:['welcome'],
+
 }
 </script>

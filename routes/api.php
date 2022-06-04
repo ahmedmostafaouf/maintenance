@@ -72,6 +72,9 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
         Route::get('get-maintenance-types',"SpinnersControler@getMaintenanceTypes");
         Route::get('get-services-maintenance-type/{maintenance_id}',"SpinnersControler@getServicesInMaintenanceType");
         Route::get('get-maintenance-order-statuses',"SpinnersControler@getMaintenanceOrderStatus");
+        Route::get('get-statistics-data',"SpinnersControler@getStatisticsData");
+        Route::get('get-new-maintenance-orders',"SpinnersControler@getNewMaintenanceOrders");
+        Route::get('get-new-maintenance-types',"SpinnersControler@getNewMaintenanceTypes");
     });
 
     //security declarations

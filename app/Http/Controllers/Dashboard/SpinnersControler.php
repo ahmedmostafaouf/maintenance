@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Dashboard\MaintenanceOrderResource;
+use App\Http\Resources\Dashboard\MaintenanceResource;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Car;
 use App\Models\Category;
@@ -110,7 +112,8 @@ class SpinnersControler extends Controller
 
     }
 
-    public function getMaintenanceOrderStatus(){
+    public function getMaintenanceOrderStatus()
+    {
         $status = [
             ['id' => MaintenanceOrder::WAITING_STATUS, 'name' => 'قيد الانتظار'],
             ['id' => MaintenanceOrder::IN_PROGRESS_STATUS, 'name' => 'جاري التنفيذ'],
@@ -120,5 +123,49 @@ class SpinnersControler extends Controller
             ['id' => MaintenanceOrder::SUPLLY_ALREADY_DONE_STATUS, 'name' => 'تم التوريد'],
         ];
         return $this->returnData('status', $status);
+    }
+
+    public function getStatisticsData()
+    {
+
+        $data = [
+            'canShowOrders' => auth()->user()->role_id == User::ADMIN_ROLE,
+            'welcome_msg' => "Welcome , " . auth()->user()->name,
+            'orderStatistics' => self::getOrderStatistics()
+        ];
+        return $this->returnData('statistics', $data);
+    }
+
+    public function getOrderStatistics()
+    {
+        $all = MaintenanceOrder::count();
+        $waiting = MaintenanceOrder::where('status', MaintenanceOrder::WAITING_STATUS)->count();
+        $inProgress = MaintenanceOrder::where('status', MaintenanceOrder::IN_PROGRESS_STATUS)->count();
+        $inDone = MaintenanceOrder::where('status', MaintenanceOrder::IN_DONE_STATUS)->count();
+        $hanging = MaintenanceOrder::where('status', MaintenanceOrder::HANGING_STATUS)->count();
+        $supplyDone = MaintenanceOrder::where('status', MaintenanceOrder::SUPLLY_DONE_STATUS)->count();
+        $supplyAlreadyDone = MaintenanceOrder::where('status', MaintenanceOrder::SUPLLY_ALREADY_DONE_STATUS)->count();
+        $statistics = [
+            ['icon' => 'GitMergeIcon', 'color' => 'light-primary', 'count' => $all, 'subtitle' => 'كافه الطلبات', 'customClass' => 'mb-2 mb-sm-0'],
+            ['icon' => 'AirplayIcon', 'color' => 'light-success', 'count' => $waiting, 'subtitle' => 'قيد الانتظار', 'customClass' => 'mb-2 mb-sm-0'],
+            ['icon' => 'CreditCardIcon', 'color' => 'light-danger', 'count' => $inProgress, 'subtitle' => 'جاري التنفيذ', 'customClass' => 'mb-2 mb-sm-0'],
+            ['icon' => 'CompassIcon', 'color' => 'light-warning', 'count' => $inDone, 'subtitle' => 'تم التنفيذ', 'customClass' => 'mb-2  mt-2 mb-xl-0'],
+            ['icon' => 'CloudLightningIcon', 'color' => 'light-info', 'count' => $hanging, 'subtitle' => 'معلق', 'customClass' => 'mb-2 mt-2 mb-xl-0'],
+            ['icon' => 'ServerIcon', 'color' => 'light-secondary', 'count' => $supplyDone, 'subtitle' => 'بانتظار التوريد', 'customClass' => 'mb-2 mt-2 mb-xl-0'],
+            ['icon' => 'CommandIcon', 'color' => 'light-primary', 'count' => $supplyAlreadyDone, 'subtitle' => 'تم التوريد', 'customClass' => 'mb-2 mt-2 mb-xl-0'],
+        ];
+        return $statistics;
+    }
+
+    public function getNewMaintenanceOrders()
+    {
+        $maintenance = MaintenanceOrder::orderBy('id', 'DESC')->take(30)->get();
+        return MaintenanceOrderResource::collection($maintenance);
+    }
+
+    public function getNewMaintenanceTypes()
+    {
+        $maintenance = Maintenance::orderBy('id', 'DESC')->get();
+        return MaintenanceResource::collection($maintenance);
     }
 }

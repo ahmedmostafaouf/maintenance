@@ -138,7 +138,7 @@ export default {
         ],
         services:[],
 
-        url: '/maintenance',
+        url: '/spinner/get-new-maintenance-types',
       searchTerm: '',
       title: 'الصيانة',
         appendFilter:'',
