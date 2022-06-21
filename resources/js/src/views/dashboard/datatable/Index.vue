@@ -70,45 +70,20 @@
 
               <!-- Column: Image Employee -->
             <span v-else-if="props.column.field === 'image'">
+
               <b-avatar
-                  :src="props.row.image"
+                  :src="'/images/employee/image/'+props.row.image"
                   class="mx-1"
               />
             </span>
-              <!-- Column: Image Employee -->
-              <span v-else-if="props.column.field === 'location'">
 
-                <b-button
-                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
-                    variant="relief-info"
-                    class="btn-icon"
-                >
-                 <a :href="props.row.location" target="_blank">
-                      <feather-icon icon="LinkIcon" />
-                 </a>
-                </b-button>
-
-              </span>
             <!-- Column: Action -->
             <span v-else-if="props.column.field === 'action'">
               <span>
-                <b-dropdown
-                  variant="link"
-                  toggle-class="text-decoration-none"
-                  no-caret
-                >
-                  <template v-slot:button-content>
-                    <feather-icon
-                      icon="MoreVerticalIcon"
-                      size="16"
-                      class="text-body align-middle mr-25"
-                    />
-                  </template>
                   <slot
                     name="actions"
                     :row="props.row"
                   />
-                </b-dropdown>
               </span>
             </span>
           </template>

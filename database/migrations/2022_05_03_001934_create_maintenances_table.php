@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('desc')->nullable();
+            $table->foreignId('service_id')->nullable()->constrained('services')->onDelete('cascade');
             $table->tinyInteger('status')->default(0)->comment('0=>inactive ,1=>active');
             $table->softDeletes();
             $table->timestamps();

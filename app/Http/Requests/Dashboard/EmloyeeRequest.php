@@ -26,9 +26,9 @@ class EmloyeeRequest extends FormRequest
         return [
             'name'=>'required|string',
             'image'=>'image|mimes:jpg,png,jpeg,gif,|max:2048|sometimes|nullable',
-            'email'=>'required|email|unique:users,email,'.$this->id,
+            'email'=>'required|email|unique:users,email,'.$this->id.',id,deleted_at,NULL',
             'password' => 'sometimes|min:6|max:25|confirmed',
-            'phone'=>'required|numeric',
+            'phone'=>'sometimes|numeric|nullable',
             'role_id'=>'required',
             'status'=>'required|in:1,0',
 
