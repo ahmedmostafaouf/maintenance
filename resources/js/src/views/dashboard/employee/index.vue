@@ -84,28 +84,30 @@
             </div>
         </template>
         <template v-slot:actions='{row}'>
-            <b-dropdown-item :to="{name:'edit-employee',params:{'id':row.id}}">
-                <feather-icon
-                    icon="Edit2Icon"
-                    class="mr-50"
-                />
-                <span>{{$t('users.edit')}}</span>
-            </b-dropdown-item>
-            <b-dropdown-item :to="{name:'view-employee',params:{'id':row.id}}">
-                <feather-icon
-                    icon="Edit2Icon"
-                    class="mr-50"
-                />
-                <span>{{$t('users.view')}}</span>
-            </b-dropdown-item>
-
-            <b-dropdown-item @click.prevent="dropRow(row.id)">
-                <feather-icon
-                    icon="TrashIcon"
-                    class="mr-50"
-                />
-                <span>{{$t('users.delete')}}</span>
-            </b-dropdown-item>
+                       <b-button
+                            variant="gradient-warning"
+                            class="btn-icon"
+                            :title="$t('users.edit')"
+                             :to="{name:'edit-employee',params:{'id':row.id}}"
+                        >
+                            <feather-icon icon="Edit2Icon" />
+                        </b-button>
+                         <b-button
+                            variant="gradient-primary"
+                            class="btn-icon"
+                            :title="$t('users.view')"
+                            :to="{name:'view-employee',params:{'id':row.id}}"
+                        >
+                            <feather-icon icon="EyeIcon" />
+                        </b-button>
+                        <b-button
+                            variant="gradient-danger"
+                            class="btn-icon"
+                            :title="$t('users.delete')"
+                            @click.prevent="dropRow(row.id)"
+                        >
+                            <feather-icon icon="Trash2Icon" />
+                        </b-button>
 
         </template>
 
