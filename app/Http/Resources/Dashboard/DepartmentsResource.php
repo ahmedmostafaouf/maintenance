@@ -20,7 +20,7 @@ class DepartmentsResource extends JsonResource
             'desc'=>$this->desc,
             'status'=>$this->status,
             'created_at'=>$this->created_at,
-            'user'=>$this->user->name,
+            'user'=>$this->user->name??'--',
         ];
     }
 }

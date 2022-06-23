@@ -244,7 +244,7 @@ export default {
               localStorage.setItem('userData', JSON.stringify(userData))
               this.$ability.update(userData.ability)
                 // ? This is just for demo purpose. Don't think CASL is role based in this case, we used role in if condition just for ease
-              this.$router.replace(getHomeRouteForLoggedInUser(userData.role)).then(() => {
+              this.$router.go(getHomeRouteForLoggedInUser(userData.role)).then(() => {
                 this.$toast({
                   component: ToastificationContent,
                   position: 'top-right',

@@ -197,6 +197,12 @@ return [
         'link'                  => ' ',
         'slug'                  => ' ',
         'service_id'                  => ' الخدمة',
+        'device_num'                  => ' رقم الجهاز',
+        'serial_num'                  => ' الرقم التسلسلي',
+        'category'                  => ' الفئة',
+        'model'                  => ' الموديل',
+        'manufacturer_comp'                  => ' الشركة المصنعة',
+        'agent'                  => ' الوكيل',
     ],
 
 ];

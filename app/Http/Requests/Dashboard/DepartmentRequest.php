@@ -26,8 +26,8 @@ class DepartmentRequest extends FormRequest
         return [
             'name' => 'required|unique:departments,name,'.$this->id,
             'status' => 'required',
-            'desc' => 'required',
-            'user_id' => 'required',
+            'desc' => 'sometimes',
+            'user_id' => 'sometimes|nullable',
         ];
     }
 }

@@ -26,30 +26,30 @@
                     </label>
                 </b-form-group>
             </b-col>
-            <!-- type department -->
-            <b-col cols="12">
-                <b-form-group
-                    :label="$t('global.type')"
-                    label-for="vi-status"
-                >
-                    <b-input-group class="input-group-merge">
-                        <v-select
-                            v-model="department.status"
-                            :placeholder="$t('global.type')+'...'"
-                            :options="types"
-                            dir="rtl"
-                            :reduce="sta => sta.value"
-                            label="name"
-                        />
-                    </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.types !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.types[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
+<!--            &lt;!&ndash; type department &ndash;&gt;-->
+<!--            <b-col cols="12">-->
+<!--                <b-form-group-->
+<!--                    :label="$t('global.type')"-->
+<!--                    label-for="vi-status"-->
+<!--                >-->
+<!--                    <b-input-group class="input-group-merge">-->
+<!--                        <v-select-->
+<!--                            v-model="department.status"-->
+<!--                            :placeholder="$t('global.type')+'...'"-->
+<!--                            :options="types"-->
+<!--                            dir="rtl"-->
+<!--                            :reduce="sta => sta.value"-->
+<!--                            label="name"-->
+<!--                        />-->
+<!--                    </b-input-group>-->
+<!--                    <label-->
+<!--                        v-if="Object.keys(errors).length > 0 && errors.types !== undefined"-->
+<!--                        class="text-danger"-->
+<!--                    >-->
+<!--                        {{this.errors.types[0]}}-->
+<!--                    </label>-->
+<!--                </b-form-group>-->
+<!--            </b-col>-->
 
 
             <!-- status -->
@@ -202,7 +202,7 @@
         methods:{
             makeToast(variant = null, body) {
                 this.$bvToast.toast(body, {
-                    title: `Variant ${variant || 'default'}`,
+                    title: ` ${variant || 'default'}`,
                     variant,
                     solid: true,
                 })

@@ -66,21 +66,23 @@
             </div>
         </template>
         <template v-slot:actions='{row}'>
-            <b-dropdown-item :to="{name:'edit-department',params:{'id':row.id}}">
-                <feather-icon
-                    icon="Edit2Icon"
-                    class="mr-50"
-                />
-                <span>{{$t('global.edit')}}</span>
-            </b-dropdown-item>
+            <b-button
+                variant="gradient-warning"
+                class="btn-icon"
+                :title="$t('global.edit')"
+                :to="{name:'edit-department',params:{'id':row.id}}"
+            >
+                <feather-icon icon="Edit2Icon" />
+            </b-button>
 
-            <b-dropdown-item @click.prevent="dropRow(row.id)">
-                <feather-icon
-                    icon="TrashIcon"
-                    class="mr-50"
-                />
-                <span>{{$t('global.delete')}}</span>
-            </b-dropdown-item>
+            <b-button
+                variant="gradient-danger"
+                class="btn-icon"
+                :title="$t('global.delete')"
+                @click.prevent="dropRow(row.id)"
+            >
+                <feather-icon icon="Trash2Icon" />
+            </b-button>
 
         </template>
 
