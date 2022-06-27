@@ -2,22 +2,22 @@
     <div>
         <div class="custom-search">
             <b-row>
-                <b-col md="4">
-                    <b-form-group
-                        label="القسم"
-                        label-for="vi-department"
-                    >
-                        <v-select
-                            v-model="datatable.department_filter"
-                            placeholder="...القسم"
-                            :options="category"
-                            dir="rtl"
-                            :reduce="dep => dep.value"
-                            label="name"
-                            @input="onfilter"
-                        />
-                    </b-form-group>
-                </b-col>
+<!--                <b-col md="4">-->
+<!--                    <b-form-group-->
+<!--                        label="القسم"-->
+<!--                        label-for="vi-department"-->
+<!--                    >-->
+<!--                        <v-select-->
+<!--                            v-model="datatable.department_filter"-->
+<!--                            placeholder="...القسم"-->
+<!--                            :options="category"-->
+<!--                            dir="rtl"-->
+<!--                            :reduce="dep => dep.value"-->
+<!--                            label="name"-->
+<!--                            @input="onfilter"-->
+<!--                        />-->
+<!--                    </b-form-group>-->
+<!--                </b-col>-->
 
             </b-row>
         </div>
@@ -66,21 +66,24 @@
             </div>
         </template>
         <template v-slot:actions='{row}'>
-            <b-dropdown-item :to="{name:'edit-car',params:{'id':row.id}}">
-                <feather-icon
-                    icon="Edit2Icon"
-                    class="mr-50"
-                />
-                <span>{{$t('global.edit')}}</span>
-            </b-dropdown-item>
 
-            <b-dropdown-item @click.prevent="dropRow(row.id)">
-                <feather-icon
-                    icon="TrashIcon"
-                    class="mr-50"
-                />
-                <span>{{$t('global.delete')}}</span>
-            </b-dropdown-item>
+            <b-button
+                variant="gradient-warning"
+                class="btn-icon"
+                :title="$t('global.edit')"
+                :to="{name:'edit-car',params:{'id':row.id}}"
+            >
+                <feather-icon icon="Edit2Icon" />
+            </b-button>
+
+            <b-button
+                variant="gradient-danger"
+                class="btn-icon"
+                :title="$t('global.delete')"
+                @click.prevent="dropRow(row.id)"
+            >
+                <feather-icon icon="Trash2Icon" />
+            </b-button>
 
         </template>
 
@@ -119,6 +122,7 @@
                     {name:'نشط',value:'1'},
                     {name:'غير نشط',value:'0'},
                 ],
+                category:'',
                 departments:[],
                 url: '/car',
                 searchTerm: '',
@@ -155,6 +159,12 @@
                         sortable: true,
                     },
                     {
+                        label: 'الجهة',
+                        field: 'side',
+                        filterable: true,
+                        sortable: true,
+                    },
+                    {
                         label: 'سنه الصنع',
                         field: 'made',
                         filterable: true,
@@ -182,7 +192,7 @@
         },
         created() {
             this.onfilter();
-            this.getDepartments();
+            // this.getDepartments();
             Fire.$on('getselected',(value)=>{
 
                 this.selected_rows = value.selectedRows.map((item)=>{

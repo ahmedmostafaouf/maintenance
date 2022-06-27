@@ -47,7 +47,7 @@
             <!-- chassis_number  -->
             <b-col cols="12">
                 <b-form-group
-                    label="رقم الهيئة"
+                    label="رقم الهيكل"
                     label-for="vi-chassis_number"
                 >
                     <b-input-group class="input-group-merge">
@@ -55,7 +55,7 @@
                         <b-form-input
                             id="vi-chassis_number"
                             v-model="car.chassis_number"
-                            placeholder="رقم الهيئة"
+                            placeholder="رقم الهيكل"
                         /><br>
                     </b-input-group>
                     <label
@@ -87,6 +87,27 @@
                     </label>
                 </b-form-group>
             </b-col>
+            <!--  side -->
+            <b-col cols="12">
+                <b-form-group
+                    label="الحهة"
+                    label-for="vi-color"
+                >
+                    <b-input-group class="input-group-merge">
+                        <b-form-input
+                            id="vi-color"
+                            v-model="car.side"
+                            placeholder="الحهة"
+                        /><br>
+                    </b-input-group>
+                    <label
+                        v-if="Object.keys(errors).length > 0 && errors.side !== undefined"
+                        class="text-danger"
+                    >
+                        {{this.errors.side[0]}}
+                    </label>
+                </b-form-group>
+            </b-col>
             <!--  date -->
             <b-col cols="12">
                 <b-form-group
@@ -98,6 +119,8 @@
                             id="example-datepicker"
                             v-model="car.made"
                             class="mb-1"
+                            :locale="locale"
+                            v-bind="labels[locale] || {}"
                         />
                     </b-input-group>
                     <label
@@ -201,6 +224,25 @@
         },
         data(){
             return{
+                locale: 'ar-EG',
+                labels: {
+                    'ar-EG': {
+                        weekdayHeaderFormat: 'narrow',
+                        labelPrevDecade: 'العقد السابق',
+                        labelPrevYear: 'العام السابق',
+                        labelPrevMonth: 'الشهر السابق',
+                        labelCurrentMonth: 'الشهر الحالي',
+                        labelNextMonth: 'الشهر المقبل',
+                        labelNextYear: 'العام المقبل',
+                        labelNextDecade: 'العقد القادم',
+                        labelToday: 'اليوم',
+                        labelSelected: 'التاريخ المحدد',
+                        labelNoDateSelected: 'لم يتم اختيار تاريخ',
+                        labelCalendar: 'التقويم',
+                        labelNav: 'الملاحة التقويم',
+                        labelHelp: 'استخدم مفاتيح المؤشر للتنقل في التواريخ'
+                    },
+                },
                 departments:[],
                 errors: {},
                 categories:[
@@ -214,11 +256,12 @@
                     chassis_number:"",
                     color:"",
                     made:"",
+                    side:''
                 }
             };
         },
         created() {
-            this.getDepartments();
+            // this.getDepartments();
         },
         methods:{
             makeToast(variant = null, body) {

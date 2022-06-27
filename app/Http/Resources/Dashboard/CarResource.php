@@ -17,8 +17,9 @@ class CarResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'category'=>$this->type==1?'اسعافات' : 'حركة',
+            'category'=>$this->category==1 ? 'اسعافات' : 'حركة',
             'name'=>$this->type,
+            'side'=>$this->side??'',
             'plate_number'=>$this->plate_number,
             'chassis_number'=>$this->chassis_number,
             'color'=>$this->color,

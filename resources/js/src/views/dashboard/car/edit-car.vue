@@ -2,94 +2,151 @@
     <b-form @submit.prevent="editDevice">
         <b-row>
 
-            <!-- first name -->
+            <!-- type type -->
             <b-col cols="12">
                 <b-form-group
-                    :label="$t('global.name')"
+                    label="نوع السيارة"
                     label-for="vi-name"
                 >
                     <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="UserIcon" />
-                        </b-input-group-prepend>
                         <b-form-input
                             id="vi-name"
-                            v-model="device.name"
-                            :placeholder="$t('global.name')"
+                            v-model="car.type"
+                            placeholder="نوع السيارة"
                         /><br>
                     </b-input-group>
                     <label
-                        v-if="Object.keys(errors).length > 0 && errors.name !== undefined"
+                        v-if="Object.keys(errors).length > 0 && errors.type !== undefined"
                         class="text-danger"
                     >
-                        {{this.errors.name[0]}}
+                        {{this.errors.type[0]}}
+                    </label>
+                </b-form-group>
+            </b-col>
+            <!-- plate_number  -->
+            <b-col cols="12">
+                <b-form-group
+                    label="رقم اللوحة"
+                    label-for="vi-name"
+                >
+                    <b-input-group class="input-group-merge">
+                        <b-form-input
+                            id="vi-plate_number"
+                            v-model="car.plate_number"
+                            placeholder="رقم اللوحة"
+                        /><br>
+                    </b-input-group>
+                    <label
+                        v-if="Object.keys(errors).length > 0 && errors.plate_number !== undefined"
+                        class="text-danger"
+                    >
+                        {{this.errors.plate_number[0]}}
+                    </label>
+                </b-form-group>
+            </b-col>
+            <!-- chassis_number  -->
+            <b-col cols="12">
+                <b-form-group
+                    label="رقم الهيكل"
+                    label-for="vi-chassis_number"
+                >
+                    <b-input-group class="input-group-merge">
+
+                        <b-form-input
+                            id="vi-chassis_number"
+                            v-model="car.chassis_number"
+                            placeholder="رقم الهيكل"
+                        /><br>
+                    </b-input-group>
+                    <label
+                        v-if="Object.keys(errors).length > 0 && errors.chassis_number !== undefined"
+                        class="text-danger"
+                    >
+                        {{this.errors.chassis_number[0]}}
+                    </label>
+                </b-form-group>
+            </b-col>
+            <!--  color -->
+            <b-col cols="12">
+                <b-form-group
+                    label="اللون"
+                    label-for="vi-color"
+                >
+                    <b-input-group class="input-group-merge">
+                        <b-form-input
+                            id="vi-color"
+                            v-model="car.color"
+                            placeholder="اللون"
+                        /><br>
+                    </b-input-group>
+                    <label
+                        v-if="Object.keys(errors).length > 0 && errors.color !== undefined"
+                        class="text-danger"
+                    >
+                        {{this.errors.color[0]}}
                     </label>
                 </b-form-group>
             </b-col>
 
-            <!-- device_num  -->
+            <!--  side -->
             <b-col cols="12">
                 <b-form-group
-                    :label="$t('global.device_num')"
-                    label-for="vi-name"
+                    label="الحهة"
+                    label-for="vi-color"
                 >
                     <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="UserIcon" />
-                        </b-input-group-prepend>
                         <b-form-input
-                            id="vi-device_num"
-                            v-model="device.device_num"
-                            :placeholder="$t('global.device_num')"
+                            id="vi-color"
+                            v-model="car.side"
+                            placeholder="الحهة"
                         /><br>
                     </b-input-group>
                     <label
-                        v-if="Object.keys(errors).length > 0 && errors.device_num !== undefined"
+                        v-if="Object.keys(errors).length > 0 && errors.side !== undefined"
                         class="text-danger"
                     >
-                        {{this.errors.device_num[0]}}
+                        {{this.errors.side[0]}}
                     </label>
                 </b-form-group>
             </b-col>
-            <!-- serial_num  -->
+            <!--  date -->
             <b-col cols="12">
                 <b-form-group
-                    :label="$t('global.serial_num')"
-                    label-for="vi-serial_num"
+                    label="سنة التصنيع"
+                    label-for="vi-color"
                 >
                     <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="UserIcon" />
-                        </b-input-group-prepend>
-                        <b-form-input
-                            id="vi-serial_num"
-                            v-model="device.serial_num"
-                            :placeholder="$t('global.serial_num')"
-                        /><br>
+                        <b-form-datepicker
+                            id="example-datepicker"
+                            v-model="car.made"
+                            class="mb-1"
+                            :locale="locale"
+                            v-bind="labels[locale] || {}"
+                        />
                     </b-input-group>
                     <label
-                        v-if="Object.keys(errors).length > 0 && errors.serial_num !== undefined"
+                        v-if="Object.keys(errors).length > 0 && errors.made !== undefined"
                         class="text-danger"
                     >
-                        {{this.errors.serial_num[0]}}
+                        {{this.errors.made[0]}}
                     </label>
                 </b-form-group>
             </b-col>
-            <!--  category -->
+            <!-- Departments -->
             <b-col cols="12">
                 <b-form-group
-                    :label="$t('global.category')"
-                    label-for="vi-category"
+                    label="القسم"
+                    label-for="vi-branch"
                 >
                     <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="UserIcon" />
-                        </b-input-group-prepend>
-                        <b-form-input
-                            id="vi-category"
-                            v-model="device.category"
-                            :placeholder="$t('global.category')"
-                        /><br>
+                        <v-select
+                            v-model="car.category"
+                            placeholder="القسم..."
+                            :options="categories"
+                            :reduce="dep => dep.value"
+                            label="name"
+                            dir="rtl"
+                        />
                     </b-input-group>
                     <label
                         v-if="Object.keys(errors).length > 0 && errors.category !== undefined"
@@ -98,146 +155,6 @@
                         {{this.errors.category[0]}}
                     </label>
                 </b-form-group>
-            </b-col>
-            <!-- model -->
-            <b-col cols="12">
-                <b-form-group
-                    :label="$t('global.model')"
-                    label-for="vi-name"
-                >
-                    <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="UserIcon" />
-                        </b-input-group-prepend>
-                        <b-form-input
-                            id="vi-model"
-                            v-model="device.model"
-                            :placeholder="$t('global.model')"
-                        /><br>
-                    </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.model !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.model[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
-            <!-- manufacturer_comp -->
-            <b-col cols="12">
-                <b-form-group
-                    :label="$t('global.manufacturer_comp')"
-                    label-for="vi-manufacturer_comp"
-                >
-                    <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="UserIcon" />
-                        </b-input-group-prepend>
-                        <b-form-input
-                            id="vi-manufacturer_comp"
-                            v-model="device.manufacturer_comp"
-                            :placeholder="$t('global.manufacturer_comp')"
-                        /><br>
-                    </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.manufacturer_comp !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.manufacturer_comp[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
-            <!-- agent -->
-            <b-col cols="12">
-                <b-form-group
-                    :label="$t('global.agent')"
-                    label-for="vi-agent"
-                >
-                    <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="UserIcon" />
-                        </b-input-group-prepend>
-                        <b-form-input
-                            id="vi-agent"
-                            v-model="device.agent"
-                            :placeholder="$t('global.agent')"
-                        /><br>
-                    </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.agent !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.agent[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
-            <!-- Departments -->
-            <b-col cols="12">
-                <b-form-group
-                    :label="$t('global.department')"
-                    label-for="vi-branch"
-                >
-                    <b-input-group class="input-group-merge">
-                        <v-select
-                            v-model="device.department_id"
-                            :placeholder="$t('global.department')+'...'"
-                            :options="departments"
-                            :reduce="dep => dep.id"
-                            label="name"
-                            dir="rtl"
-                        />
-                    </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.service_id !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.department_id[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
-            <!-- status -->
-            <b-col cols="12">
-                <b-form-group
-                    :label="$t('global.status')"
-                    label-for="vi-status"
-                >
-                    <b-input-group class="input-group-merge">
-                        <v-select
-                            v-model="device.status"
-                            :placeholder="$t('global.status')+'...'"
-                            :options="status"
-                            dir="rtl"
-                            :reduce="sta => sta.value"
-                            label="name"
-                        />
-                    </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.status !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.status[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
-
-            <!-- description -->
-            <b-col cols="12">
-                <label for="textarea-default">{{$t('global.desc')}}</label>
-                <b-input-group class="input-group-merge">
-                    <b-form-textarea
-                        id="textarea-default"
-                        v-model="device.desc"
-                        :placeholder="$t('global.desc')"
-                        rows="3"
-                    /><br>
-                </b-input-group>
-                <label
-                    v-if="Object.keys(errors).length > 0 && errors.desc !== undefined"
-                    class="text-danger"
-                >
-                    {{this.errors.desc[0]}}
-
-                </label>
             </b-col>
 
             <!-- reset and submit -->
@@ -262,20 +179,32 @@
                 </b-button>
             </b-col>
         </b-row>
+
     </b-form>
 </template>
 
 <script>
-    import {
-        BRow, BCol, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton, BInputGroup, BInputGroupPrepend, BFormTextarea, BFormValidFeedback,
-        BFormInvalidFeedback,
-    } from 'bootstrap-vue'
+import {
+    BRow,
+    BCol,
+    BFormGroup,
+    BFormInput,
+    BFormCheckbox,
+    BForm,
+    BButton,
+    BInputGroup,
+    BInputGroupPrepend,
+    BFormTextarea,
+    BFormValidFeedback,
+    BFormInvalidFeedback,
+    BFormDatepicker,
+} from 'bootstrap-vue'
     import Ripple from 'vue-ripple-directive'
     import vSelect from 'vue-select'
     import axios from 'axios'
 
     export default {
-        name: 'AddDepartment',
+        name: 'editCar',
         components: {
             BRow,
             vSelect,
@@ -290,35 +219,58 @@
             BInputGroupPrepend,
             BForm,
             BButton,
+            BFormDatepicker
         },
         directives: {
             Ripple,
         },
         data(){
             return{
+                locale: 'ar-EG',
+                labels: {
+                    'ar-EG': {
+                        weekdayHeaderFormat: 'narrow',
+                        labelPrevDecade: 'العقد السابق',
+                        labelPrevYear: 'العام السابق',
+                        labelPrevMonth: 'الشهر السابق',
+                        labelCurrentMonth: 'الشهر الحالي',
+                        labelNextMonth: 'الشهر المقبل',
+                        labelNextYear: 'العام المقبل',
+                        labelNextDecade: 'العقد القادم',
+                        labelToday: 'اليوم',
+                        labelSelected: 'التاريخ المحدد',
+                        labelNoDateSelected: 'لم يتم اختيار تاريخ',
+                        labelCalendar: 'التقويم',
+                        labelNav: 'الملاحة التقويم',
+                        labelHelp: 'استخدم مفاتيح المؤشر للتنقل في التواريخ'
+                    },
+                },
+
                 errors: {},
                 departments:[],
                 status:[
                     {name:'نشط',value:1},
                     {name:'غير نشط',value:0},
                 ],
-                device:{
-                    name:'',
-                    desc:'',
-                    status:'',
-                    department_id:"",
-                    device_num:"",
-                    serial_num:"",
+
+                categories:[
+                    {name:'الحركة',value:2},
+                    {name:'الاسعافات',value:1},
+                ],
+                car:{
+                    id:'',
+                    type:'',
                     category:"",
-                    model:"",
-                    manufacturer_comp:"",
-                    agent:"",
+                    plate_number:"",
+                    chassis_number:"",
+                    color:"",
+                    made:"",
+                    side:""
                 }
             };
         },
         created() {
-            this.getDepartments();
-            this.getDevice();
+            this.getCar();
         },
         methods:{
             makeToast(variant = null, body) {
@@ -331,7 +283,7 @@
             editDevice(){
                 const instance = this
                 let id=this.$route.params.id
-                axios.put(`device/${id}`, this.device, {
+                axios.put(`car/${id}`, this.car, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
@@ -339,7 +291,7 @@
                     this.errors = {}
                     this.makeToast('success', 'تم التعديل  بنجاح')
                     setTimeout(() => {
-                        instance.$router.push({ name: 'device' })
+                        instance.$router.push({ name: 'car' })
                     }, 1000)
                 })
                     .catch(error => {
@@ -347,26 +299,23 @@
                         this.errors = error.response.data.errors
                     })
             },
-            getDevice(){
+            getCar(){
                 let instance=this;
                 let id = instance.$route.params.id;
-                axios.get(`device/${id}/edit`,{
+                axios.get(`car/${id}/edit`,{
                     headers:{
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     }
                 }).then(response=>{
                     if(response.status){
-                        this.device.id=response.data.device.id
-                        this.device.name=response.data.device.name
-                        this.device.desc=response.data.device.desc
-                        this.device.status=response.data.device.status
-                        this.device.department_id=response.data.device.department_id
-                        this.device.device_num=response.data.device.device_num
-                        this.device.serial_num=response.data.device.serial_num
-                        this.device.category=response.data.device.category
-                        this.device.model=response.data.device.model
-                        this.device.manufacturer_comp=response.data.device.manufacturer_comp
-                        this.device.agent=response.data.device.agent
+                        this.car.id=response.data.car.id
+                        this.car.type=response.data.car.type
+                        this.car.category=response.data.car.category
+                        this.car.side=response.data.car.side
+                        this.car.plate_number=response.data.car.plate_number
+                        this.car.chassis_number=response.data.car.chassis_number
+                        this.car.color=response.data.car.color
+                        this.car.made=response.data.car.made
                     }
 
                 });
