@@ -21,7 +21,10 @@ class MaintenanceOrder extends Model
         'type',
         'device_id',
         'car_id',
-    ];
+        "request_stocks",
+        'technical_id'
+        ];
+        protected $casts=['request_stocks'=>'array','technical_id'=>'array'];
 
     const WAITING_STATUS = '0';
     const IN_PROGRESS_STATUS = '1';

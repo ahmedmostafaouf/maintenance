@@ -47,6 +47,11 @@
               </b-badge>
             </span>
 
+               <!-- Column: Status -->
+            <span v-else-if="props.column.field === 'visitor_name'">
+                 <ul><li v-for="item in props.row.visitor_name">{{item.visitor_names}}</li></ul>
+            </span>
+
             <span v-else-if="props.column.field === 'securityStatus'">
               <b-badge :variant="securityStatusVariant(props.row.status)">
                 {{ (props.row.status=='0')?'معلق':"تم التاكيد" }}

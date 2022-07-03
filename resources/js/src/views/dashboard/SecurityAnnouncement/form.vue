@@ -1,7 +1,17 @@
 <template>
     <div>
         <b-form @submit.prevent="save">
+          <ul>
+                    <li
+                                v-if="Object.keys(errors).length > 0"
+                                v-for="error in errors"
+                                class="text-danger"
+                            >
+                            {{error[0]}}
+                            </li>
+                </ul>
             <b-row>
+              
                 <!-- Departments -->
                 <b-col cols="6">
                     <b-form-group
@@ -9,21 +19,13 @@
                         label-for="vi-branch"
                     >
                         <b-input-group class="input-group-merge">
-                            <v-select
+                          
+                            <b-form-input
+                                id="vi-name"
                                 v-model="data.department_id"
-                                :placeholder="$t('global.department')+'...'"
-                                :options="departments"
-                                :reduce="dep => dep.id"
-                                label="name"
-                                dir="rtl"
-                            />
+                            :placeholder="$t('global.department')+'...'"/>
                         </b-input-group>
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.department_id !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.department_id[0]}}
-                        </label>
+                      
                     </b-form-group>
                 </b-col>
                 <!-- Company Name -->
@@ -42,12 +44,7 @@
                                 :placeholder="$i18n.t('global.company_name')"
                             /><br>
                         </b-input-group>
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.company_name !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.company_name[0]}}
-                        </label>
+                
                     </b-form-group>
                 </b-col>
                 <!-- responsible Person -->
@@ -66,12 +63,7 @@
                                 :placeholder="$i18n.t('global.responsible')"
                             /><br>
                         </b-input-group>
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.responsible !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.responsible[0]}}
-                        </label>
+                       
                     </b-form-group>
                 </b-col>
                 <!-- working duration -->
@@ -90,12 +82,7 @@
                                 :placeholder="$i18n.t('global.working_duration')"
                             /><br>
                         </b-input-group>
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.working_duration !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.working_duration[0]}}
-                        </label>
+                    
                     </b-form-group>
                 </b-col>
                 <!-- Month -->
@@ -114,12 +101,12 @@
                                 dir="rtl"
                             />
                         </b-input-group>
-                        <label
+                        <!-- <label
                             v-if="Object.keys(errors).length > 0 && errors.month !== undefined"
                             class="text-danger"
                         >
                             {{this.errors.month[0]}}
-                        </label>
+                        </label> -->
                     </b-form-group>
                 </b-col>
                 <!-- Start Date -->
@@ -135,12 +122,12 @@
                                 class="mb-1"
                             />
                         </b-input-group>
-                        <label
+                        <!-- <label
                             v-if="Object.keys(errors).length > 0 && errors.start_date !== undefined"
                             class="text-danger"
                         >
                             {{this.errors.start_date[0]}}
-                        </label>
+                        </label> -->
                     </b-form-group>
                 </b-col>
                 <!-- End Date -->
@@ -156,12 +143,12 @@
                                 class="mb-1"
                             />
                         </b-input-group>
-                        <label
+                        <!-- <label
                             v-if="Object.keys(errors).length > 0 && errors.end_date !== undefined"
                             class="text-danger"
                         >
                             {{this.errors.end_date[0]}}
-                        </label>
+                        </label> -->
                     </b-form-group>
                 </b-col>
                 <!-- Start Time-->
@@ -175,12 +162,12 @@
                             id="start_time"
                             v-model='data.start_time'
                             locale='en' />
-                        <label
+                        <!-- <label
                             v-if="Object.keys(errors).length > 0 && errors.start_time !== undefined"
                             class="text-danger"
                         >
                             {{this.errors.start_time[0]}}
-                        </label>
+                        </label> -->
                     </b-form-group>
                 </b-col>
                 <!-- End Time-->
@@ -194,12 +181,7 @@
                             id="end_time"
                             v-model='data.end_time'
                             locale='en' />
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.end_time !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.end_time[0]}}
-                        </label>
+                   
                     </b-form-group>
                 </b-col>
                 <!-- work Reason -->
@@ -214,15 +196,12 @@
                             class="mb-1"
                         /><br>
                     </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.work_reason !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.work_reason[0]}}
-
-                    </label>
+               
                 </b-col>
+
+                      
                 <!-- visitor name -->
+                <b-row v-for="(item,key) in data.visitor_name" :key="key">
                 <b-col cols="6">
                     <b-form-group
                         :label="$t('global.visitor_name')"
@@ -234,16 +213,11 @@
                             </b-input-group-prepend>
                             <b-form-input
                                 id="vi-name"
-                                v-model="data.visitor_name"
+                                v-model="item.visitor_names"
                                 :placeholder="$i18n.t('global.visitor_name')"
                             /><br>
                         </b-input-group>
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.visitor_name !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.visitor_name[0]}}
-                        </label>
+                
                     </b-form-group>
                 </b-col>
                 <!-- national_id -->
@@ -258,17 +232,12 @@
                             </b-input-group-prepend>
                             <b-form-input
                                 id="vi-name"
-                                v-model="data.national_id"
+                                v-model="item.national_id"
                                 :type="'number'"
                                 :placeholder="$i18n.t('global.national_id')"
                             /><br>
                         </b-input-group>
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.national_id !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.national_id[0]}}
-                        </label>
+                    
                     </b-form-group>
                 </b-col>
                 <!-- residence-->
@@ -283,22 +252,17 @@
                             </b-input-group-prepend>
                             <b-form-input
                                 id="vi-name"
-                                v-model="data.residence"
+                                v-model="item.residence"
                                 :placeholder="$i18n.t('global.residence')"
                             /><br>
                         </b-input-group>
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.residence !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.residence[0]}}
-                        </label>
+                    
                     </b-form-group>
                 </b-col>
                 <!-- Nationality -->
                 <b-col cols="6">
                     <b-form-group
-                        :label="$t('global.nationality')"
+                        label="رقم الجوال"
                         label-for="vi-branch"
                     >
                         <b-input-group class="input-group-merge">
@@ -307,18 +271,32 @@
                             </b-input-group-prepend>
                             <b-form-input
                                 id="vi-name"
-                                v-model="data.nationality"
-                                :placeholder="$i18n.t('global.nationality')"
+                                v-model="item.nationality"
+                                placeholder="رقم الجوال"
                             /><br>
                         </b-input-group>
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.nationality !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.nationality[0]}}
-                        </label>
+                    
                     </b-form-group>
                 </b-col>
+                </b-row>
+
+
+               <b-col
+                    cols="3"
+                    class="mt-2"
+                >
+                    <b-button
+                                v-ripple.400="'rgba(186, 191, 199, 0.15)'"
+                                type="reset"
+                                variant="outline-secondary"
+                                @click="AddField"
+                            >
+                                Add
+                    </b-button>
+                </b-col>
+                <br>
+
+
                 <!-- involve_chemicals -->
                 <b-col cols="4">
                     <b-form-group
@@ -335,12 +313,12 @@
                                 label="name"
                             />
                         </b-input-group>
-                        <label
+                        <!-- <label
                             v-if="Object.keys(errors).length > 0 && errors.involve_chemicals !== undefined"
                             class="text-danger"
                         >
                             {{this.errors.status[0]}}
-                        </label>
+                        </label> -->
                     </b-form-group>
                 </b-col>
                 <!-- work_noisy -->
@@ -359,12 +337,12 @@
                                 label="name"
                             />
                         </b-input-group>
-                        <label
+                        <!-- <label
                             v-if="Object.keys(errors).length > 0 && errors.work_noisy !== undefined"
                             class="text-danger"
                         >
                             {{this.errors.work_noisy[0]}}
-                        </label>
+                        </label> -->
                     </b-form-group>
                 </b-col>
                 <!-- include_elevations -->
@@ -383,12 +361,7 @@
                                 label="name"
                             />
                         </b-input-group>
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.include_elevations !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.include_elevations[0]}}
-                        </label>
+                      
                     </b-form-group>
                 </b-col>
                 <!-- confined_spaces -->
@@ -407,12 +380,7 @@
                                 label="name"
                             />
                         </b-input-group>
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.confined_spaces !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.confined_spaces[0]}}
-                        </label>
+                        
                     </b-form-group>
                 </b-col>
                 <!-- services_separation -->
@@ -431,12 +399,7 @@
                                 label="name"
                             />
                         </b-input-group>
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.services_separation !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.services_separation[0]}}
-                        </label>
+                      
                     </b-form-group>
                 </b-col>
                 <!-- flammable_materials -->
@@ -455,12 +418,7 @@
                                 label="name"
                             />
                         </b-input-group>
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.flammable_materials !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.flammable_materials[0]}}
-                        </label>
+                      
                     </b-form-group>
                 </b-col>
                 <!-- entry_gate -->
@@ -477,14 +435,10 @@
                                 :reduce="gate => gate"
                                 label="entry_gate"
                                 dir="rtl"
+                                multiple
                             />
                         </b-input-group>
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.entry_gate !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.entry_gate[0]}}
-                        </label>
+                      
                     </b-form-group>
                 </b-col>
                 <!-- guard name-->
@@ -503,12 +457,7 @@
                                 :placeholder="$i18n.t('global.guard_name')"
                             /><br>
                         </b-input-group>
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.guard_name !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.guard_name[0]}}
-                        </label>
+                       
                     </b-form-group>
                 </b-col>
                 <!-- business responsible-->
@@ -527,12 +476,7 @@
                                 :placeholder="$i18n.t('global.business_responsible')"
                             /><br>
                         </b-input-group>
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.business_responsible !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.business_responsible[0]}}
-                        </label>
+                      
                     </b-form-group>
                 </b-col>
                 <!-- entry_time -->
@@ -546,12 +490,7 @@
                             id="entry_time"
                             v-model='data.entry_time'
                             locale='en' />
-                        <label
-                            v-if="Object.keys(errors).length > 0 && errors.entry_time !== undefined"
-                            class="text-danger"
-                        >
-                            {{this.errors.entry_time[0]}}
-                        </label>
+                       
                     </b-form-group>
                 </b-col>
                 <!-- reset and submit -->
@@ -634,11 +573,18 @@ export default {
                 {name:'نعم',value:'1'},
                 {name:'لا',value:'0'},
             ],
+
             departments:[],
             months:["January","February","March","April","May","June","July", "August","September","October","November","December"],
             entry_gates:["مدخل الطوارئ", "مدخل العيادات","مدخل المغسله","مدخل الطوارئ", "مدخل رئيسي"],
             errors: {},
             data:{
+                visitor_name:[{
+                   visitor_names:'',
+                   national_id:'',
+                   residence:'',
+                   nationality:'',
+                }],
                 department_id:'',
                 company_name:'',
                 work_reason:'',
@@ -648,10 +594,7 @@ export default {
                 start_time:'',
                 end_date:'',
                 end_time:'',
-                visitor_name:'',
-                national_id:'',
-                residence:'',
-                nationality:'',
+
                 involve_chemicals:'',
                 work_noisy:'',
                 include_elevations:'',
@@ -666,6 +609,8 @@ export default {
         };
     },
     created() {
+
+    
         this.getDepartments();
         if(this.submitType == 'edit'){
             this.getData()
@@ -678,6 +623,12 @@ export default {
                 variant,
                 solid: true,
             })
+        },
+        AddField(){
+       this.data.visitor_name.push({ visitor_names:'',
+                   national_id:'',
+                   residence:'',
+                   nationality:'',})
         },
         getDepartments(){
             axios.get('/spinner/all-departments').then(response => {

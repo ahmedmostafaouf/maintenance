@@ -13,9 +13,11 @@ use App\Models\Device;
 use App\Models\Maintenance;
 use App\Models\MaintenanceOrder;
 use App\Models\Organization;
+use App\Models\RequestStock;
 use App\Models\Role;
 use App\Models\Service;
 use App\Models\Stock;
+use App\Models\Technical;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -102,13 +104,18 @@ class SpinnersControler extends Controller
     public function getServicesInMaintenanceType($id)
     {
         $maintenance = Maintenance::with(['services'])->find($id);
-        $related_data = match ((string)$maintenance->type) {
-            Maintenance::MAINTENANCE_HAS_DEVICES_TYPE => Device::all(),
-            Maintenance::MAINTENANCE_HAS_CARS_TYPE => Car::all(),
+            return $this->returnData('maintenance', $maintenance);
+
+    }
+    public function getDevicesInDepartment($id,$type)
+    {
+        $related_data = match ((string)$type) {
+            Maintenance::MAINTENANCE_HAS_DEVICES_TYPE => Device::where('department_id',$id)->get(),
+            Maintenance::MAINTENANCE_HAS_CARS_TYPE => Car::where('category',$id)->get(),
             default => [],
         };
-        $maintenance['related_data'] = $related_data;
-        return $this->returnData('maintenance', $maintenance);
+    
+        return $this->returnData('related_data', $related_data);
 
     }
 
@@ -122,7 +129,8 @@ class SpinnersControler extends Controller
             ['id' => MaintenanceOrder::SUPLLY_DONE_STATUS, 'name' => 'بانتظار التوريد'],
             ['id' => MaintenanceOrder::SUPLLY_ALREADY_DONE_STATUS, 'name' => 'تم التوريد'],
         ];
-        return $this->returnData('status', $status);
+        $stock=RequestStock::where('wait',1)->with('stock')->get();
+          return response()->json(['status'=>true,'data'=>['status'=>$status,'stock'=>$stock]],200);
     }
 
     public function getStatisticsData()
@@ -134,6 +142,12 @@ class SpinnersControler extends Controller
             'orderStatistics' => self::getOrderStatistics()
         ];
         return $this->returnData('statistics', $data);
+    }
+    public function getTechnical()
+    {
+       $technical=Technical::all();
+       return $this->returnData('technical', $technical);
+
     }
 
     public function getOrderStatistics()

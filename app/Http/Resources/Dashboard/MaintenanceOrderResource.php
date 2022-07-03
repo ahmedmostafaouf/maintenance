@@ -30,10 +30,20 @@ class MaintenanceOrderResource extends JsonResource
                 'filePreview' => asset('orders/' . $this->image),
             ];
         } else {
+            $data='';
+            if(!$this->car?->type){
+                $data=$this->department->name;
+            }else{
+                  if($this->department_id==1){
+                    $data="اسعافات";
+                  }else{
+                    $data="حركة";
+                  }
+            }
             $data = [
                 'id' => $this->id,
                 'maintenance_type' => $this->maintenance->name,
-                'department' => $this->department->name,
+                'department' => $data,
                 'service' => $this->service->name,
                 'device' => $this->device?->name ?? '...',
                 'car' => $this->car?->type ?? '...',

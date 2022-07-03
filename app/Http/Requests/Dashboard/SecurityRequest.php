@@ -3,6 +3,11 @@
 namespace App\Http\Requests\Dashboard;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+
+use Illuminate\Validation\ValidationException;
+
+
 
 class SecurityRequest extends FormRequest
 {
@@ -25,17 +30,18 @@ class SecurityRequest extends FormRequest
     {
 
         return [
-            "department_id" => 'required|exists:departments,id',
+            "department_id" => 'required',
             "company_name" => "required|string|max:255",
             "work_reason" => "required|string",
             "responsible" => "required|string|max:255",
             "working_duration" => "required|string|max:255",
             "start_date" => "required|date",
             "end_date" => "required|date|after:start_date",
-            "visitor_name" => "required|string|max:255",
-            "national_id" => "required|numeric",
-            "residence" => "required|string|max:255",
-            "nationality" => "required|string|max:255",
+            "visitor_name"=>"array|required",
+            "visitor_name.*.visitor_names" => "required|string|max:255",
+            "visitor_name.*.national_id" => "required|numeric",
+            "visitor_name.*.residence" => "required|string|max:255",
+            "visitor_name.*.nationality" => "required|string|max:255",
             "involve_chemicals" => "required|numeric|in:0,1",
             "work_noisy" => "required|numeric|in:0,1",
             "include_elevations" => "required|numeric|in:0,1",
@@ -47,4 +53,33 @@ class SecurityRequest extends FormRequest
             "business_responsible" => "required|string|max:255",
         ];
     }
+    public function attributes()
+    {
+        return [
+            'visitor_name.*.visitor_names'  => ' الزائر',
+             'visitor_name.*.national_id'    => 'رقم الهوية',
+             'visitor_name.*.residence'    => 'الاقامة',
+             'visitor_name.*.nationality'    => 'الجنسية',
+            'department_id'      => 'القسم',
+            'company_name'      => 'اسم الشركة',
+            'responsible'  => 'الشحص المسؤول',
+            'working_duration' => 'مدة العمل',
+            'work_reason' => 'الغرض من العمل',
+            'start_date' => 'تاريخ بداية العمل',
+            'end_date' => 'تاريخ نهاية العمل',
+            'involve_chemicals' => 'يشمل العمل مواد كيميائية',
+            'work_noisy' => 'يشكل العمل ضوضاء',
+            'include_elevations' => 'هل يشمل العمل ارتفاعات',
+            'confined_spaces' => 'هل يشمل العمل أماكن ضيقة',
+            'services_separation' => 'هل يشمل فصل خدمات الكهرباء – الماء',
+            'flammable_materials' => 'هل يشمل مواد سريعة الاشتعال ',
+            'guard_name' => 'اسم الحارس',
+            'entry_time' => 'قت الدخول',
+            'business_responsible' => 'اسم المسئول عن ااعمال بالشركه',
+        ];
+            
+    }
+
+ 
+
 }

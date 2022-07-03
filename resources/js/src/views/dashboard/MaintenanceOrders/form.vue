@@ -73,6 +73,31 @@
             </label>
           </b-form-group>
         </b-col>
+         <!-- Departments -->
+        <b-col cols="12">
+          <b-form-group
+              :label="$t('global.required-department')"
+              label-for="vi-branch"
+          >
+            <b-input-group class="input-group-merge">
+              <v-select
+                  v-model="data.department_id"
+                  :placeholder="$t('global.department')+'...'"
+                  :options="data.type==1?departments:departmentCar"
+                  :reduce="dep => dep.id"
+                  label="name"
+                  v-on:input="get_devicesInDepartment"
+                  dir="rtl"
+              />
+            </b-input-group>
+            <label
+                v-if="Object.keys(errors).length > 0 && errors.department_id !== undefined"
+                class="text-danger"
+            >
+              {{ this.errors.department_id[0] }}
+            </label>
+          </b-form-group>
+        </b-col>
         <!-- Services -->
         <b-col cols="12" v-if="services.length > 0">
           <b-form-group
@@ -121,30 +146,7 @@
             </label>
           </b-form-group>
         </b-col>
-        <!-- Departments -->
-        <b-col cols="12">
-          <b-form-group
-              :label="$t('global.required-department')"
-              label-for="vi-branch"
-          >
-            <b-input-group class="input-group-merge">
-              <v-select
-                  v-model="data.department_id"
-                  :placeholder="$t('global.department')+'...'"
-                  :options="departments"
-                  :reduce="dep => dep.id"
-                  label="name"
-                  dir="rtl"
-              />
-            </b-input-group>
-            <label
-                v-if="Object.keys(errors).length > 0 && errors.department_id !== undefined"
-                class="text-danger"
-            >
-              {{ this.errors.department_id[0] }}
-            </label>
-          </b-form-group>
-        </b-col>
+       
         <!-- location -->
         <b-col cols="12">
           <b-form-group
@@ -270,6 +272,10 @@ export default {
       services: [],
       maintenanceTypes: [],
       related_data:[],
+      departmentCar:[
+                    {name:'الحركة',id:2},
+                    {name:'الاسعافات',id:1},
+                ],
       errors: {},
       data: {
         maintenance_id: '',
@@ -323,11 +329,25 @@ export default {
       })
     },
     getServicesInMaintenanceType() {
-
+        if (!this.submitType == 'edit') {
+        this.data.related_data = ''
+      this.data.department_id = ''
+    }
+    
       axios.get(`/spinner/get-services-maintenance-type/${this.data.maintenance_id}`).then(response => {
         this.services = response.data.maintenance.services
         this.data.type = response.data.maintenance.type
-        this.related_data = response.data.maintenance.related_data
+        this.related_data = []
+      })
+    },
+     get_devicesInDepartment() {
+        if (!this.submitType == 'edit') {
+        this.data.related_data = ''
+        }
+
+      axios.get(`/spinner/get-devices-department/${this.data.department_id}/${this.data.type}`).then(response => {
+      
+        this.related_data = response.data.related_data
       })
     },
     save() {
@@ -373,7 +393,8 @@ export default {
       axios.get(`/maintenance-orders/${id}/edit`).then(response => {
         this.data = response.data.data
         this.filePreview = this.data.filePreview
-        this.getServicesInMaintenanceType()
+        // this.getServicesInMaintenanceType()
+        this.get_devicesInDepartment();
       })
 
     }

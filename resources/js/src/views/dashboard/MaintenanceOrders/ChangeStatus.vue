@@ -24,6 +24,8 @@
                                 :placeholder="$i18n.t('global.choose')"
                                 :options="orderStatuses"
                                 :reduce="status => status.id"
+                                v-on:input="checkStatus"
+
                                 dir="rtl"
                                 label="name"
                             />
@@ -35,8 +37,35 @@
                             {{ this.errors.status[0] }}
                         </label>
                     </b-form-group>
+                </b-col>
+                 <!-- Status Types-->
+                <b-col cols="12" v-if="showRequestStock">
+                    <b-form-group
+                        label="امور الصرف"
+                        label-for="vi-status"
+                    >
+                        <b-input-group class="input-group-merge">
+                            <v-select
+                                v-model="data.request_stocks"
+                                placeholder="كود الصرف"
+                                :options="requestStocks"
+                                :reduce="req => req.id"
+                                multiple
+                                dir="rtl"
+                                label="request_number"
+                            />
+                        </b-input-group>
+                        <label
+                            v-if="Object.keys(errors).length > 0 && errors.status !== undefined"
+                            class="text-danger"
+                        >
+                            {{ this.errors.status[0] }}
+                        </label>
+                    </b-form-group>
+                </b-col>
+
                     <!-- comment -->
-                    <b-col cols="12">
+                    <b-col cols="12" >
                         <label for="comment">{{$t('global.comment')}}</label>
                         <b-input-group class="input-group-merge">
                             <b-form-textarea
@@ -55,7 +84,6 @@
 
                         </label>
                     </b-col>
-                </b-col>
             </b-row>
         </b-modal>
     </div>
@@ -100,9 +128,13 @@ export default {
         return {
             errors: {},
             orderStatuses:[],
+            requestStocks:[],
+            showRequestStock:false,
+             comment:true,
             data:{
                 status:'',
                 comment:'',
+                request_stocks:'',
                 ids:null
             }
         }
@@ -110,8 +142,17 @@ export default {
     methods:{
         getMaintenanceOrderStatus(){
             axios.get('/spinner/get-maintenance-order-statuses').then(response => {
-                this.orderStatuses = response.data.status
+                this.orderStatuses = response.data.data.status
+                this.requestStocks=response.data.data.stock
             })
+        },
+        checkStatus(){
+           if(this.data.status==2){
+            this.showRequestStock=true
+            this.comment=false
+           }else{
+                        this.showRequestStock=false
+           }
         },
         save(){
             this.data.ids = this.selected_rows

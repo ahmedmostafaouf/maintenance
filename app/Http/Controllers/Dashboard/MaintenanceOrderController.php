@@ -8,6 +8,7 @@ use App\Http\Resources\Dashboard\MaintenanceOrderResource;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Maintenance;
 use App\Models\MaintenanceOrder;
+use App\Models\RequestStock;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -78,6 +79,10 @@ class MaintenanceOrderController extends Controller
 
         return new MaintenanceOrderResource( MaintenanceOrder::find($id) );
     }
+    public function getMaintanance(Request $request, $id){
+        $maintenance=MaintenanceOrder::findOrFal($id);
+        $maintenance->update(['tech_id'=>$request->technical]);
+    }
 
     /**
      * Update the specified resource in storage.
@@ -115,7 +120,8 @@ class MaintenanceOrderController extends Controller
     {
         $request->validate(['status' => 'required|numeric']);
         MaintenanceOrder::whereIn('id', $request->ids)
-                        ->update(['status' => $request->status, 'comment' => $request->comment]);
+                        ->update(['status' => $request->status, 'comment' => $request->comment,'request_stocks'=>$request->request_stocks]);
+        RequestStock::whereIn("id",$request->request_stocks)->update(['wait'=>0]);               
         return $this->returnSuccessMessage('تم التعديل بنجاح');
     }
 }

@@ -27,7 +27,7 @@
                                 class="btn-icon"
                                 @click="selectedChangeStatus"
                             >
-                                <feather-icon icon="EditIcon" />
+                                <span>تغيير الحالة </span>
                             </b-button>
                             <!-- Remove Button -->
 
@@ -45,24 +45,69 @@
                 </div>
             </template>
             <template v-slot:actions='{row}'>
-                <b-dropdown-item :to="{name:'edit-maintenanceOrders',params:{'id':row.id}}">
-                    <feather-icon
-                        icon="Edit2Icon"
-                        class="mr-50"
-                    />
-                    <span>{{$t('global.edit')}}</span>
-                </b-dropdown-item>
-
-                <b-dropdown-item @click.prevent="dropRow(row.id)">
-                    <feather-icon
-                        icon="TrashIcon"
-                        class="mr-50"
-                    />
-                    <span>{{$t('global.delete')}}</span>
-                </b-dropdown-item>
-
+                 <b-button
+                            variant="gradient-warning"
+                            class="btn-icon"
+                            :title="$t('users.edit')"
+                             :to="{name:'edit-maintenanceOrders',params:{'id':row.id}}"
+                        >
+                            <feather-icon icon="Edit2Icon" />
+                        </b-button>
+                    
+                        <b-button
+                            variant="gradient-danger"
+                            class="btn-icon"
+                            :title="$t('users.delete')"
+                            @click.prevent="dropRow(row.id)"
+                        >
+                            <feather-icon icon="Trash2Icon" />
+                        </b-button>
+                        <b-button v-b-modal.modal-prevent-closing
+                           @click="modalRequestSystem(row.id)">
+                               <span> تكليف فني</span>
+                        </b-button>
             </template>
         </table-data>
+
+<b-modal
+            id="modal-prevent-closing"
+            ref="my-modal"
+            title="طلب صرف"
+            cancel-variant="outline-secondary"
+        >
+
+            <b-form >
+                <b-row>
+
+                     <b-col cols="12">
+                    <b-form-group
+                        label="امور الصرف"
+                        label-for="vi-status"
+                    >
+                        <b-input-group class="input-group-merge">
+                            <v-select
+                                v-model="data.technical"
+                                placeholder="اختار فني"
+                                :options="technicals"
+                                :reduce="technical => technical.id"
+                                multiple
+                                dir="rtl"
+                                label="name"
+                            />
+                        </b-input-group>
+                      
+                    </b-form-group>
+                </b-col>
+
+
+                </b-row>
+            </b-form>
+            <template #modal-footer>
+                <b-button block  variant="gradient-primary" class="" block @click="RequestSave(this.order)">حفظ </b-button>
+                <b-button block  variant="gradient-dark" class="" block @click="$refs['my-modal'].hide()">غلق</b-button>
+            </template>
+        </b-modal>
+
         <ChangeStatus :selected_rows="selected_rows" />
     </div>
 </template>
@@ -115,6 +160,11 @@ export default {
                 {name:'معلق',value:'1'},
                 {name:'تم التاكيد',value:'0'},
             ],
+            technicals:[],
+            order:'',
+            data:{
+                technical:'',
+            },
             url: '/maintenance-orders',
             searchTerm: '',
             title: 'طلبات الصيانه',
@@ -189,10 +239,44 @@ export default {
                 return item.id
             })
         })
-
+ this.getTechnical()
 
     },
     methods: {
+        modalRequestSystem(id){
+            this.order=id
+            },
+            RequestSave(id){
+                alert(id)
+                if(!this.data.technical){
+                     this.$swal({
+                    icon: 'warning',
+                    title: 'اختر فني!',
+                    text: 'اختر فني',
+                    customClass: {
+                        confirmButton: 'btn btn-warning',
+                    },
+                })
+                }
+                 let authHeader = {Authorization: `Bearer ${localStorage.getItem('accessToken')}`,};
+                axios.post(`/maintenance_order/${id}`,this.data, {headers: authHeader,}).then(response => {
+                   this.$swal({
+                    icon: 'success',
+                    title: 'تم!',
+                    text: 'تتكلييف فني بنجاح',
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                    },
+                })
+                })
+            },
+            getTechnical(){
+                axios.get(`/spinner/get-technical`).then(response => {
+                    this.technicals = response.data.technical
+
+                })
+            },
+          
         selectedDeleted(){
             if(this.selected_rows.length>0){
                 this.dropRow(this.selected_rows,'maintenance-orders/bulk-delete');

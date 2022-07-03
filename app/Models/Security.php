@@ -11,6 +11,7 @@ class Security extends Model
 
     const STATUS_PENDING = 0;
     const STATUS_CONFIRMED = 1;
+    protected $casts=['visitor_name'=>'array','entry_gate'=>'array'];
     protected $fillable = [
         "department_id",
         "company_name",
@@ -22,8 +23,6 @@ class Security extends Model
         "end_date",
         "end_time",
         "visitor_name",
-        "national_id",
-        "residence",
         "nationality",
         "involve_chemicals",
         "work_noisy",
@@ -33,6 +32,7 @@ class Security extends Model
         "flammable_materials",
         "guard_name",
         "entry_time",
+        "entry_gate",
         "business_responsible",
         "status",
         "created_by",

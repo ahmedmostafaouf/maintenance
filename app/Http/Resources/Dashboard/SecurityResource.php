@@ -31,9 +31,9 @@ class SecurityResource extends JsonResource
                 'end_date' => Carbon::parse($this->end_date)->format('Y-m-d'),
                 'end_time' => Carbon::parse($this->end_date)->format('H:i'),
                 'visitor_name' => $this->visitor_name,
-                'national_id' => $this->national_id,
-                'residence' => $this->residence,
-                'nationality' => $this->nationality,
+                // 'national_id' => $this->national_id,
+                // 'residence' => $this->residence,
+                // 'nationality' => $this->nationality,
                 'involve_chemicals' => $this->involve_chemicals,
                 'work_noisy' => $this->work_noisy,
                 'include_elevations' => $this->include_elevations,
@@ -48,7 +48,7 @@ class SecurityResource extends JsonResource
         }else{
             $data = [
                 'id' => $this->id,
-                'department' => $this->department->name,
+                'department' => $this->department_id,
                 'visitor_name' => $this->visitor_name,
                 'company_name' => $this->company_name,
                 'securityStatus' => $this->status,

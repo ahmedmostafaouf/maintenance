@@ -71,10 +71,12 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
         Route::get('get-branch2-cat/{cat}',"SpinnersControler@getBranch2categories");
         Route::get('get-maintenance-types',"SpinnersControler@getMaintenanceTypes");
         Route::get('get-services-maintenance-type/{maintenance_id}',"SpinnersControler@getServicesInMaintenanceType");
+        Route::get('get-devices-department/{department_id}/{type}',"SpinnersControler@getDevicesInDepartment");
         Route::get('get-maintenance-order-statuses',"SpinnersControler@getMaintenanceOrderStatus");
         Route::get('get-statistics-data',"SpinnersControler@getStatisticsData");
         Route::get('get-new-maintenance-orders',"SpinnersControler@getNewMaintenanceOrders");
         Route::get('get-new-maintenance-types',"SpinnersControler@getNewMaintenanceTypes");
+        Route::get('get-technical',"SpinnersControler@getTechnical");
     });
 
     //security declarations
@@ -85,4 +87,5 @@ Route::group(['middleware'=>['auth:sanctum']],function () {
     Route::resource('maintenance-orders', 'MaintenanceOrderController');
     Route::delete('maintenance-orders/bulk-delete/{ids}', 'MaintenanceOrderController@bulkDelete');
     Route::post('maintenance-orders/bulk-change-status', 'MaintenanceOrderController@bulkChangeStatus');
+    Route::post('maintenance_order/{id}', 'MaintenanceOrderController@getMaintanance');
 });
