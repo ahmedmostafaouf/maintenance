@@ -43,7 +43,7 @@
             <!-- Column: Status -->
             <span v-else-if="props.column.field === 'status'">
               <b-badge :variant="statusVariant(props.row.status)">
-                {{ (props.row.status=='0')?'In Active':"Active" }}
+                {{ (props.row.status=='0')?'غير نشط':"نشط   " }}
               </b-badge>
             </span>
 

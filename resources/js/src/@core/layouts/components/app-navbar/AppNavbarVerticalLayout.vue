@@ -22,7 +22,7 @@
     </div>
 
     <b-navbar-nav class="nav align-items-center ml-auto">
-      <locale />
+      <!-- <locale /> -->
       <dark-Toggler class="d-none d-lg-block" />
       <user-dropdown />
     </b-navbar-nav>

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Dashboard\StockRequest;
 use App\Http\Resources\Dashboard\StockResource;
 use App\Http\Traits\ResponseTrait;
+use App\Models\RequestStock;
 use App\Models\Stock;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
@@ -105,11 +106,12 @@ class StockController extends Controller
             return  \response()->json(['status'=>false,'message'=>'Access Forbidden'],403);
         }
         $stock=Stock::findOrFail($id);
-
+          RequestStock::where('stock_id',$id)->delete();
         $stock->delete();
         return $this->returnSuccessMessage('stock Deleted Succeffully');
     }
     public function bulk_delete($ids){
+        RequestStock::whereIn('stock_id',$ids)->delete();
         Stock::whereIn('id',explode(',',$ids))->delete();
         return $this->returnSuccessMessage('تم الحذف بنجاح');
     }

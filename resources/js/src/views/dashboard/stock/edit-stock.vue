@@ -1,21 +1,18 @@
 <template>
-    <b-form @submit.prevent="editService">
+    <b-form @submit.prevent=" editStock">
         <b-row>
 
             <!-- first name -->
             <b-col cols="12">
                 <b-form-group
-                    :label="$t('global.name')"
+                    label="الاسم"
                     label-for="vi-name"
                 >
                     <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="UserIcon" />
-                        </b-input-group-prepend>
                         <b-form-input
                             id="vi-name"
-                            v-model="service.name"
-                            :placeholder="$t('global.name')"
+                            v-model="stock.name"
+                            placeholder="الاسم"
                         /><br>
                     </b-input-group>
                     <label
@@ -26,17 +23,86 @@
                     </label>
                 </b-form-group>
             </b-col>
+
+            <!-- first name -->
+            <b-col cols="12">
+                <b-form-group
+                    label="رقم التعميد"
+                    label-for="vi-name"
+                >
+                    <b-input-group class="input-group-merge">
+
+                        <b-form-input
+                            id="vi-number"
+                            v-model="stock.number"
+                            placeholder="رقم التعميد"
+                        /><br>
+                    </b-input-group>
+                    <label
+                        v-if="Object.keys(errors).length > 0 && errors.number !== undefined"
+                        class="text-danger"
+                    >
+                        {{this.errors.number[0]}}
+                    </label>
+                </b-form-group>
+            </b-col>
+            <!-- first name -->
+            <b-col cols="12">
+                <b-form-group
+                    label="الكود"
+                    label-for="vi-name"
+                >
+                    <b-input-group class="input-group-merge">
+
+                        <b-form-input
+                            id="vi-code"
+                            v-model="stock.code"
+                            placeholder="الكود"
+                        /><br>
+                    </b-input-group>
+                    <label
+                        v-if="Object.keys(errors).length > 0 && errors.code !== undefined"
+                        class="text-danger"
+                    >
+                        {{this.errors.code[0]}}
+                    </label>
+                </b-form-group>
+            </b-col>
+            <!-- first name -->
+            <b-col cols="12">
+                <b-form-group
+                    label="تاريخ التوريد"
+                    label-for="vi-name"
+                >
+                    <b-input-group class="input-group-merge">
+                        <b-form-datepicker
+                            id="example-datepicker"
+                            v-model="stock.supply_date"
+                            class="mb-1"
+                        />
+                        <br>
+                    </b-input-group>
+                    <label
+                        v-if="Object.keys(errors).length > 0 && errors.supply_date !== undefined"
+                        class="text-danger"
+                    >
+                        {{this.errors.supply_date[0]}}
+                    </label>
+                </b-form-group>
+            </b-col>
+
             <!-- status -->
             <b-col cols="12">
                 <b-form-group
-                    :label="$t('global.status')"
+                    label="نوع المخزون"
                     label-for="vi-status"
                 >
                     <b-input-group class="input-group-merge">
                         <v-select
-                            v-model="service.status"
-                            :placeholder="$t('global.service')+'...'"
+                            v-model="stock.status"
+                            placeholder="نوع المخزون"
                             :options="status"
+                            dir="rtl"
                             :reduce="sta => sta.value"
                             label="name"
                         />
@@ -49,23 +115,92 @@
                     </label>
                 </b-form-group>
             </b-col>
-
-            <!-- description -->
+            <!-- type -->
             <b-col cols="12">
-                <label for="textarea-default">{{$t('global.desc')}}</label>
+                <b-form-group
+                    label="النوع"
+                    label-for="vi-status"
+                >
+                    <b-input-group class="input-group-merge">
+                        <v-select
+                            v-model="stock.type"
+                            placeholder="النوع"
+                            :options="types"
+                            dir="rtl"
+                            :reduce="ty => ty.value"
+                            label="name"
+                        />
+                    </b-input-group>
+                    <label
+                        v-if="Object.keys(errors).length > 0 && errors.types !== undefined"
+                        class="text-danger"
+                    >
+                        {{this.errors.types[0]}}
+                    </label>
+                </b-form-group>
+            </b-col>
+            <!-- amount -->
+            <b-col cols="12">
+                <b-form-group
+                    label="الكمية"
+                    label-for="vi-status"
+                >
+                    <b-input-group class="input-group-merge">
+                        <b-form-spinbutton
+                            id="sb-small"
+                            size="sm"
+                            placeholder="--"
+                            class="mb-1"
+                            v-model="stock.amount"
+                        />
+                    </b-input-group>
+                    <label
+                        v-if="Object.keys(errors).length > 0 && errors.amount !== undefined"
+                        class="text-danger"
+                    >
+                        {{this.errors.amount[0]}}
+                    </label>
+                </b-form-group>
+            </b-col>
+
+            <!-- warehouse_name -->
+            <b-col cols="12">
+                <b-form-group
+                    label="اسم المستودع"
+                    label-for="vi-warehouse_name"
+                >
+                    <b-input-group class="input-group-merge">
+                        <b-form-input
+                            id="vi-warehouse_name"
+                            v-model="stock.warehouse_name"
+                            placeholder="اسم المستودع"
+                        /><br>
+                    </b-input-group>
+                    <label
+                        v-if="Object.keys(errors).length > 0 && errors.warehouse_name !== undefined"
+                        class="text-danger"
+                    >
+                        {{this.errors.warehouse_name[0]}}
+                    </label>
+                </b-form-group>
+            </b-col>
+
+            <!-- Note -->
+            <b-col cols="12">
+                <label for="textarea-default">ملاحظات</label>
                 <b-input-group class="input-group-merge">
                     <b-form-textarea
                         id="textarea-default"
-                        v-model="service.desc"
-                        :placeholder="$t('global.desc')"
+                        v-model="stock.note"
+                        placeholder="ملاحظات"
                         rows="3"
                     /><br>
                 </b-input-group>
                 <label
-                    v-if="Object.keys(errors).length > 0 && errors.desc !== undefined"
+                    v-if="Object.keys(errors).length > 0 && errors.note !== undefined"
                     class="text-danger"
                 >
-                    {{this.errors.desc[0]}}
+                    {{this.errors.note[0]}}
 
                 </label>
             </b-col>
@@ -97,8 +232,8 @@
 
 <script>
     import {
-        BRow, BCol, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton, BInputGroup, BInputGroupPrepend, BFormTextarea, BFormValidFeedback,
-        BFormInvalidFeedback,
+       BFormDatepicker,BFormSpinbutton,BRow, BCol, BFormGroup, BFormInput, BFormCheckbox, BForm, BButton, BInputGroup, BInputGroupPrepend, BFormTextarea, BFormValidFeedback,
+    BFormInvalidFeedback,
     } from 'bootstrap-vue'
     import Ripple from 'vue-ripple-directive'
     import vSelect from 'vue-select'
@@ -108,41 +243,51 @@
         name: 'AddMaintenance',
         components: {
             BRow,
-            vSelect,
-            BCol,
-            BFormValidFeedback,
-            BFormInvalidFeedback,
-            BFormGroup,
-            BFormInput,
-            BFormTextarea,
-            BFormCheckbox,
-            BInputGroup,
-            BInputGroupPrepend,
-            BForm,
-            BButton,
+        vSelect,
+        BCol,
+        BFormValidFeedback,
+        BFormInvalidFeedback,
+        BFormGroup,
+        BFormInput,
+        BFormTextarea,
+        BFormCheckbox,
+        BInputGroup,
+        BInputGroupPrepend,
+        BForm,
+        BButton,
+        BFormDatepicker,
+        BFormSpinbutton
         },
         directives: {
             Ripple,
         },
         data(){
             return{
-                services:[],
                 errors: {},
-                status:[
-                    {name:'نشط',value:1},
-                    {name:'غير نشط',value:0},
-                ],
-                service:{
-                    name:'',
-                    id:'',
-                    desc:'',
-                    service_id:'',
-                    status:''
-                }
+               status:[
+                {name:'قطع غيار',value:1},
+                {name:'المستهلكات',value:2},
+                {name:'مواد النظافة',value:3},
+            ],
+            types:[
+                {name:'طقم',value:1},
+                {name:'عدد',value:2},
+            ],
+            stock:{
+                name:'',
+                status:'',
+                type:'',
+                "code":'',
+                "number":"",
+                'amount':'',
+                'supply_date':'',
+                "warehouse_name":'',
+                "note":""
+            }
             };
         },
         created() {
-              this.getService();
+              this.getStocks();
         },
         methods:{
             makeToast(variant = null, body) {
@@ -152,26 +297,32 @@
                     solid: true,
                 })
             },
-            getService(){
+            getStocks(){
                 let id=this.$route.params.id
-                axios.get(`service/${id}/edit`,{
+                axios.get(`stock/${id}/edit`,{
                     headers:{
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     }
                 }).then(response=>{
                     if(response.status){
-                        this.service.id=response.data.service.id
-                        this.service.name=response.data.service.name
-                        this.service.desc=response.data.service.desc
-                        this.service.status=response.data.service.status
+                        this.stock.id=response.data.stock.id
+                        this.stock.name=response.data.stock.name
+                        this.stock.type=response.data.stock.type
+                        this.stock.status=response.data.stock.status
+                        this.stock.code=response.data.stock.code
+                        this.stock.number=response.data.stock.number
+                        this.stock.amount=response.data.stock.amount
+                        this.stock.supply_date=response.data.stock.supply_date
+                        this.stock.warehouse_name=response.data.stock.warehouse_name
+                        this.stock.note=response.data.stock.note
                     }
 
                 });
             },
-            editService(){
+             editStock(){
                 const instance = this
                 let id=this.$route.params.id
-                axios.put(`/service/${id}`, this.service, {
+                axios.put(`/stock/${id}`, this.stock, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
@@ -179,7 +330,7 @@
                     this.errors = {}
                     this.makeToast('success', response.data.message)
                     setTimeout(() => {
-                        instance.$router.push({ name: 'service' })
+                        instance.$router.push({ name: 'stock' })
                     }, 1000)
                 })
                     .catch(error => {

@@ -1,6 +1,6 @@
 <template>
     <b-form @submit.prevent="editDevice">
-        <b-row>
+         <b-row>
 
             <!-- first name -->
             <b-col cols="12">
@@ -9,12 +9,9 @@
                     label-for="vi-name"
                 >
                     <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="UserIcon" />
-                        </b-input-group-prepend>
                         <b-form-input
                             id="vi-name"
-                            v-model="device.name"
+                            v-model="technical.name"
                             :placeholder="$t('global.name')"
                         /><br>
                     </b-input-group>
@@ -27,184 +24,63 @@
                 </b-form-group>
             </b-col>
 
-            <!-- device_num  -->
+            <!-- first name -->
             <b-col cols="12">
                 <b-form-group
-                    :label="$t('global.device_num')"
+                    label="المهنة"
                     label-for="vi-name"
                 >
                     <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="UserIcon" />
-                        </b-input-group-prepend>
                         <b-form-input
-                            id="vi-device_num"
-                            v-model="device.device_num"
-                            :placeholder="$t('global.device_num')"
+                            id="vi-jop"
+                            v-model="technical.jop"
+                            placeholder="المهنة"
                         /><br>
                     </b-input-group>
                     <label
-                        v-if="Object.keys(errors).length > 0 && errors.device_num !== undefined"
+                        v-if="Object.keys(errors).length > 0 && errors.jop !== undefined"
                         class="text-danger"
                     >
-                        {{this.errors.device_num[0]}}
+                        {{this.errors.jop[0]}}
                     </label>
                 </b-form-group>
             </b-col>
-            <!-- serial_num  -->
+
+            <!-- users -->
             <b-col cols="12">
                 <b-form-group
-                    :label="$t('global.serial_num')"
-                    label-for="vi-serial_num"
-                >
-                    <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="UserIcon" />
-                        </b-input-group-prepend>
-                        <b-form-input
-                            id="vi-serial_num"
-                            v-model="device.serial_num"
-                            :placeholder="$t('global.serial_num')"
-                        /><br>
-                    </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.serial_num !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.serial_num[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
-            <!--  category -->
-            <b-col cols="12">
-                <b-form-group
-                    :label="$t('global.category')"
-                    label-for="vi-category"
-                >
-                    <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="UserIcon" />
-                        </b-input-group-prepend>
-                        <b-form-input
-                            id="vi-category"
-                            v-model="device.category"
-                            :placeholder="$t('global.category')"
-                        /><br>
-                    </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.category !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.category[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
-            <!-- model -->
-            <b-col cols="12">
-                <b-form-group
-                    :label="$t('global.model')"
-                    label-for="vi-name"
-                >
-                    <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="UserIcon" />
-                        </b-input-group-prepend>
-                        <b-form-input
-                            id="vi-model"
-                            v-model="device.model"
-                            :placeholder="$t('global.model')"
-                        /><br>
-                    </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.model !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.model[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
-            <!-- manufacturer_comp -->
-            <b-col cols="12">
-                <b-form-group
-                    :label="$t('global.manufacturer_comp')"
-                    label-for="vi-manufacturer_comp"
-                >
-                    <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="UserIcon" />
-                        </b-input-group-prepend>
-                        <b-form-input
-                            id="vi-manufacturer_comp"
-                            v-model="device.manufacturer_comp"
-                            :placeholder="$t('global.manufacturer_comp')"
-                        /><br>
-                    </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.manufacturer_comp !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.manufacturer_comp[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
-            <!-- agent -->
-            <b-col cols="12">
-                <b-form-group
-                    :label="$t('global.agent')"
-                    label-for="vi-agent"
-                >
-                    <b-input-group class="input-group-merge">
-                        <b-input-group-prepend is-text>
-                            <feather-icon icon="UserIcon" />
-                        </b-input-group-prepend>
-                        <b-form-input
-                            id="vi-agent"
-                            v-model="device.agent"
-                            :placeholder="$t('global.agent')"
-                        /><br>
-                    </b-input-group>
-                    <label
-                        v-if="Object.keys(errors).length > 0 && errors.agent !== undefined"
-                        class="text-danger"
-                    >
-                        {{this.errors.agent[0]}}
-                    </label>
-                </b-form-group>
-            </b-col>
-            <!-- Departments -->
-            <b-col cols="12">
-                <b-form-group
-                    :label="$t('global.department')"
+                    label="المدير المسؤول"
                     label-for="vi-branch"
                 >
                     <b-input-group class="input-group-merge">
                         <v-select
-                            v-model="device.department_id"
-                            :placeholder="$t('global.department')+'...'"
-                            :options="departments"
+                            v-model="technical.user_id"
+                            placeholder="المدير المسؤول"
+                            :options="users"
                             :reduce="dep => dep.id"
                             label="name"
                             dir="rtl"
                         />
                     </b-input-group>
                     <label
-                        v-if="Object.keys(errors).length > 0 && errors.service_id !== undefined"
+                        v-if="Object.keys(errors).length > 0 && errors.user_id !== undefined"
                         class="text-danger"
                     >
-                        {{this.errors.department_id[0]}}
+                        {{this.errors.user_id[0]}}
                     </label>
                 </b-form-group>
             </b-col>
+
             <!-- status -->
             <b-col cols="12">
                 <b-form-group
-                    :label="$t('global.status')"
+                    label=" الحالة"
                     label-for="vi-status"
                 >
                     <b-input-group class="input-group-merge">
                         <v-select
-                            v-model="device.status"
-                            :placeholder="$t('global.status')+'...'"
+                            v-model="technical.status"
+                            placeholder="الحالة"
                             :options="status"
                             dir="rtl"
                             :reduce="sta => sta.value"
@@ -220,25 +96,6 @@
                 </b-form-group>
             </b-col>
 
-            <!-- description -->
-            <b-col cols="12">
-                <label for="textarea-default">{{$t('global.desc')}}</label>
-                <b-input-group class="input-group-merge">
-                    <b-form-textarea
-                        id="textarea-default"
-                        v-model="device.desc"
-                        :placeholder="$t('global.desc')"
-                        rows="3"
-                    /><br>
-                </b-input-group>
-                <label
-                    v-if="Object.keys(errors).length > 0 && errors.desc !== undefined"
-                    class="text-danger"
-                >
-                    {{this.errors.desc[0]}}
-
-                </label>
-            </b-col>
 
             <!-- reset and submit -->
             <b-col
@@ -297,28 +154,23 @@
         data(){
             return{
                 errors: {},
-                departments:[],
+                users:[],
+                errors: {},
                 status:[
                     {name:'نشط',value:1},
                     {name:'غير نشط',value:0},
                 ],
-                device:{
+                technical:{
                     name:'',
-                    desc:'',
+                    jop:'',
                     status:'',
-                    department_id:"",
-                    device_num:"",
-                    serial_num:"",
-                    category:"",
-                    model:"",
-                    manufacturer_comp:"",
-                    agent:"",
+                    user_id:"",
                 }
             };
         },
         created() {
-            this.getDepartments();
-            this.getDevice();
+            this.getusers();
+            this.getTechnical();
         },
         methods:{
             makeToast(variant = null, body) {
@@ -331,7 +183,7 @@
             editDevice(){
                 const instance = this
                 let id=this.$route.params.id
-                axios.put(`device/${id}`, this.device, {
+                axios.put(`technical/${id}`, this.technical, {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     },
@@ -339,7 +191,7 @@
                     this.errors = {}
                     this.makeToast('success', 'تم التعديل  بنجاح')
                     setTimeout(() => {
-                        instance.$router.push({ name: 'device' })
+                        instance.$router.push({ name: 'technical' })
                     }, 1000)
                 })
                     .catch(error => {
@@ -347,33 +199,28 @@
                         this.errors = error.response.data.errors
                     })
             },
-            getDevice(){
+            getTechnical(){
                 let instance=this;
                 let id = instance.$route.params.id;
-                axios.get(`device/${id}/edit`,{
+                axios.get(`technical/${id}/edit`,{
                     headers:{
                         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
                     }
                 }).then(response=>{
                     if(response.status){
-                        this.device.id=response.data.device.id
-                        this.device.name=response.data.device.name
-                        this.device.desc=response.data.device.desc
-                        this.device.status=response.data.device.status
-                        this.device.department_id=response.data.device.department_id
-                        this.device.device_num=response.data.device.device_num
-                        this.device.serial_num=response.data.device.serial_num
-                        this.device.category=response.data.device.category
-                        this.device.model=response.data.device.model
-                        this.device.manufacturer_comp=response.data.device.manufacturer_comp
-                        this.device.agent=response.data.device.agent
+                        this.technical.id=response.data.technical.id
+                        this.technical.name=response.data.technical.name
+                        this.technical.jop=response.data.technical.jop
+                        this.technical.status=response.data.technical.status
+                        this.technical.user_id=response.data.technical.user_id
+                     
                     }
 
                 });
             },
-            getDepartments(){
-                axios.get('/spinner/all-departments').then(response => {
-                    this.departments = response.data.departments
+             getusers(){
+                axios.get('/spinner/get-users').then(response => {
+                    this.users = response.data.users
                 })
             },
 

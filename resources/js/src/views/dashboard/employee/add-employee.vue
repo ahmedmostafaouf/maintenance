@@ -229,13 +229,7 @@
                 >
                     {{$i18n.t('users.submit')}}
                 </b-button>
-                <b-button
-                    v-ripple.400="'rgba(186, 191, 199, 0.15)'"
-                    type="reset"
-                    variant="outline-secondary"
-                >
-                    {{$i18n.t('users.reset')}}
-                </b-button>
+             
             </b-col>
         </b-row>
     </b-form>

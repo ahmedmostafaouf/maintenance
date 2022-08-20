@@ -32,4 +32,16 @@ class CarRequest extends FormRequest
             "category"=>"required",
         ];
     }
+    public function attributes()
+    {
+        return [
+            'type'=>'نوع',
+            "plate_number"=>"رقم اللوحة",
+            "chassis_number"=>"رقم الهيكل",
+            "color"=>"الون",
+            "made"=>"سنه التصنيع",
+            "category"=>"القسم",
+        ];
+            
+    }
 }

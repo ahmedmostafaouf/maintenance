@@ -21,21 +21,25 @@
       </div>
     </template>
       <template v-slot:actions='{row}'>
-          <b-dropdown-item :to="{name:'edit-role',params:{'id':row.id}}"  v-if="$gate.hasPermission('update roles')">
-              <feather-icon
-                  icon="Edit2Icon"
-                  class="mr-50"
-              />
-              <span>{{$i18n.t('roles.edit')}}</span>
-          </b-dropdown-item>
 
-          <b-dropdown-item @click="confirmText(row.id)" v-if="$gate.hasPermission('delete roles')&&user.group_id!=row.id">
-              <feather-icon
-                  icon="TrashIcon"
-                  class="mr-50"
-              />
-              <span>{{$i18n.t('roles.delete')}}</span>
-          </b-dropdown-item>
+
+             <b-button
+                            variant="gradient-warning"
+                            class="btn-icon"
+                            :title="$t('roles.edit')"
+                             :to="{name:'edit-role',params:{'id':row.id}}"
+                        >
+                            <feather-icon icon="Edit2Icon" />
+                        </b-button>
+
+                     <b-button
+                            variant="gradient-danger"
+                            class="btn-icon"
+                            :title="$t('roles.delete')"
+                           @click="confirmText(row.id)" v-if="$gate.hasPermission('delete roles')&&user.group_id!=row.id"
+                        >
+                            <feather-icon icon="Trash2Icon" />
+                        </b-button>
 
       </template>
   </table-data>
@@ -44,7 +48,7 @@
 <script>
 import axios from 'axios'
 import {
-  BCard, BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdownItem, BDropdown, BRow, BCol,
+  BCard, BButton, BAvatar, BBadge, BPagination, BFormGroup, BFormInput, BFormSelect, BDropdownItem, BDropdown, BRow, BCol,
 } from 'bootstrap-vue'
 import tableData from '../datatable/Index'
 import Ripple from 'vue-ripple-directive'
@@ -59,7 +63,7 @@ export default {
     BFormGroup,
     BFormInput,
     BFormSelect,
-    // Prism,
+    BButton,
     BDropdownItem,
     BDropdown,
     BRow,
@@ -99,11 +103,12 @@ export default {
   methods: {
       confirmText(id) {
           this.$swal({
-              title: 'Are you sure?',
-              text: "You won't be able to revert this!",
-              icon: 'warning',
+             title: 'هل انت متأكد ؟ ',
+                text: "تريد حذف هذا!",
+                icon: 'warning',
               showCancelButton: true,
-              confirmButtonText: 'Yes, delete it!',
+               cancelButtonText:"لا",
+                    confirmButtonText: 'نعم , قم بالحذف',
               customClass: {
                   confirmButton: 'btn btn-primary',
                   cancelButton: 'btn btn-outline-danger ml-1',
@@ -125,8 +130,8 @@ export default {
                     }).catch(error => {
                         this.$swal({
                             icon: 'error',
-                            title: 'Error!',
-                            text: error.response.data.message,
+                            title: 'تم المسح !',
+                            text: 'تم حذف هذا العنصر بنجاح.',
                             customClass: {
                                 confirmButton: 'btn btn-danger',
                             },
@@ -134,8 +139,9 @@ export default {
                     })
               } else if (result.dismiss === 'cancel') {
                   this.$swal({
-                      title: 'Cancelled',
-                      text: 'Your imaginary file is safe :)',
+                       title: 'خطأ!',
+                       text: 'حصل خطأ ما حاول في وقت لاحق',
+                       confirmButtonText:"تاكيد",
                       icon: 'error',
                       customClass: {
                           confirmButton: 'btn btn-success',

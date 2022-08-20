@@ -51,7 +51,7 @@
                         <label class="mr-1">{{$t('users.search')}}</label>
                         <b-form-input
                             v-model="searchTerm"
-                            placeholder="Search"
+                            placeholder="بحث"
                             type="text"
                             class="d-inline-block"
                         />

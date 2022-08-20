@@ -158,13 +158,13 @@
             <!-- status -->
             <b-col cols="12">
                 <b-form-group
-                    label="Status"
+                    label="الحالة"
                     label-for="vi-status"
                 >
                     <b-input-group class="input-group-merge">
                         <v-select
                             v-model="employee.status"
-                            :placeholder="$t('users.status')"
+                            placeholder="الحالة"
                             :options="status"
                             :reduce="sta => sta.value"
                             label="name"
@@ -182,13 +182,13 @@
             <!-- Roles -->
             <b-col cols="12">
                 <b-form-group
-                    label="roles"
+                    label="الرتبه"
                     label-for="vi-status"
                 >
                     <b-input-group class="input-group-merge">
                         <v-select
                             v-model="employee.role_id"
-                            :placeholder="$t('users.roles')"
+                            placeholder="الرتبة"
                             :options="roles"
                             :reduce="rol => rol.id"
                             dir="rtl"
@@ -215,15 +215,9 @@
                     variant="primary"
                     class="mr-1"
                 >
-                   {{$i18n.t('users.submit')}}
+                   تحديث
                 </b-button>
-                <b-button
-                    v-ripple.400="'rgba(186, 191, 199, 0.15)'"
-                    type="reset"
-                    variant="outline-secondary"
-                >
-                    {{$i18n.t('users.reset')}}
-                </b-button>
+               
             </b-col>
         </b-row>
     </b-form>

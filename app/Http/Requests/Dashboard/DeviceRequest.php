@@ -24,7 +24,7 @@ class DeviceRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:devices,name,'.$this->id,
+            'name' => 'required|unique:devices,name,'.$this->id.',id,deleted_at,NULL',
             'status' => 'required',
             'desc' => 'sometimes|nullable|min:8',
             'device_num' => 'required|unique:devices,device_num,'.$this->id,

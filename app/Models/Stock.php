@@ -27,4 +27,7 @@ class Stock extends Model
             get: fn ($value) => carbon::parse($value)->format('y-m-d'),
         );
     }
+    public function requestsStock(){
+        return $this->hasMany(Stock::class,'stock_id');
+    }
 }

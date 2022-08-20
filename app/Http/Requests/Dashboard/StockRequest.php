@@ -25,7 +25,7 @@ class StockRequest extends FormRequest
     {
         return [
             'name'=>'required',
-            'code'=>'required|unique:stocks,code',
+            'code'=>'required|unique:stocks,code,'.$this->id.',id,deleted_at,NULL',
             'amount'=>'required|numeric',
             'status'=>'required',
             'number'=>'required',

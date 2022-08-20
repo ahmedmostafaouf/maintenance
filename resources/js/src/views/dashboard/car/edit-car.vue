@@ -91,14 +91,14 @@
             <!--  side -->
             <b-col cols="12">
                 <b-form-group
-                    label="الحهة"
+                    label="الجهة"
                     label-for="vi-color"
                 >
                     <b-input-group class="input-group-merge">
                         <b-form-input
                             id="vi-color"
                             v-model="car.side"
-                            placeholder="الحهة"
+                            placeholder="الجهة"
                         /><br>
                     </b-input-group>
                     <label

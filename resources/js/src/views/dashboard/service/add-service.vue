@@ -157,7 +157,7 @@ export default {
                 },
             }).then(response => {
                 this.errors = {}
-                this.makeToast('success', 'Department Stored Succeffully')
+                this.makeToast('success', 'تم اضافه الخدمة بنجاح')
                 setTimeout(() => {
                     instance.$router.push({ name: 'service' })
                 }, 1000)

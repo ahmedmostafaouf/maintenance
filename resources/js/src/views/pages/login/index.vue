@@ -48,19 +48,14 @@
           >
            مرحبا بك في مستشفى المخواة العام ! 👋
           </b-card-title>
-          <b-card-text class="mb-2">
-              الرجاء تسجيل الدخول إلى حسابك وبدء المغامرة
-          </b-card-text>
+         
           <b-alert
             variant="primary"
             show
           />
 
           <!-- form -->
-          <validation-observer
-            ref="loginForm"
-            #default="{invalid}"
-          >
+        
             <b-form
               class="auth-login-form mt-2"
               @submit.prevent="login"
@@ -69,39 +64,26 @@
                 label="الاميل او الاسم"
                 label-for="login-email"
               >
-                <validation-provider
-                  #default="{ errors }"
-                  name="Email"
-                  vid="email"
-                  rules="required"
-                >
+               
                   <b-form-input
                     id="login-email"
                     v-model="userEmail"
-                    :state="errors.length > 0 ? false:null"
                     name="login-email"
                     placeholder="john@example.com"
                   />
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
+                  <small v-if="Object.keys(errors).length > 0 && errors.email !== undefined" class="text-danger">{{this.errors.email[0] }}</small>
+              
               </b-form-group>
               <!-- forgot password -->
               <b-form-group>
 
-                <validation-provider
-                  #default="{ errors }"
-                  name="Password"
-                  vid="password"
-                  rules="required"
-                >
+              
                   <b-input-group
                     class="input-group-merge"
-                    :class="errors.length > 0 ? 'is-invalid':null"
                   >
                     <b-form-input
                       id="login-password"
                       v-model="password"
-                      :state="errors.length > 0 ? false:null"
                       class="form-control-merge"
                       :type="passwordFieldType"
                       name="login-password"
@@ -115,19 +97,14 @@
                       />
                     </b-input-group-append>
                   </b-input-group>
-                  <small class="text-danger">{{ errors[0] }}</small>
-                </validation-provider>
+                  
+                  <small v-if="Object.keys(errors).length > 0 && errors.passowrd !== undefined" class="text-danger">{{this.errors.password[0] }}</small>
+                
               </b-form-group>
 
               <!-- checkbox -->
               <b-form-group>
-                <b-form-checkbox
-                  id="remember-me"
-                  v-model="status"
-                  name="checkbox-1"
-                >
-                 تذكرني
-                </b-form-checkbox>
+              
                   <div class="d-flex justify-content-between">
                       <b-link :to="{name:'auth-forgot-password'}">
                           <small>هل نسيت كلمة المرور؟</small>
@@ -145,7 +122,7 @@
                سجل الان
               </b-button>
             </b-form>
-          </validation-observer>
+         
         </b-col>
       </b-col>
     <!-- /Login-->
@@ -207,6 +184,7 @@ export default {
   mixins: [togglePasswordVisibility],
   data() {
     return {
+        errors:{},
       status: '',
       password: '',
       userEmail: '',
@@ -231,8 +209,7 @@ export default {
   },
   methods: {
     login() {
-      this.$refs.loginForm.validate().then(success => {
-        if (success) {
+     
           useSanctum.login({
             email: this.userEmail,
             password: this.password,
@@ -258,10 +235,10 @@ export default {
               })
             })
             .catch(error => {
-              this.$refs.loginForm.setErrors(error.response.data.errors)
+              this.errors=error.response.data.errors
             })
-        }
-      })
+        
+     
     },
   },
 }

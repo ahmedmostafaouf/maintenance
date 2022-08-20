@@ -61,7 +61,7 @@
         </b-form-group>
 
         <!-- RTL -->
-        <b-form-group
+        <!-- <b-form-group
           label="RTL"
           label-cols="10"
         >
@@ -72,7 +72,7 @@
             switch
             inline
           />
-        </b-form-group>
+        </b-form-group> -->
 
         <!-- Router Transition -->
         <b-form-group
@@ -95,7 +95,7 @@
       <div class="customizer-section">
 
         <!-- Layout Type -->
-        <b-form-group
+        <!-- <b-form-group
           label="Menu Layout"
         >
           <b-form-radio-group
@@ -103,7 +103,7 @@
             name="layout-type"
             :options="layoutTypeOptions"
           />
-        </b-form-group>
+        </b-form-group> -->
 
         <!-- Collapsible -->
         <div
@@ -138,7 +138,7 @@
       <div class="customizer-section">
 
         <!-- Navbar Color -->
-        <b-form-group
+        <!-- <b-form-group
           v-show="layoutType === 'vertical'"
           label="Navbar Color"
         >
@@ -149,29 +149,29 @@
             :class="[`bg-${color}`, {'border border-light': !index}, {'mark-active': navbarBackgroundColor === color}]"
             @click="navbarBackgroundColor = color"
           />
-        </b-form-group>
+        </b-form-group> -->
 
         <!-- Navbar Type -->
-        <b-form-group :label="layoutType === 'vertical' ? 'Navbar Type' : 'Menu Type'">
+        <!-- <b-form-group :label="layoutType === 'vertical' ? 'Navbar Type' : 'Menu Type'">
           <b-form-radio-group
             v-model="navbarType"
             name="navbar-type"
             :options="navbarTypes"
           />
-        </b-form-group>
+        </b-form-group> -->
       </div>
 
       <!-- SECTION: Footer -->
       <div class="customizer-section">
 
         <!-- Footer Type -->
-        <b-form-group label="Footer Type">
+        <!-- <b-form-group label="Footer Type">
           <b-form-radio-group
             v-model="footerType"
             name="footer-type"
             :options="footerTypes"
           />
-        </b-form-group>
+        </b-form-group> -->
       </div>
     </vue-perfect-scrollbar>
   </div>

@@ -23,7 +23,7 @@ export default [
                 allows: gate.hasPermission('read users')
             },
             {
-                title: 'اصافة موظف',
+                title: 'اضافة موظف',
                 route: 'add-employee',
                 allows: gate.hasPermission('write users')
             },

@@ -18,6 +18,7 @@ class MaintenanceOrder extends Model
         'location',
         'desc',
         'image',
+        'status',
         'type',
         'device_id',
         'car_id',

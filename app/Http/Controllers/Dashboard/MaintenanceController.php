@@ -74,7 +74,7 @@ class MaintenanceController extends Controller
      */
     public function edit($id)
     {
-        $maintenance=Maintenance::findOrFail($id);
+        $maintenance=Maintenance::with('services')->findOrFail($id);
         return $this->returnData('maintenance',$maintenance);
     }
 
@@ -89,6 +89,7 @@ class MaintenanceController extends Controller
     {
         $maintenance=Maintenance::findOrFail($id);
         $maintenance->update($request->all());
+        $maintenance->services()->syncWithoutDetaching($request->service_id);
         return $this->returnSuccessMessage('تم التعديل بنجاح');
 
     }

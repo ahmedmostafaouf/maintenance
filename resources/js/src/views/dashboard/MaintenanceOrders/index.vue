@@ -103,7 +103,7 @@
                 </b-row>
             </b-form>
             <template #modal-footer>
-                <b-button block  variant="gradient-primary" class="" block @click="RequestSave(this.order)">حفظ </b-button>
+                <b-button block  variant="gradient-primary" class="" block @click="RequestSave">حفظ </b-button>
                 <b-button block  variant="gradient-dark" class="" block @click="$refs['my-modal'].hide()">غلق</b-button>
             </template>
         </b-modal>
@@ -123,6 +123,8 @@ import {
     BFormGroup,
     BFormInput,
     BFormSelect,
+    BForm,
+    BInputGroup,
     BDropdownItem,
     BDropdown,
     BRow,
@@ -149,8 +151,10 @@ export default {
         BDropdown,
         BRow,
         BCol,
+        BForm,
         vSelect,
-        ChangeStatus
+        ChangeStatus,
+        BInputGroup
 
 
     },
@@ -246,8 +250,7 @@ export default {
         modalRequestSystem(id){
             this.order=id
             },
-            RequestSave(id){
-                alert(id)
+            RequestSave(){
                 if(!this.data.technical){
                      this.$swal({
                     icon: 'warning',
@@ -259,15 +262,18 @@ export default {
                 })
                 }
                  let authHeader = {Authorization: `Bearer ${localStorage.getItem('accessToken')}`,};
-                axios.post(`/maintenance_order/${id}`,this.data, {headers: authHeader,}).then(response => {
-                   this.$swal({
+                axios.post(`/maintenance_order/${this.order}`,this.data, {headers: authHeader,}).then(response => {
+                   this.$refs['my-modal'].hide()
+                  this.$swal({
                     icon: 'success',
                     title: 'تم!',
                     text: 'تتكلييف فني بنجاح',
                     customClass: {
                         confirmButton: 'btn btn-success',
                     },
-                })
+                });
+                    Fire.$emit('deleted');
+
                 })
             },
             getTechnical(){

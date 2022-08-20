@@ -80,8 +80,11 @@ class MaintenanceOrderController extends Controller
         return new MaintenanceOrderResource( MaintenanceOrder::find($id) );
     }
     public function getMaintanance(Request $request, $id){
-        $maintenance=MaintenanceOrder::findOrFal($id);
-        $maintenance->update(['tech_id'=>$request->technical]);
+
+        $maintenance=MaintenanceOrder::findOrFail($id);
+        $maintenance->update(['technical_id'=>$request->technical,'status'=>1]);
+        $this->returnSuccessMessage('تم تكليف فني بنجاح');
+
     }
 
     /**

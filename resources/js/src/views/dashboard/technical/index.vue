@@ -1,26 +1,6 @@
 <template>
     <div>
-        <div class="custom-search">
-            <b-row>
-                <b-col md="4">
-                    <b-form-group
-                        label="القسم"
-                        label-for="vi-department"
-                    >
-                        <v-select
-                            v-model="datatable.department_filter"
-                            placeholder="...القسم"
-                            :options="category"
-                            dir="rtl"
-                            :reduce="dep => dep.value"
-                            label="name"
-                            @input="onfilter"
-                        />
-                    </b-form-group>
-                </b-col>
-
-            </b-row>
-        </div>
+    
         <table-data
             :title-prop="title"
             :search-term-prop="searchTerm"
@@ -66,21 +46,24 @@
                 </div>
             </template>
             <template v-slot:actions='{row}'>
-                <b-dropdown-item :to="{name:'edit-technical',params:{'id':row.id}}">
-                    <feather-icon
-                        icon="Edit2Icon"
-                        class="mr-50"
-                    />
-                    <span>{{$t('global.edit')}}</span>
-                </b-dropdown-item>
+                
+                  <b-button
+                            variant="gradient-warning"
+                            class="btn-icon"
+                            :title="$t('users.edit')"
+                             :to="{name:'edit-technical',params:{'id':row.id}}"
+                        >
+                            <feather-icon icon="Edit2Icon" />
+                        </b-button>
 
-                <b-dropdown-item @click.prevent="dropRow(row.id)">
-                    <feather-icon
-                        icon="TrashIcon"
-                        class="mr-50"
-                    />
-                    <span>{{$t('global.delete')}}</span>
-                </b-dropdown-item>
+                     <b-button
+                            variant="gradient-danger"
+                            class="btn-icon"
+                            :title="$t('users.delete')"
+                            @click.prevent="dropRow(row.id)"
+                        >
+                            <feather-icon icon="Trash2Icon" />
+                        </b-button>
 
             </template>
 
@@ -122,7 +105,7 @@
                 departments:[],
                 url: '/technical',
                 searchTerm: '',
-                title: 'السيارات',
+                title: 'الفنيين',
                 appendFilter:'',
                 selected_rows:"",
                 datatable:{

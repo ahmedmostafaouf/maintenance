@@ -177,13 +177,13 @@
                     },
                 }).then(response => {
                     this.errors = {}
-                    this.makeToast('success', response.data.message)
+                    this.makeToast('success', 'تم تعديل الخدمة بنجاح')
                     setTimeout(() => {
                         instance.$router.push({ name: 'service' })
                     }, 1000)
                 })
                     .catch(error => {
-                        this.makeToast('warning', error.response.data.message)
+                        this.makeToast('warning', 'حصل خطا')
                         this.errors = error.response.data.errors
                     })
             },

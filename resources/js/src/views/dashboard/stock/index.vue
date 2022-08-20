@@ -4,12 +4,12 @@
             <b-row>
                 <b-col md="4">
                     <b-form-group
-                        :label="$t('global.status')"
+                        label="نوع المخزون"
                         label-for="vi-status"
                     >
                         <v-select
                             v-model="datatable.status_filter"
-                            :placeholder="$t('global.status')+'...'"
+                            placeholder="نوع المخزون"
                             :options="status"
                             dir="rtl"
                             :reduce="sta => sta.value"
@@ -82,21 +82,24 @@
       </div>
     </template>
     <template v-slot:actions='{row}'>
-            <b-dropdown-item :to="{name:'edit-stock',params:{'id':row.id}}">
-                <feather-icon
-                    icon="Edit2Icon"
-                    class="mr-50"
-                />
-                <span>{{$t('global.edit')}}</span>
-              </b-dropdown-item>
+        
+               <b-button
+                            variant="gradient-warning"
+                            class="btn-icon"
+                            :title="$t('global.edit')"
+                             :to="{name:'edit-stock',params:{'id':row.id}}"
+                        >
+                            <feather-icon icon="Edit2Icon" />
+                        </b-button>
 
-              <b-dropdown-item @click.prevent="dropRow(row.id)">
-                <feather-icon
-                    icon="TrashIcon"
-                    class="mr-50"
-                />
-                <span>{{$t('global.delete')}}</span>
-              </b-dropdown-item>
+                     <b-button
+                            variant="gradient-danger"
+                            class="btn-icon"
+                            :title="$t('global.delete')"
+                            @click.prevent="dropRow(row.id)"
+                        >
+                            <feather-icon icon="Trash2Icon" />
+                        </b-button>
 
         </template>
 
@@ -114,12 +117,12 @@
                 <!-- status -->
                 <b-col cols="6" >
                     <b-form-group
-                        label="اختر الحالة"
+                        label="اختر نوع المخزون"
                         label-for="vi-status"
                     >
                         <b-input-group class="input-group-merge">
                             <v-select
-                                placeholder=" اختر الحالة... "
+                                placeholder="ختر نوع المخزون... "
                                 :options="status"
                                 v-model="request.status"
                                 dir="rtl"
@@ -133,12 +136,12 @@
                     <!--  stock-->
                     <b-col cols="6"  >
                         <b-form-group
-                            label="المخزون"
+                            label="الصنف"
                             label-for="vi-status"
                         >
                             <b-input-group class="input-group-merge">
                                 <v-select
-                                    placeholder=" المخزون..."
+                                    placeholder=" الصنف..."
                                     :options="stocks"
                                     v-model="request.stock"
                                     dir="rtl"
@@ -505,7 +508,7 @@ export default {
       },
       selectedDeleted(){
           if(this.selected_rows.length>0){
-              this.dropRow(this.selected_rows,'service/bulk_delete');
+              this.dropRow(this.selected_rows,'stock/bulk_delete');
           }else {
               this.$swal({
                   icon: 'warning',
@@ -527,7 +530,7 @@ export default {
       },
 
       dropRow(id,url) {
-          let RoutUrl=url?url:"/service"
+          let RoutUrl=url?url:"/stock"
           this.$swal({
               title: 'هل انت متأكد ؟ ',
               text: "تريد حذف هذا!",

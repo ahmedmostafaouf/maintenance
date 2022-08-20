@@ -26,6 +26,7 @@ class StockResource extends JsonResource
             'amount'=> (int)@$this->amount,
             'warehouse_name'=> (string)$this->warehouse_name,
             'note'=> (string)$this->note,
+            
         ];
     }
 }

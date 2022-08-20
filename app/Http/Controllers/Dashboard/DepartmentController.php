@@ -7,6 +7,7 @@ use App\Http\Requests\Dashboard\DepartmentRequest;
 use App\Http\Resources\Dashboard\DepartmentsResource;
 use App\Http\Traits\ResponseTrait;
 use App\Models\Department;
+use App\Models\Device;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
@@ -125,6 +126,7 @@ class DepartmentController extends Controller
         }
         try{
             if($department){
+                Device::where('department_id',$department->id)->delete();
                 $department->delete();
             }
             return $this->returnSuccessMessage('department Deleted Succeffully');
